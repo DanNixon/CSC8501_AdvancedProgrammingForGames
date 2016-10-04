@@ -7,6 +7,7 @@ int getNegativeInt(bool &result,
 int add(int x, int y);
 int loopedFactorial(int x);
 int recursiveFactorial(int x);
+int recursiveFactorialInv(int x, int total = 1);
 
 int main()
 {
@@ -25,10 +26,12 @@ int main()
   {
     int lf = loopedFactorial(*it);
     int rf = recursiveFactorial(*it);
+    int rfi = recursiveFactorialInv(*it);
 
-    std::cout << *it << "\tLooped: " << lf << "\tRecursive: " << rf << '\n';
+    std::cout << *it << "\tLooped: " << lf << "\tRecursive: " << rf
+              << "\tRecursive (inv): " << rfi << '\n';
 
-    if (lf != rf)
+    if (lf != rf || lf != rfi)
       std::cout << "Well, fuck. (" << *it << ")\n";
   }
 
@@ -107,4 +110,13 @@ int recursiveFactorial(int x)
     return 1;
 
   return x * recursiveFactorial(x - 1);
+}
+
+int recursiveFactorialInv(int x, int total)
+{
+  if (x == 0)
+    return total;
+
+  total *= x;
+  return recursiveFactorialInv(x - 1, total);
 }
