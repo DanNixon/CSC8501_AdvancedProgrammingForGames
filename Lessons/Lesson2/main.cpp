@@ -1,10 +1,12 @@
+#include <functional>
 #include <iostream>
 
-double add(double x, double y);
-double minus(double x, double y);
-double product(double a, double b);
-void product(std::ostream &str, double a, double b);
-double quotient(double a, double b);
+void productStr(std::ostream &str, double a, double b);
+
+auto add = [](double x, double y) -> double { return x + y; };
+auto minus = [](double x, double y) -> double { return x - y; };
+auto product = [](double x, double y) -> double { return x * y; };
+auto quotient = [](double x, double y) -> double { return x / y; };
 
 int main()
 {
@@ -41,33 +43,13 @@ int main()
       return 2;
     }
 
-    std::cout << a << op << b << '=' << c << '\n';
+    std::cout << a << ' ' << op << ' ' << b << " = " << c << '\n';
   }
 
   return 0;
 }
 
-double add(double x, double y)
-{
-  return x + y;
-}
-
-double minus(double x, double y)
-{
-  return x - y;
-}
-
-double product(double a, double b)
-{
-  return a * b;
-}
-
-void product(std::ostream &str, double a, double b)
+void productStr(std::ostream &str, double a, double b)
 {
   str << a << '*' << b << '=' << (a * b) << '\n';
-}
-
-double quotient(double a, double b)
-{
-  return a / b;
 }
