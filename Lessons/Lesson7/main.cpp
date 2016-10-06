@@ -1,5 +1,49 @@
 #include <iostream>
 
+int nums[] = {7, 3, 5, 2, 1, 4, 6, 9, 10, 9};
+
+void swap(int x, int y);
+void swap(int *x, int *y);
+void swap_ref(int &x, int &y);
+void swap_chars(char &x, char &y);
+void sort(int *begin, int *end);
+void printIntArray(int *begin, int *end);
+
+int main()
+{
+  printIntArray(nums, nums + 10);
+  sort(nums, nums + 10);
+  printIntArray(nums, nums + 10);
+
+  int a = 12;
+  int b = 24;
+  std::cout << "a = " << a << ", b = " << b << '\n';
+
+  swap(a, b);
+  std::cout << "a = " << a << ", b = " << b << '\n';
+
+  swap(&a, &b);
+  std::cout << "a = " << a << ", b = " << b << '\n';
+
+  swap_ref(a, b);
+  std::cout << "a = " << a << ", b = " << b << '\n';
+
+  char c = 'y';
+  char d = 'n';
+  std::cout << "c = " << c << ", d = " << d << '\n';
+
+  swap_chars(c, d);
+  std::cout << "c = " << c << ", d = " << d << '\n';
+
+  int x = 3;
+  int y = 4;
+  int &xr = x;
+  xr = y;
+  std::cout << "xr = " << xr << '\n';
+
+  return 0;
+}
+
 void swap(int x, int y)
 {
   int temp = x;
@@ -21,27 +65,38 @@ void swap_ref(int &x, int &y)
   y = temp;
 }
 
-int main()
+void swap_chars(char &x, char &y)
 {
-  int a, b;
+  char &temp = y;
+  y = x;
+  x = temp;
+}
 
-  std::cout << "Please type in a number\n";
-  std::cin >> a;
-  std::cout << "Please type in another number\n";
-  std::cin >> b;
+// Bubble sort
+void sort(int *begin, int *end)
+{
+  bool haveSwapped;
+  do
+  {
+    haveSwapped = false;
+    int *i = begin;
+    while (i < end - 1)
+    {
+      if (*i > *(i + 1))
+      {
+        swap_ref(*i, *(i + 1));
+        haveSwapped = true;
+      }
 
-  std::cout << "before swap, a = " << a << " and b = " << b << '\n';
-  swap(a, b);
-  std::cout << "after swap (by value), a = " << a << " and b = " << b << '\n';
-  swap(&a, &b);
-  std::cout << "after swap by pointer reference, a = " << a << " and b = " << b
-            << '\n';
+      i++;
+    }
+  } while (haveSwapped);
+}
 
-  swap_ref(a, b);
-  std::cout << "after swap using references, a = " << a << " and b = " << b
-            << '\n';
+void printIntArray(int *begin, int *end)
+{
+  while (begin != end)
+    std::cout << *(begin++) << ' ';
 
-  int &a_ref = a;
-
-  return 0;
+  std::cout << '\n';
 }
