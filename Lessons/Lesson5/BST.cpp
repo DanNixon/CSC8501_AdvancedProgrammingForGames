@@ -2,11 +2,14 @@
 
 #include "BST.h"
 
+//#define BST_RECURSIVE
+
 struct node *bst_gen_new_node(int value);
 
+#ifdef BST_RECURSIVE
 void bst_insert_int(struct node **tree, int value)
 {
-  struct node * currentNode = *tree;
+  struct node *currentNode = *tree;
 
   // If there is no root node then add one
   if (currentNode == nullptr)
@@ -15,6 +18,7 @@ void bst_insert_int(struct node **tree, int value)
     return;
   }
 
+  // Ignore identical values already in tree
   if (currentNode->value == value)
     return;
 
@@ -32,11 +36,60 @@ void bst_insert_int(struct node **tree, int value)
     // Otherwise search the branch
     bst_insert_int(searchBranch, value);
 }
+#else
+void bst_insert_int(struct node **tree, int value)
+{
+  struct node *currentNode = *tree;
+
+  // If there is no root node then add one
+  if (currentNode == nullptr)
+  {
+    *tree = bst_gen_new_node(value);
+    return;
+  }
+
+  while (currentNode != nullptr)
+  {
+    if (value < currentNode->value)
+    {
+      // If at leaf add new node
+      if (currentNode->left == nullptr)
+      {
+        currentNode->left = bst_gen_new_node(value);
+
+        // Mark termination
+        currentNode = nullptr;
+      }
+      else
+        // Otherwise search branch
+        currentNode = currentNode->left;
+    }
+    else
+    {
+      // If at leaf add new node
+      if (currentNode->right == nullptr)
+      {
+        currentNode->right = bst_gen_new_node(value);
+
+        // Mark termination
+        currentNode = nullptr;
+      }
+      else
+        // Otherwise search branch
+        currentNode = currentNode->right;
+    }
+  }
+}
+#endif
 
 void bst_print_tree(std::ostream &str, struct node **tree, size_t level)
 {
+  // Terminate branch recursion when hit a null leaf
   if (*tree == nullptr)
+  {
+    str << "NULL\n";
     return;
+  }
 
   // Generate indentation string
   std::stringstream indentStr;
@@ -49,31 +102,24 @@ void bst_print_tree(std::ostream &str, struct node **tree, size_t level)
 
   // Output the left node
   str << indent << "L: ";
-  if ((*tree)->left != nullptr)
-  {
-    bst_print_tree(str, &(*tree)->left, level + 1);
-  }
-  else
-    str << "NULL\n";
+  bst_print_tree(str, &(*tree)->left, level + 1);
 
   // Output the right node
   str << indent << "R: ";
-  if ((*tree)->right != nullptr)
-  {
-    bst_print_tree(str, &(*tree)->right, level + 1);
-  }
-  else
-    str << "NULL\n";
+  bst_print_tree(str, &(*tree)->right, level + 1);
 }
 
 void bst_release_tree(struct node *tree)
 {
+  // Terminate branch recursion when hit a null leaf
   if (tree == nullptr)
     return;
 
+  // Release branches
   bst_release_tree(tree->left);
   bst_release_tree(tree->right);
 
+  // Release this node
   delete tree;
 }
 

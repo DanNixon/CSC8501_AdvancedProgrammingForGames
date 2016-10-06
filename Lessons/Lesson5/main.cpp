@@ -7,7 +7,7 @@
 int main()
 {
   struct node *tree = nullptr;
-  std::vector<int> bstVals = {50, 70, 20, 80, 90, 0, 30, 60, 10};
+  std::vector<int> bstVals = {50, 70, 20, 90, 100, 80, 0, 30, 60, 10};
 
   for (auto it = bstVals.begin(); it != bstVals.end(); ++it)
     bst_insert_int(&tree, *it);
@@ -15,6 +15,7 @@ int main()
   bst_print_tree(std::cout, &tree);
   bst_release_tree(tree);
 
+#if 0
   char c;
   std::string *s;
 
@@ -33,6 +34,11 @@ int main()
     std::cout << *(p++) << ' ';
 
   delete[] arr;
+#endif
+
+  std::cout << "Exit...";
+  std::string q;
+  std::getline(std::cin, q);
 
   return 0;
 }
