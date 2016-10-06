@@ -36,9 +36,5 @@ int main()
   delete[] arr;
 #endif
 
-  std::cout << "Exit...";
-  std::string q;
-  std::getline(std::cin, q);
-
   return 0;
 }
