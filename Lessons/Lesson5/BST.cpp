@@ -6,21 +6,24 @@ struct node *bst_gen_new_node(int value);
 
 void bst_insert_int(struct node **tree, int value)
 {
+  struct node * currentNode = *tree;
+
   // If there is no root node then add one
-  if (*tree == nullptr)
+  if (currentNode == nullptr)
   {
     *tree = bst_gen_new_node(value);
     return;
   }
 
+  if (currentNode->value == value)
+    return;
+
   // Find the branch this value should be in
   struct node **searchBranch = nullptr;
-  if (value < (*tree)->value)
-    searchBranch = &((*tree)->left);
-  else if (value > (*tree)->value)
-    searchBranch = &((*tree)->right);
+  if (value < currentNode->value)
+    searchBranch = &(currentNode->left);
   else
-    return;
+    searchBranch = &(currentNode->right);
 
   if (*searchBranch == nullptr)
     // If the branch does not exist then add this value as the first node
@@ -32,6 +35,9 @@ void bst_insert_int(struct node **tree, int value)
 
 void bst_print_tree(std::ostream &str, struct node **tree, size_t level)
 {
+  if (*tree == nullptr)
+    return;
+
   // Generate indentation string
   std::stringstream indentStr;
   for (size_t i = 0; i < level; i++)

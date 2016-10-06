@@ -7,7 +7,7 @@
 int main()
 {
   struct node *tree = nullptr;
-  std::vector<int> bstVals = {5, 7, 2, 5, 8, 9, 2, 3, 5, 3};
+  std::vector<int> bstVals = {50, 70, 20, 80, 90, 0, 30, 60, 10};
 
   for (auto it = bstVals.begin(); it != bstVals.end(); ++it)
     bst_insert_int(&tree, *it);
@@ -26,7 +26,7 @@ int main()
   int *arr = new int[10];
 
   for (size_t i = 0; i < 10; i++)
-    arr[i] = i * i;
+    arr[i] = (int) i * (int) i;
 
   int *p = arr;
   while (p != arr + 10)
