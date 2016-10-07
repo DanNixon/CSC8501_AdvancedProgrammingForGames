@@ -1,11 +1,11 @@
 #include <iostream>
+#include <random>
 #include <string>
 #include <vector>
-#include <random>
 
 #include "BST.h"
 
-#define PROFILE
+//#define PROFILE
 
 int main()
 {
