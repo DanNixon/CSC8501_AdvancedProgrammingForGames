@@ -67,3 +67,14 @@ void bst_release_tree(struct node *tree)
   // Release this node
   delete tree;
 }
+
+size_t bst_depth(struct node *tree, std::function<size_t(size_t, size_t)> f)
+{
+  if (tree == nullptr)
+    return 0;
+
+  size_t left = bst_depth(tree->left, f);
+  size_t right = bst_depth(tree->right, f);
+
+  return 1 + f(left, right);
+}
