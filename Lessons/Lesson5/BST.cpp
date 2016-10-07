@@ -2,19 +2,20 @@
 
 #include "BST.h"
 
-//#define BST_RECURSIVE
-
-struct node *bst_gen_new_node(int value);
+#define BST_RECURSIVE
 
 #ifdef BST_RECURSIVE
 void bst_insert_int(struct node **tree, int value)
 {
   struct node *currentNode = *tree;
 
-  // If there is no root node then add one
+  // If there is no node then add one
   if (currentNode == nullptr)
   {
-    *tree = bst_gen_new_node(value);
+    *tree = new struct node;
+    (*tree)->value = value;
+    (*tree)->left = nullptr;
+    (*tree)->right = nullptr;
     return;
   }
 
@@ -22,21 +23,22 @@ void bst_insert_int(struct node **tree, int value)
   if (currentNode->value == value)
     return;
 
-  // Find the branch this value should be in
-  struct node **searchBranch = nullptr;
+  // Find the branch this value should be in and search it
   if (value < currentNode->value)
-    searchBranch = &(currentNode->left);
+    bst_insert_int(&(currentNode->left), value);
   else
-    searchBranch = &(currentNode->right);
-
-  if (*searchBranch == nullptr)
-    // If the branch does not exist then add this value as the first node
-    *searchBranch = bst_gen_new_node(value);
-  else
-    // Otherwise search the branch
-    bst_insert_int(searchBranch, value);
+    bst_insert_int(&(currentNode->right), value);
 }
 #else
+struct node *bst_gen_new_node(int value)
+{
+  struct node *newNode = new struct node;
+  newNode->value = value;
+  newNode->left = nullptr;
+  newNode->right = nullptr;
+  return newNode;
+}
+
 void bst_insert_int(struct node **tree, int value)
 {
   struct node *currentNode = *tree;
@@ -82,10 +84,10 @@ void bst_insert_int(struct node **tree, int value)
 }
 #endif
 
-void bst_print_tree(std::ostream &str, struct node **tree, size_t level)
+void bst_print_tree(std::ostream &str, struct node *tree, size_t level)
 {
   // Terminate branch recursion when hit a null leaf
-  if (*tree == nullptr)
+  if (tree == nullptr)
   {
     str << "NULL\n";
     return;
@@ -98,15 +100,15 @@ void bst_print_tree(std::ostream &str, struct node **tree, size_t level)
   const std::string indent = indentStr.str();
 
   // Output the value of this node
-  str << (*tree)->value << '\n';
+  str << tree->value << '\n';
 
   // Output the left node
   str << indent << "L: ";
-  bst_print_tree(str, &(*tree)->left, level + 1);
+  bst_print_tree(str, tree->left, level + 1);
 
   // Output the right node
   str << indent << "R: ";
-  bst_print_tree(str, &(*tree)->right, level + 1);
+  bst_print_tree(str, tree->right, level + 1);
 }
 
 void bst_release_tree(struct node *tree)
@@ -121,13 +123,4 @@ void bst_release_tree(struct node *tree)
 
   // Release this node
   delete tree;
-}
-
-struct node *bst_gen_new_node(int value)
-{
-  struct node *newNode = new struct node;
-  newNode->value = value;
-  newNode->left = nullptr;
-  newNode->right = nullptr;
-  return newNode;
 }
