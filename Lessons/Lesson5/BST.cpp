@@ -27,6 +27,31 @@ void bst_insert_int(struct node **tree, int value)
     bst_insert_int(&(currentNode->right), value);
 }
 
+void bst_insert_int(struct node * &tree, int value)
+{
+  struct node *currentNode = tree;
+
+  // If there is no node then add one
+  if (currentNode == nullptr)
+  {
+    tree = new struct node;
+    tree->value = value;
+    tree->left = nullptr;
+    tree->right = nullptr;
+    return;
+  }
+
+  // Ignore identical values already in tree
+  if (currentNode->value == value)
+    return;
+
+  // Find the branch this value should be in and search it
+  if (value < currentNode->value)
+    bst_insert_int(&(currentNode->left), value);
+  else
+    bst_insert_int(&(currentNode->right), value);
+}
+
 void bst_print_tree(std::ostream &str, struct node *tree, size_t level)
 {
   // Terminate branch recursion when hit a null leaf
