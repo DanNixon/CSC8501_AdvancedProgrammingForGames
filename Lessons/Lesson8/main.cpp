@@ -1,57 +1,94 @@
 #include <iostream>
+#include <limits>
 
 #define BS_GRID_DIMENSIONS 10
+//#define DO_NOT_HIDE_SHIPS
 
-enum battleship_t
+#define SHIP_SUNK_FLAG std::numeric_limits<size_t>::max()
+
+struct battleship_t
 {
-  BS_AIRCRAFTCARRIER = 5,
-  BS_DESTROYER = 4,
+  char *name;
+  size_t numSquares;
+  size_t squaresRemaining;
 
-  BS_NONE = -1,
-  BS_HIT = -2,
-  BS_MISS = -3
+  bool hasBeenSunk()
+  {
+    bool sunk = squaresRemaining == 0;
+    if (sunk)
+      squaresRemaining = SHIP_SUNK_FLAG;
+    return sunk;
+  }
+};
+
+struct grid_square_t
+{
+  size_t timesHit;
+  battleship_t *ship;
 };
 
 size_t findSpace(const char *str);
 void printStr(const char *str);
 size_t strCopy(char *dest, size_t destLen, const char *src, size_t srcLen);
 
-void printGridToStream(battleship_t grid[][BS_GRID_DIMENSIONS],
+void printGridToStream(grid_square_t grid[][BS_GRID_DIMENSIONS],
                        std::ostream &str);
-size_t shipSpacesRemaining(battleship_t grid[][BS_GRID_DIMENSIONS]);
+size_t shipSpacesRemaining(grid_square_t grid[][BS_GRID_DIMENSIONS]);
 std::pair<size_t, size_t> getPositionFromStream(std::istream &str);
-bool fireMissile(battleship_t grid[][BS_GRID_DIMENSIONS],
-                 std::pair<size_t, size_t> position);
+battleship_t *fireMissile(grid_square_t grid[][BS_GRID_DIMENSIONS],
+                          std::pair<size_t, size_t> position);
 
 int main(void)
 {
+  // Create ships
+  battleship_t ships[2];
+  ships[0] = {"Destroyer", 4, 4};
+  ships[1] = {"Aircraft Carrier", 5, 5};
+
   // Create game grid
-  battleship_t grid[BS_GRID_DIMENSIONS][BS_GRID_DIMENSIONS];
+  grid_square_t grid[BS_GRID_DIMENSIONS][BS_GRID_DIMENSIONS];
 
   for (size_t y = 0; y < BS_GRID_DIMENSIONS; y++)
+  {
     for (size_t x = 0; x < BS_GRID_DIMENSIONS; x++)
-      grid[y][x] = BS_NONE;
+    {
+      grid[y][x].timesHit = 0;
+      grid[y][x].ship = nullptr;
+    }
+  }
 
   // Place ships
-  for (size_t i = 0; i < (size_t)BS_AIRCRAFTCARRIER; i++)
-    grid[4][i + 2] = BS_AIRCRAFTCARRIER;
-  for (size_t i = 0; i < (size_t)BS_DESTROYER; i++)
-    grid[6][i + 5] = BS_DESTROYER;
+  // TODO: make this random
+  for (size_t i = 0; i < ships[0].numSquares; i++)
+    grid[4][i + 2].ship = &ships[0];
+  for (size_t i = 0; i < ships[1].numSquares; i++)
+    grid[6][i + 5].ship = &ships[1];
 
   printGridToStream(grid, std::cout);
 
+  // Continue game while ships remain
   while (shipSpacesRemaining(grid) > 0)
   {
+    // Get players next missile position
     std::cout << "Enter position \"x,y\":";
     auto position = getPositionFromStream(std::cin);
 
-    if (fireMissile(grid, position))
+    // Check for ship hit
+    battleship_t *hitShip = fireMissile(grid, position);
+    if (hitShip)
+    {
       std::cout << "Hit!\n";
+
+      // Check for sunk ship
+      if (hitShip->hasBeenSunk())
+        std::cout << hitShip->name << " has been sunk!\n";
+    }
     else
       std::cout << "Miss!\n";
 
     printGridToStream(grid, std::cout);
   }
+  std::cout << "All ships sunk!\n";
 
 #if 0
   char *name = "Dan Nixon";
@@ -112,47 +149,52 @@ size_t strCopy(char *dest, size_t destLen, const char *src, size_t srcLen)
   return i;
 }
 
-void printGridToStream(battleship_t grid[][BS_GRID_DIMENSIONS],
+void printGridToStream(grid_square_t grid[][BS_GRID_DIMENSIONS],
                        std::ostream &str)
 {
+  static const char DELIMITER = ' ';
+
   for (size_t y = 0; y < BS_GRID_DIMENSIONS; y++)
   {
+    str << y << DELIMITER;
     for (size_t x = 0; x < BS_GRID_DIMENSIONS; x++)
     {
-      char c;
-      switch (grid[y][x])
+      battleship_t *ship = grid[y][x].ship;
+      bool hit = grid[y][x].timesHit > 0;
+
+      char c = '.';
+      if (ship != nullptr)
       {
-      case BS_AIRCRAFTCARRIER:
-        c = 'A';
-        break;
-      case BS_DESTROYER:
-        c = 'D';
-        break;
-      case BS_HIT:
-        c = 'x';
-        break;
-      case BS_MISS:
-        c = '0';
-        break;
-      case BS_NONE:
-        c = '-';
-        break;
-      default:
-        c = ' ';
+        if (hit)
+          c = 'X';
+#ifdef DO_NOT_HIDE_SHIPS
+        else
+          c = ship->name[0];
+#endif
       }
-      str << c << ' ';
+      else
+      {
+        if (hit)
+          c = '0';
+      }
+      str << c << DELIMITER;
     }
     str << '\n';
   }
+
+  str << DELIMITER << DELIMITER;
+  for (size_t x = 0; x < BS_GRID_DIMENSIONS; x++)
+    str << x << DELIMITER;
+  str << '\n';
 }
 
-size_t shipSpacesRemaining(battleship_t grid[][BS_GRID_DIMENSIONS])
+size_t shipSpacesRemaining(grid_square_t grid[][BS_GRID_DIMENSIONS])
 {
   size_t n = 0;
 
   for (size_t y = 0; y < BS_GRID_DIMENSIONS; y++)
     for (size_t x = 0; x < BS_GRID_DIMENSIONS; x++)
-      if (grid[y][x] > 0)
+      if (grid[y][x].ship != nullptr && grid[y][x].timesHit == 0)
         n++;
 
   return n;
@@ -162,24 +204,17 @@ std::pair<size_t, size_t> getPositionFromStream(std::istream &str)
 {
   size_t x, y;
   char c;
-
   str >> x >> c >> y;
-
   return std::make_pair(x, y);
 }
 
-bool fireMissile(battleship_t grid[][BS_GRID_DIMENSIONS],
-                 std::pair<size_t, size_t> position)
+battleship_t *fireMissile(grid_square_t grid[][BS_GRID_DIMENSIONS],
+                          std::pair<size_t, size_t> position)
 {
-  battleship_t *square = &(grid[position.second][position.first]);
-  if (*square > 0)
-  {
-    *square = BS_HIT;
-    return true;
-  }
-  else
-  {
-    *square = BS_MISS;
-    return false;
-  }
+  grid_square_t *square = &(grid[position.second][position.first]);
+  bool hasShip = square->ship != nullptr;
+  square->timesHit++;
+  if (hasShip)
+    square->ship->squaresRemaining--;
+  return hasShip && square->timesHit == 1 ? square->ship : nullptr;
 }
