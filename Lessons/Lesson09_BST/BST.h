@@ -2,18 +2,49 @@
 
 #include <ostream>
 
-class BSTNode;
+#include "BSTNode.h"
 
-class BST
+template <typename T> class BST
 {
 public:
-  BST();
-  virtual ~BST();
+  BST()
+      : m_tree(nullptr)
+  {
+  }
 
-  void insert(int value);
-  void print(std::ostream &str);
-  bool search(int value);
+  virtual ~BST()
+  {
+    if (m_tree != nullptr)
+      delete m_tree;
+  }
+
+  void insert(T value)
+  {
+    if (m_tree == nullptr)
+    {
+      m_tree = new BSTNode<T>(value);
+      return;
+    }
+
+    m_tree->insert(value);
+  }
+
+  void print(std::ostream &str)
+  {
+    if (m_tree != nullptr)
+      m_tree->print(str, 0);
+    else
+      str << "Empty tree";
+  }
+
+  bool search(T value)
+  {
+    if (m_tree == nullptr)
+      return false;
+
+    return m_tree->search(value);
+  }
 
 private:
-  BSTNode *m_tree;
+  BSTNode<T> *m_tree;
 };
