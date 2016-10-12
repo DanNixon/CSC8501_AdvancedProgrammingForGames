@@ -18,7 +18,7 @@ public:
 
   int get_element(int x, int y) const;
   void set_element(int x, int y, int elem);
-  
+
   static const int default_x = 3;
   static const int default_y = 3;
 

@@ -31,7 +31,8 @@ template <typename T, size_t X, size_t Y> Matrix<T, X, Y>::Matrix()
     cells[i] = new T[Y];
 }
 
-template <typename T, size_t X, size_t Y> Matrix<T, X, Y>::Matrix(const Matrix<T, X, Y> &other)
+template <typename T, size_t X, size_t Y>
+Matrix<T, X, Y>::Matrix(const Matrix<T, X, Y> &other)
 {
   cells = new T *[X];
   for (size_t x = 0; x < X; ++x)
