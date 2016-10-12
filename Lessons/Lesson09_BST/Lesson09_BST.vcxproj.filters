@@ -6,5 +6,6 @@
   <ItemGroup>
     <ClInclude Include="BST.h" />
     <ClInclude Include="BSTNode.h" />
+    <ClInclude Include="Comparable.h" />
   </ItemGroup>
 </Project>
