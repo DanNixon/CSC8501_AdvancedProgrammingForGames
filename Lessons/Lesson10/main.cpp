@@ -1,31 +1,47 @@
 #include <iostream>
+#include <ctime>
 
 #include "ArmedEnemy.h"
 #include "Boss.h"
 #include "Enemy.h"
 
-void some_function(Enemy &enemy)
-{
-  enemy.set_score(6);
-}
+void hitEnemy(Enemy * e, int hp = 1);
 
 int main(void)
 {
-  ArmedEnemy *ae = new ArmedEnemy(2, 5);
-  ae->set_hit_points(3);
-  std::cout << "hit points = " << ae->get_hit_points() << "\n";
+  std::srand((unsigned int) std::time(0));
 
-  ae->shoot();
+  const size_t NUM_ENEMIES = 11;
+  Enemy *enemies[NUM_ENEMIES];
 
-  some_function(*ae);
+  // Add armed enemies
+  for (size_t i = 0; i < NUM_ENEMIES - 1; i++)
+    enemies[i] = new ArmedEnemy(100, 20);
 
-  Boss b(2, 5, 10);
-  std::cout << "Boss armour: " << b.get_armour() << '\n';
+  // Add boss
+  enemies[NUM_ENEMIES - 1] = new Boss(200, 50, 50);
 
-  b.set_armour(8);
-  std::cout << "Boss armour: " << b.get_armour() << '\n';
+  long totalHp;
+  do
+  {
+    totalHp = 0;
+    for (size_t i = 0; i < NUM_ENEMIES; i++)
+    {
+      hitEnemy(enemies[i], std::rand() % 20);
+      int hp = enemies[i]->get_hit_points();
+      std::cout << i << ": hp=" << hp << '\n';
+      totalHp += hp;
+    }
+    std::cout << "===== Total HP = " << totalHp << '\n';
+  } while (totalHp > 0);
 
-  delete ae;
-  ae = NULL;
   return 0;
+}
+
+void hitEnemy(Enemy * e, int hp)
+{
+  int newHp = e->get_hit_points() - hp;
+  if (newHp < 0)
+    newHp = 0;
+  e->set_hit_points(newHp);
 }

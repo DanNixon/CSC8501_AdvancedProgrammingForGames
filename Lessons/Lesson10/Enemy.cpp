@@ -25,8 +25,3 @@ void Enemy::set_hit_points(const int new_hit_points)
 {
   hit_points = new_hit_points;
 }
-
-void Enemy::set_score(const int new_score)
-{
-  *score = new_score;
-}
