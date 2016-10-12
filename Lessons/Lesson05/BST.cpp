@@ -57,7 +57,7 @@ void bst_print_tree(std::ostream &str, struct node *tree, size_t level)
   // Terminate branch recursion when hit a null leaf
   if (tree == nullptr)
   {
-    str << "NULL\n";
+    str << "null\n";
     return;
   }
 

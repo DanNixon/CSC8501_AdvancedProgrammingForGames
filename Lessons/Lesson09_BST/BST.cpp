@@ -15,10 +15,27 @@ BST::~BST()
 
 void BST::insert(int value)
 {
-  // TODO
+  if (m_tree == nullptr)
+  {
+    m_tree = new BSTNode(value);
+    return;
+  }
+
+  m_tree->insert(value);
 }
 
 void BST::print(std::ostream &str)
 {
-  // TODO
+  if (m_tree != nullptr)
+    m_tree->print(str, 0);
+  else
+    str << "Empty tree";
+}
+
+bool BST::search(int value)
+{
+  if (m_tree == nullptr)
+    return false;
+
+  return m_tree->search(value);
 }

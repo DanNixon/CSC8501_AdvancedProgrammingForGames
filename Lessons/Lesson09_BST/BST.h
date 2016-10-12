@@ -12,6 +12,7 @@ public:
 
   void insert(int value);
   void print(std::ostream &str);
+  bool search(int value);
 
 private:
   BSTNode *m_tree;

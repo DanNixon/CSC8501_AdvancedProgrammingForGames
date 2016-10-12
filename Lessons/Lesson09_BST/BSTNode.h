@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ostream>
+
 class BSTNode
 {
 public:
@@ -12,6 +14,11 @@ public:
   }
 
   bool search(int value);
+
+private:
+  friend class BST;
+  void insert(int value);
+  void print(std::ostream &stream, size_t level);
 
 private:
   int m_value;
