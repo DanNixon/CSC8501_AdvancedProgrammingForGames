@@ -3,8 +3,8 @@
 #include <iostream>
 
 ArmedEnemy::ArmedEnemy(int hps, int ammo)
-  : Enemy(hps)
-  , ammo_level(ammo)
+    : Enemy(hps)
+    , ammo_level(ammo)
 {
 }
 

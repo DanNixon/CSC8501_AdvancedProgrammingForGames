@@ -5,7 +5,7 @@
 class Player
 {
 public:
-  Player(int hps, const std::string & name);
+  Player(int hps, const std::string &name);
   ~Player();
   int get_hit_points() const;
   int get_score() const;

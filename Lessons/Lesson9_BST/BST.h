@@ -11,8 +11,8 @@ public:
   virtual ~BST();
 
   void insert(int value);
-  void print(std::ostream & str);
+  void print(std::ostream &str);
 
 private:
-  BSTNode * m_tree;
+  BSTNode *m_tree;
 };

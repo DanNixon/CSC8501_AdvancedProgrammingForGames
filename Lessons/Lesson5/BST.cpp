@@ -27,7 +27,7 @@ void bst_insert_int(struct node **tree, int value)
     bst_insert_int(&(currentNode->right), value);
 }
 
-void bst_insert_int(struct node * &tree, int value)
+void bst_insert_int(struct node *&tree, int value)
 {
   struct node *currentNode = tree;
 

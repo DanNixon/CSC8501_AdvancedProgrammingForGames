@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
 Enemy::Enemy(int hps)
-  : hit_points(hps)
+    : hit_points(hps)
 {
   score = new int(0);
 }

@@ -15,6 +15,6 @@ public:
 
 private:
   int m_value;
-  BSTNode * m_left;
-  BSTNode * m_right;
+  BSTNode *m_left;
+  BSTNode *m_right;
 };

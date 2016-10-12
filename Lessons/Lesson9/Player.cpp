@@ -1,9 +1,9 @@
 #include "Player.h"
 
-Player::Player(int hps, const std::string & name)
-  : hit_points(hps)
-  , score(new int(10))
-  , name(new std::string(name))
+Player::Player(int hps, const std::string &name)
+    : hit_points(hps)
+    , score(new int(10))
+    , name(new std::string(name))
 {
 }
 
