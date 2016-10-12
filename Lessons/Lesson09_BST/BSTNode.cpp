@@ -37,7 +37,7 @@ void BSTNode::insert(int value)
   if (value == m_value)
     return;
 
-  BSTNode ** node = &m_left;
+  BSTNode **node = &m_left;
   if (value > m_value)
     node = &m_right;
 

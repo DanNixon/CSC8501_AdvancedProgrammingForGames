@@ -3,22 +3,10 @@
 
 void productStr(std::ostream &str, double a, double b);
 
-auto add = [](double x, double y) -> double
-{
-  return x + y;
-};
-auto minus = [](double x, double y) -> double
-{
-  return x - y;
-};
-auto product = [](double x, double y) -> double
-{
-  return x * y;
-};
-auto quotient = [](double x, double y) -> double
-{
-  return x / y;
-};
+auto add = [](double x, double y) -> double { return x + y; };
+auto minus = [](double x, double y) -> double { return x - y; };
+auto product = [](double x, double y) -> double { return x * y; };
+auto quotient = [](double x, double y) -> double { return x / y; };
 
 int main()
 {

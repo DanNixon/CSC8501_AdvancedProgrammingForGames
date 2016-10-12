@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "Enemy.h"
 #include "ArmedEnemy.h"
 #include "Boss.h"
+#include "Enemy.h"
 
 void some_function(Enemy &enemy)
 {

@@ -27,21 +27,16 @@ int main()
 
   std::cout << "Hello " << name << "!\n";
 
-  auto firstInitialIt =
-      std::find_if(name.begin(), name.end(), [](char c) -> bool
-                   {
-                     return isupper(c) > 0;
-                   });
+  auto firstInitialIt = std::find_if(
+      name.begin(), name.end(), [](char c) -> bool { return isupper(c) > 0; });
   if (firstInitialIt != name.end())
   {
     size_t firstInitialIdx = firstInitialIt - name.begin();
     std::cout << name[firstInitialIdx];
 
-    auto secondInitialIt = std::find_if(name.begin() + firstInitialIdx + 1,
-                                        name.end(), [](char c) -> bool
-                                        {
-                                          return isupper(c) > 0;
-                                        });
+    auto secondInitialIt =
+        std::find_if(name.begin() + firstInitialIdx + 1, name.end(),
+                     [](char c) -> bool { return isupper(c) > 0; });
     if (secondInitialIt != name.end())
     {
       size_t secondInitialIdx = secondInitialIt - name.begin();
