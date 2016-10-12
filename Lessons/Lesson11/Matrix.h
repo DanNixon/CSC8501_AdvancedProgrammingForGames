@@ -1,60 +1,62 @@
 #pragma once
 
-template <typename T> class Matrix
+template <typename T, size_t X, size_t Y> class Matrix
 {
 public:
-  Matrix(int x = default_x, int y = default_y);
+  Matrix();
+  Matrix(const Matrix<T, X, Y> &other);
   ~Matrix();
 
   inline int get_x_size() const
   {
-    return x_size;
+    return X;
   }
 
   inline int get_y_size() const
   {
-    return y_size;
+    return Y;
   }
 
   T get_element(int x, int y) const;
   void set_element(int x, int y, T elem);
-  
-  static const int default_x = 3;
-  static const int default_y = 3;
 
 protected:
   T **cells;
-  int x_size;
-  int y_size;
 };
 
-template <typename T>
-Matrix<T>::Matrix(int x, int y)
-  : x_size(x)
-  , y_size(y)
+template <typename T, size_t X, size_t Y> Matrix<T, X, Y>::Matrix()
 {
-  cells = new T *[x_size];
-  for (int i = 0; i < x_size; ++i)
+  cells = new T *[X];
+  for (size_t i = 0; i < X; ++i)
+    cells[i] = new T[Y];
+}
+
+template <typename T, size_t X, size_t Y> Matrix<T, X, Y>::Matrix(const Matrix<T, X, Y> &other)
+{
+  cells = new T *[X];
+  for (size_t x = 0; x < X; ++x)
   {
-    cells[i] = new T[y_size];
+    cells[x] = new T[Y];
+    for (size_t y = 0; y < Y; y++)
+      cells[x][y] = other.cells[x][y];
   }
 }
 
-template <typename T> Matrix<T>::~Matrix()
+template <typename T, size_t X, size_t Y> Matrix<T, X, Y>::~Matrix()
 {
-  for (int i = 0; i < x_size; ++i)
-  {
+  for (int i = 0; i < X; ++i)
     delete[] cells[i];
-  }
   delete[] cells;
 }
 
-template <typename T> T Matrix<T>::get_element(int x, int y) const
+template <typename T, size_t X, size_t Y>
+T Matrix<T, X, Y>::get_element(int x, int y) const
 {
   return (cells[x][y]);
 }
 
-template <typename T> void Matrix<T>::set_element(int x, int y, T elem)
+template <typename T, size_t X, size_t Y>
+void Matrix<T, X, Y>::set_element(int x, int y, T elem)
 {
   cells[x][y] = elem;
 }
