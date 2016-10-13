@@ -2,8 +2,7 @@
 
 #include "GridSquare.h"
 
-template<size_t W, size_t H>
-class Grid
+template <size_t W, size_t H> class Grid
 {
 public:
   Grid()
@@ -28,7 +27,7 @@ public:
   {
     m_grid[x][y]->hit();
   }
-  
+
 private:
   GridSquare *m_grid[W][H];
 };

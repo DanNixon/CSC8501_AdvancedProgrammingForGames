@@ -1,15 +1,15 @@
-#include <iostream>
 #include <ctime>
+#include <iostream>
 
 #include "ArmedEnemy.h"
 #include "Boss.h"
 #include "Enemy.h"
 
-void hitEnemy(Enemy * e, int hp = 1);
+void hitEnemy(Enemy *e, int hp = 1);
 
 int main(void)
 {
-  std::srand((unsigned int) std::time(0));
+  std::srand((unsigned int)std::time(0));
 
   const size_t NUM_ENEMIES = 11;
   Enemy *enemies[NUM_ENEMIES];
@@ -38,7 +38,7 @@ int main(void)
   return 0;
 }
 
-void hitEnemy(Enemy * e, int hp)
+void hitEnemy(Enemy *e, int hp)
 {
   int newHp = e->get_hit_points() - hp;
   if (newHp < 0)

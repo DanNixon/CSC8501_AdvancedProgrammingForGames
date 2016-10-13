@@ -2,8 +2,8 @@
 
 #include "Battleship.h"
 
-GridSquare::GridSquare(Battleship * ship)
-  : m_ship(ship)
+GridSquare::GridSquare(Battleship *ship)
+    : m_ship(ship)
 {
 }
 
