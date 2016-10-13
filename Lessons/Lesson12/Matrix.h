@@ -3,11 +3,11 @@
 template <typename T> class Matrix
 {
 public:
-  static const int default_x = 3;
-  static const int default_y = 3;
+  static const size_t DEFAULT_X = 3;
+  static const size_t DEFAULT_Y = 3;
 
 public:
-  Matrix(int x = default_x, int y = default_y);
+  Matrix(size_t x = DEFAULT_X, size_t y = DEFAULT_Y);
   Matrix(const Matrix<T> &src);
   ~Matrix();
 
@@ -19,59 +19,49 @@ public:
   template <typename E>
   friend Matrix<E> operator*(const Matrix<E> &a, const Matrix<E> &b);
 
-  inline int get_x_size() const
+  inline size_t get_x_size() const
   {
-    return x_size;
+    return m_xSize;
   }
 
-  inline int get_y_size() const
+  inline size_t get_y_size() const
   {
-    return y_size;
+    return m_ySize;
   }
 
   T get_element(int x, int y) const;
   void set_element(int x, int y, T elem);
 
 protected:
-  T **cells;
-  int x_size;
-  int y_size;
+  T *m_data;
+  size_t m_xSize;
+  size_t m_ySize;
+  size_t m_length;
 };
 
 template <typename T>
-Matrix<T>::Matrix(int x, int y)
-  : x_size(x)
-  , y_size(y)
+Matrix<T>::Matrix(size_t x, size_t y)
+    : m_xSize(x)
+    , m_ySize(y)
+    , m_length(x * y)
 {
-  cells = new T *[x_size];
-  for (int i = 0; i < x_size; ++i)
-  {
-    cells[i] = new T[y_size];
-    memset(cells[i], 0, (y_size * sizeof(T)));
-  }
+  m_data = new T[m_length];
+  memset(m_data, 0, m_length * sizeof(T));
 }
 
 template <typename T>
 Matrix<T>::Matrix(const Matrix<T> &src)
-  : x_size(src.x_size)
-  , y_size(src.y_size)
+    : m_xSize(src.m_xSize)
+    , m_ySize(src.m_ySize)
+    , m_length(src.m_xSize * src.m_ySize)
 {
-  cells = new T *[x_size];
-  for (int i = 0; i < x_size; ++i)
-  {
-    cells[i] = new T[y_size];
-    memcpy_s(cells[i], (y_size * sizeof(T)), src.cells[i],
-      (y_size * sizeof(T)));
-  }
+  m_data = new T[m_length];
+  memcpy_s(m_data, m_length * sizeof(T), src.m_data, m_length * sizeof(T));
 }
 
 template <typename T> Matrix<T>::~Matrix()
 {
-  for (int i = 0; i < x_size; ++i)
-  {
-    delete[] cells[i];
-  }
-  delete[] cells;
+  delete[] m_data;
 }
 
 template <typename T> Matrix<T> &Matrix<T>::operator=(const Matrix<T> &rhs)
@@ -79,38 +69,28 @@ template <typename T> Matrix<T> &Matrix<T>::operator=(const Matrix<T> &rhs)
   if (this == &rhs)
     return (*this);
 
-  // release old memory
-  for (int i = 0; i < x_size; ++i)
-  {
-    delete[] cells[i];
-  }
-  delete[] cells;
+  // Release old memory
+  delete[] m_data;
 
-  // allocate new memory
-  cells = new T *[rhs.x_size];
-  for (int i = 0; i < rhs.x_size; ++i)
-  {
-    cells[i] = new T[rhs.y_size];
-    memset(cells[i], 0, (rhs.y_size * sizeof(T)));
-  }
+  // Copy new values
+  m_xSize = rhs.m_xSize;
+  m_ySize = rhs.m_ySize;
+  m_length = rhs.m_length;
 
-  // copy values
-  for (int i = 0; i < rhs.x_size; ++i)
-  {
-    for (int j = 0; j < rhs.y_size; ++j)
-    {
-      cells[i][j] = rhs.cells[i][j];
-    }
-  }
+  m_data = new T[m_length];
+  memcpy_s(m_data, m_length * sizeof(T), rhs.m_data, m_length * sizeof(T));
+
   return *this;
 }
 
-template <typename E> std::ostream &operator<<(std::ostream &ostr, const Matrix<E> &mtx)
+template <typename E>
+std::ostream &operator<<(std::ostream &ostr, const Matrix<E> &mtx)
 {
-  for (int i = 0; i < mtx.x_size; ++i)
+  for (int x = 0; x < mtx.m_xSize; ++x)
   {
-    for (int j = 0; j < mtx.y_size; ++j)
-      ostr << mtx.cells[j][i] << ", ";
+    for (int y = 0; y < mtx.m_ySize; ++y)
+      ostr << mtx.m_data[x * mtx.m_ySize + y] << ", ";
+
     ostr << '\n';
   }
   ostr << '\n';
@@ -121,14 +101,16 @@ template <typename E> std::ostream &operator<<(std::ostream &ostr, const Matrix<
 template <typename E>
 Matrix<E> operator*(const Matrix<E> &a, const Matrix<E> &b)
 {
-  Matrix<E> result(a.x_size, b.y_size);
-  for (int i = 0; i < a.x_size; ++i)
+  Matrix<E> result(a.m_xSize, b.m_ySize);
+
+  for (size_t x = 0; x < a.m_xSize; ++x)
   {
-    for (int j = 0; j < a.x_size; ++j)
+    for (size_t y = 0; y < a.m_xSize; ++y)
     {
-      for (int k = 0; k < a.x_size; ++k)
+      for (size_t xx = 0; xx < a.m_xSize; ++xx)
       {
-        result.cells[i][j] += (a.cells[k][j] * b.cells[i][k]);
+        result.m_data[x * a.m_ySize + y] +=
+            a.m_data[y * a.m_ySize + xx] * b.m_data[x * a.m_ySize + xx];
       }
     }
   }
@@ -138,10 +120,10 @@ Matrix<E> operator*(const Matrix<E> &a, const Matrix<E> &b)
 
 template <typename T> T Matrix<T>::get_element(int x, int y) const
 {
-  return (cells[x][y]);
+  return m_data[x * m_ySize + y];
 }
 
 template <typename T> void Matrix<T>::set_element(int x, int y, T elem)
 {
-  cells[x][y] = elem;
+  m_data[x * m_ySize + y] = elem;
 }

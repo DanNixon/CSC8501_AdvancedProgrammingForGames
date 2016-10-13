@@ -14,7 +14,6 @@ int main()
   mtx2.set_element(0, 0, 1);
   mtx2.set_element(1, 1, 4);
   mtx2.set_element(2, 2, 2);
-
   std::cout << "matrix 2:\n" << mtx2;
 
   Matrix<int> mtx3;
