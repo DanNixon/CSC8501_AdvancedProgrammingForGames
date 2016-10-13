@@ -8,5 +8,6 @@
   <ItemGroup>
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Item.h" />
   </ItemGroup>
 </Project>
