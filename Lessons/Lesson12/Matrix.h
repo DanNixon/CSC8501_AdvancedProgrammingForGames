@@ -1,70 +1,64 @@
 #pragma once
 
-template <typename T> class Matrix
+template <typename T, size_t X, size_t Y> class Matrix
 {
 public:
-  static const size_t DEFAULT_X = 3;
-  static const size_t DEFAULT_Y = 3;
-
-public:
-  Matrix(size_t x = DEFAULT_X, size_t y = DEFAULT_Y);
-  Matrix(const Matrix<T> &src);
+  Matrix();
+  Matrix(const Matrix<T, X, Y> &src);
   ~Matrix();
 
-  Matrix<T> &operator=(const Matrix<T> &rhs);
+  Matrix<T, X, Y> &operator=(const Matrix<T, X, Y> &rhs);
 
   template <typename E>
-  friend std::ostream &operator<<(std::ostream &ostr, const Matrix<E> &mtx);
+  friend std::ostream &operator<<(std::ostream &ostr,
+                                  const Matrix<E, X, Y> &mtx);
 
   template <typename E>
-  friend Matrix<E> operator*(const Matrix<E> &a, const Matrix<E> &b);
+  friend Matrix<E, X, Y> operator*(const Matrix<E, X, Y> &a,
+                                   const Matrix<E, X, Y> &b);
 
   inline size_t get_x_size() const
   {
-    return m_xSize;
+    return X;
   }
 
   inline size_t get_y_size() const
   {
-    return m_ySize;
+    return Y;
   }
 
-  T get_element(int x, int y) const;
-  void set_element(int x, int y, T elem);
+  T get_element(size_t x, size_t y) const;
+  T &get_element(size_t x, size_t y);
+  void set_element(size_t x, size_t y, T elem);
 
 protected:
   T *m_data;
-  size_t m_xSize;
-  size_t m_ySize;
   size_t m_length;
 };
 
-template <typename T>
-Matrix<T>::Matrix(size_t x, size_t y)
-    : m_xSize(x)
-    , m_ySize(y)
-    , m_length(x * y)
+template <typename T, size_t X, size_t Y>
+Matrix<T, X, Y>::Matrix()
+    : m_length(X * Y)
 {
   m_data = new T[m_length];
   memset(m_data, 0, m_length * sizeof(T));
 }
 
-template <typename T>
-Matrix<T>::Matrix(const Matrix<T> &src)
-    : m_xSize(src.m_xSize)
-    , m_ySize(src.m_ySize)
-    , m_length(src.m_xSize * src.m_ySize)
+template <typename T, size_t X, size_t Y>
+Matrix<T, X, Y>::Matrix(const Matrix<T, X, Y> &src)
+    : m_length(X * Y)
 {
   m_data = new T[m_length];
   memcpy_s(m_data, m_length * sizeof(T), src.m_data, m_length * sizeof(T));
 }
 
-template <typename T> Matrix<T>::~Matrix()
+template <typename T, size_t X, size_t Y> Matrix<T, X, Y>::~Matrix()
 {
   delete[] m_data;
 }
 
-template <typename T> Matrix<T> &Matrix<T>::operator=(const Matrix<T> &rhs)
+template <typename T, size_t X, size_t Y>
+Matrix<T, X, Y> &Matrix<T, X, Y>::operator=(const Matrix<T, X, Y> &rhs)
 {
   if (this == &rhs)
     return (*this);
@@ -73,23 +67,20 @@ template <typename T> Matrix<T> &Matrix<T>::operator=(const Matrix<T> &rhs)
   delete[] m_data;
 
   // Copy new values
-  m_xSize = rhs.m_xSize;
-  m_ySize = rhs.m_ySize;
   m_length = rhs.m_length;
-
   m_data = new T[m_length];
   memcpy_s(m_data, m_length * sizeof(T), rhs.m_data, m_length * sizeof(T));
 
   return *this;
 }
 
-template <typename E>
-std::ostream &operator<<(std::ostream &ostr, const Matrix<E> &mtx)
+template <typename E, size_t X, size_t Y>
+std::ostream &operator<<(std::ostream &ostr, const Matrix<E, X, Y> &mtx)
 {
-  for (int x = 0; x < mtx.m_xSize; ++x)
+  for (int x = 0; x < X; ++x)
   {
-    for (int y = 0; y < mtx.m_ySize; ++y)
-      ostr << mtx.m_data[x * mtx.m_ySize + y] << ", ";
+    for (int y = 0; y < Y; ++y)
+      ostr << mtx.get_element(x, y) << ", ";
 
     ostr << '\n';
   }
@@ -98,19 +89,18 @@ std::ostream &operator<<(std::ostream &ostr, const Matrix<E> &mtx)
   return ostr;
 }
 
-template <typename E>
-Matrix<E> operator*(const Matrix<E> &a, const Matrix<E> &b)
+template <typename E, size_t X, size_t Y>
+Matrix<E, X, Y> operator*(const Matrix<E, X, Y> &a, const Matrix<E, X, Y> &b)
 {
-  Matrix<E> result(a.m_xSize, b.m_ySize);
+  Matrix<E, X, Y> result;
 
-  for (size_t x = 0; x < a.m_xSize; ++x)
+  for (size_t x = 0; x < X; ++x)
   {
-    for (size_t y = 0; y < a.m_xSize; ++y)
+    for (size_t y = 0; y < Y; ++y)
     {
-      for (size_t xx = 0; xx < a.m_xSize; ++xx)
+      for (size_t xx = 0; xx < X; ++xx)
       {
-        result.m_data[x * a.m_ySize + y] +=
-            a.m_data[y * a.m_ySize + xx] * b.m_data[x * a.m_ySize + xx];
+        result.get_element(x, y) += a.get_element(y, xx) * b.get_element(x, xx);
       }
     }
   }
@@ -118,12 +108,21 @@ Matrix<E> operator*(const Matrix<E> &a, const Matrix<E> &b)
   return result;
 }
 
-template <typename T> T Matrix<T>::get_element(int x, int y) const
+template <typename T, size_t X, size_t Y>
+T Matrix<T, X, Y>::get_element(size_t x, size_t y) const
 {
-  return m_data[x * m_ySize + y];
+  return m_data[x * Y + y];
 }
 
-template <typename T> void Matrix<T>::set_element(int x, int y, T elem)
+template <typename T, size_t X, size_t Y>
+T &Matrix<T, X, Y>::get_element(size_t x, size_t y)
 {
-  m_data[x * m_ySize + y] = elem;
+  return m_data[x * Y + y];
+}
+
+template <typename T, size_t X, size_t Y>
+void Matrix<T, X, Y>::set_element(size_t x, size_t y, T elem)
+{
+  size_t i = (x * Y) + y;
+  m_data[i] = elem;
 }
