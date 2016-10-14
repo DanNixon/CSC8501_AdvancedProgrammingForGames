@@ -119,6 +119,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="XORGate.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Circuit.h" />
+    <ClInclude Include="Device.h" />
+    <ClInclude Include="Encoder.h" />
+    <ClInclude Include="Patch.h" />
+    <ClInclude Include="SerialRegisterArray.h" />
+    <ClInclude Include="XORGate.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

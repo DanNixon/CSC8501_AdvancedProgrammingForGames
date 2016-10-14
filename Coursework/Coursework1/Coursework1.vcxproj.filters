@@ -2,5 +2,14 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="XORGate.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Device.h" />
+    <ClInclude Include="SerialRegisterArray.h" />
+    <ClInclude Include="XORGate.h" />
+    <ClInclude Include="Patch.h" />
+    <ClInclude Include="Circuit.h" />
+    <ClInclude Include="Encoder.h" />
   </ItemGroup>
 </Project>
