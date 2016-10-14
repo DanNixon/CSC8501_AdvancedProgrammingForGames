@@ -1,19 +1,19 @@
 #pragma once
 
-#include <string>
 #include <list>
 #include <map>
+#include <string>
 
-template <typename T>
-class Device
+template <typename T> class Device
 {
 public:
   typedef typename std::map<std::string, T>::const_iterator IOConstListIter;
 
 public:
-  Device(const std::string &id, const std::string &name, std::list<std::string> inputs, std::list<std::string> outputs)
-    : m_id(id)
-    , m_name(name)
+  Device(const std::string &id, const std::string &name,
+         std::list<std::string> inputs, std::list<std::string> outputs)
+      : m_id(id)
+      , m_name(name)
   {
     for (auto it = inputs.begin(); it != inputs.end(); ++it)
       m_inputs[*it] = T();

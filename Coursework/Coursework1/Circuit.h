@@ -1,23 +1,29 @@
 #pragma once
 
+#include <algorithm>
 #include <stdint.h>
-#include <vector>
 #include <string>
+#include <vector>
 
 #include "Device.h"
 #include "Patch.h"
 
-template <typename T>
-class Circuit : public Device<T>
+template <typename T> class Circuit : public Device<T>
 {
 public:
-  Circuit(const std::string &id, const std::string &name, std::list<std::string> inputs, std::list<std::string> outputs)
-    : Device<T>(id, name, inputs, outputs)
+  Circuit(const std::string &id, const std::string &name,
+          std::list<std::string> inputs, std::list<std::string> outputs)
+      : Device<T>(id, name, inputs, outputs)
   {
   }
 
   virtual ~Circuit()
   {
+  }
+
+  void addDevice(Device<T> *device)
+  {
+    m_devices.push_back(device);
   }
 
   void patch(const std::string &from, const std::string &to)

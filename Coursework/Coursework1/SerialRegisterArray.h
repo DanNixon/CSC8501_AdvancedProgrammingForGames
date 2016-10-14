@@ -4,8 +4,7 @@
 
 #include <bitset>
 
-template <size_t N>
-class SerialRegisterArray : public Device<bool>
+template <size_t N> class SerialRegisterArray : public Device<bool>
 {
 public:
   SerialRegisterArray()
@@ -22,5 +21,6 @@ public:
   }
 
 private:
-  std::bitset<N> m_registers;
+  std::bitset<N + 1>
+      m_registers; // Number of registers required plus one space for the input
 };

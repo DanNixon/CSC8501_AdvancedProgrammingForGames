@@ -1,7 +1,7 @@
 #include "XORGate.h"
 
 XORGate::XORGate(const std::string &id)
-  : Device(id, "XOR Gate", {"a", "b"}, {"z"})
+    : Device(id, "XOR Gate", {"a", "b"}, {"z"})
 {
 }
 

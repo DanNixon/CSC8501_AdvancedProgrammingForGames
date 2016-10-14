@@ -4,7 +4,7 @@
 
 class XORGate : public Device<bool>
 {
-public: 
+public:
   XORGate(const std::string &id);
   virtual ~XORGate();
 
