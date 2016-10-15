@@ -2,11 +2,11 @@
 
 #include "Circuit.h"
 
-class Encoder : public Circuit<bool>
+class Encoder : public Circuit
 {
 public:
-  Encoder(const std::string &id)
-      : Circuit(id, "Encoder", {"input_bit"}, {"output_bit_1", "output_bit_2"})
+  Encoder()
+      : Circuit({"input_bit"}, {"output_bit_1", "output_bit_2"})
   {
   }
 

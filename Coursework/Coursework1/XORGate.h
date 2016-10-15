@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Device.h"
+#include "Component.h"
 
-class XORGate : public Device<bool>
+class XORGate : public Component
 {
 public:
   XORGate(const std::string &id);

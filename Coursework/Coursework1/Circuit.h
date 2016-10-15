@@ -1,42 +1,29 @@
 #pragma once
 
-#include <algorithm>
-#include <stdint.h>
+#include <list>
 #include <string>
 #include <vector>
 
-#include "Device.h"
-#include "Patch.h"
+#include "Component.h"
+#include "Wire.h"
 
-template <typename T> class Circuit : public Device<T>
+class Circuit
 {
 public:
-  Circuit(const std::string &id, const std::string &name,
-          std::list<std::string> inputs, std::list<std::string> outputs)
-      : Device<T>(id, name, inputs, outputs)
+  Circuit(std::list<std::string> inputs, std::list<std::string> outputs);
+  virtual ~Circuit();
+
+  inline void addComponent(IComponent *component)
   {
+    m_components.push_back(component);
   }
 
-  virtual ~Circuit()
-  {
-  }
-
-  void addDevice(Device<T> *device)
-  {
-    m_devices.push_back(device);
-  }
-
-  void patch(const std::string &from, const std::string &to)
-  {
-    // TODO
-  }
-
-  virtual void operate()
-  {
-    // TOOD
-  }
+  void patch(const std::string &from, const std::string &to);
 
 private:
-  std::vector<Device<T> *> m_devices;
-  std::vector<Patch<T> *> m_patchPanel;
+  std::pair<IComponent *, Pin *> findPatchEndpoint(const std::string &def);
+
+private:
+  std::vector<IComponent *> m_components;
+  std::vector<Wire *> m_wiring;
 };

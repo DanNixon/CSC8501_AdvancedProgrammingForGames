@@ -1,20 +1,22 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "Encoder.h"
+#include "Wire.h"
+#include "XORGate.h"
 
 int main()
 {
-  Encoder e("e1");
+  Encoder e;
+  e.addComponent(new XORGate("xor1"));
+  e.addComponent(new XORGate("xor2"));
 
-  for (auto it = e.inputs(); it != e.inputsEnd(); ++it)
-    std::cout << it->first << " = " << it->second << '\n';
-
-  for (auto it = e.outputs(); it != e.outputsEnd(); ++it)
-    std::cout << it->first << " = " << it->second << '\n';
-
-  std::string s;
-  std::getline(std::cin, s);
+  e.patch("input_bit", "xor1.a");
+  e.patch("input_bit", "xor2.a");
+  e.patch("xor2.z", "xor1.b");
+  e.patch("xor1.z", "output_bit_1");
+  e.patch("xor2.z", "output_bit_2");
 
   return 0;
 }

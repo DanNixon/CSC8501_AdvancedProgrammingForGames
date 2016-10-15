@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Device.h"
+#include "Component.h"
 
 #include <bitset>
 
-template <size_t N> class SerialRegisterArray : public Device<bool>
+template <size_t N> class SerialRegisterArray : public Component
 {
 public:
   SerialRegisterArray()

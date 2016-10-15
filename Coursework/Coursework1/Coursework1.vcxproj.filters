@@ -3,13 +3,20 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="XORGate.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Pin.cpp" />
+    <ClCompile Include="Circuit.cpp" />
+    <ClCompile Include="Wire.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Device.h" />
     <ClInclude Include="SerialRegisterArray.h" />
     <ClInclude Include="XORGate.h" />
-    <ClInclude Include="Patch.h" />
     <ClInclude Include="Circuit.h" />
     <ClInclude Include="Encoder.h" />
+    <ClInclude Include="Bus.h" />
+    <ClInclude Include="IComponent.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="Pin.h" />
+    <ClInclude Include="Wire.h" />
   </ItemGroup>
 </Project>

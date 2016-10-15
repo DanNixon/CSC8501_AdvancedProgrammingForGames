@@ -118,14 +118,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Circuit.cpp" />
+    <ClCompile Include="Component.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Pin.cpp" />
+    <ClCompile Include="Wire.cpp" />
     <ClCompile Include="XORGate.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bus.h" />
     <ClInclude Include="Circuit.h" />
-    <ClInclude Include="Device.h" />
+    <ClInclude Include="Component.h" />
     <ClInclude Include="Encoder.h" />
-    <ClInclude Include="Patch.h" />
+    <ClInclude Include="IComponent.h" />
+    <ClInclude Include="Wire.h" />
+    <ClInclude Include="Pin.h" />
     <ClInclude Include="SerialRegisterArray.h" />
     <ClInclude Include="XORGate.h" />
   </ItemGroup>
