@@ -21,10 +21,9 @@ public:
     return m_name;
   }
 
-  virtual Pin *pin(const std::string &name);
-
-  bool hasInput(const std::string &name) const;
-  bool hasOutput(const std::string &name) const;
+  Pin *pin(const std::string &name);
+  const Pin *Component::pin(const std::string &name) const;
+  bool hasPin(const std::string &name, uint8_t flag) const;
 
   void setInput(const std::string &name, bool value);
   bool getOutput(const std::string &name) const;

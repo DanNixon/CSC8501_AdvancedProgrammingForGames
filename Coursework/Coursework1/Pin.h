@@ -1,6 +1,8 @@
 #pragma once
 
+#include <functional>
 #include <string>
+#include <vector>
 
 #define PIN_FLAG_INPUT 0x01
 #define PIN_FLAG_OUTPUT 0x02
@@ -16,8 +18,16 @@ public:
     return m_id;
   }
 
+  inline uint8_t flags() const
+  {
+    return m_flags;
+  }
+
   bool isInput() const;
   bool isOutput() const;
+
+  void wireTo(Pin *other);
+  void setOnChange(std::function<void(void)> func);
 
   void setState(bool state);
 
@@ -30,4 +40,6 @@ private:
   const std::string m_id;
   const uint8_t m_flags;
   bool m_state;
+  std::vector<Pin *> m_outboundConnections;
+  std::function<void(void)> m_onChange;
 };

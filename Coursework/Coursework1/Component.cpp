@@ -11,7 +11,11 @@ Component::Component(const std::string &id, const std::string &name,
     , m_name(name)
 {
   for (auto it = inputs.begin(); it != inputs.end(); ++it)
-    m_pins.push_back(new Pin(*it, PIN_FLAG_INPUT));
+  {
+    Pin *p = new Pin(*it, PIN_FLAG_INPUT);
+    p->setOnChange([this]() { this->operate(); });
+    m_pins.push_back(p);
+  }
 
   for (auto it = outputs.begin(); it != outputs.end(); ++it)
     m_pins.push_back(new Pin(*it, PIN_FLAG_OUTPUT));
@@ -25,34 +29,47 @@ Pin *Component::pin(const std::string &name)
 {
   auto it = std::find_if(m_pins.begin(), m_pins.end(),
                          [name](Pin *p) { return p->id() == name; });
+
   if (it == m_pins.end())
     throw std::runtime_error("Cannot find pin \"" + name + "\"");
+
   return *it;
 }
 
-bool Component::hasInput(const std::string &name) const
+const Pin *Component::pin(const std::string &name) const
 {
-  return false;
+  auto it = std::find_if(m_pins.cbegin(), m_pins.cend(),
+                         [name](Pin *p) { return p->id() == name; });
+
+  if (it == m_pins.cend())
+    throw std::runtime_error("Cannot find pin \"" + name + "\"");
+
+  return *it;
 }
 
-bool Component::hasOutput(const std::string &name) const
+bool Component::hasPin(const std::string &name, uint8_t flag) const
 {
-  return false;
+  return std::find_if(m_pins.begin(), m_pins.end(), [name, flag](Pin *p) {
+           return p->id() == name && p->flags() & flag;
+         }) != m_pins.end();
 }
 
 void Component::setInput(const std::string &name, bool value)
 {
-  auto it = std::find_if(m_pins.begin(), m_pins.end(),
-                         [name](Pin *p) { return p->id() == name; });
-  if (it == m_pins.end())
-    throw std::runtime_error("Pin \"" + name + "\" of device \"" + m_id +
-                             "\" not found");
-  // TODO
+  Pin *p = pin(name);
+  if (!(p->flags() & PIN_FLAG_INPUT))
+    throw std::runtime_error("Pin \"" + name + "\" is not an input pin.");
+
+  p->setState(value);
 }
 
 bool Component::getOutput(const std::string &name) const
 {
-  return false;
+  const Pin *p = pin(name);
+  if (!(p->flags() & PIN_FLAG_OUTPUT))
+    throw std::runtime_error("Pin \"" + name + "\" is not an input pin.");
+
+  return p->getState();
 }
 
 std::ostream &operator<<(std::ostream &stream, const Component &o)

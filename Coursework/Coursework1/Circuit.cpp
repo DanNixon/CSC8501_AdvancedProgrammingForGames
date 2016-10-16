@@ -27,37 +27,67 @@ Circuit::~Circuit()
 {
 }
 
-void Circuit::patch(const std::string &from, const std::string &to)
+Component *Circuit::component(const std::string &name)
 {
-  auto source = findPatchEndpoint(from);
-  auto dest = findPatchEndpoint(to);
-  m_wiring.push_back(
-      new Wire(source.first, source.second, dest.first, dest.second));
+  auto it = std::find_if(m_components.begin(), m_components.end(),
+                         [name](Component *c) { return c->id() == name; });
+
+  if (it == m_components.end())
+    throw std::runtime_error("Could not find component \"" + name + "\"");
+
+  return *it;
 }
 
-std::pair<Component *, Pin *> Circuit::findPatchEndpoint(const std::string &def)
+const Component *Circuit::component(const std::string &name) const
+{
+  auto it = std::find_if(m_components.cbegin(), m_components.cend(),
+                         [name](Component *c) { return c->id() == name; });
+
+  if (it == m_components.cend())
+    throw std::runtime_error("Could not find component \"" + name + "\"");
+
+  return *it;
+}
+
+bool Circuit::hasComponent(const std::string &name) const
+{
+  auto it = std::find_if(m_components.cbegin(), m_components.cend(),
+                         [name](Component *c) { return c->id() == name; });
+
+  return it != m_components.cend();
+}
+
+void Circuit::patch(const std::string &from, const std::string &to)
+{
+  Pin *source = findPatchEndpoint(from);
+  Pin *dest = findPatchEndpoint(to);
+  source->wireTo(dest);
+}
+
+void Circuit::setInput(const std::string &name, bool value)
+{
+  Component *c = component("input_bus");
+  c->setInput(name, value);
+}
+
+bool Circuit::getOutput(const std::string &name) const
+{
+  const Component *c = component("output_bus");
+  return c->getOutput(name);
+}
+
+Pin *Circuit::findPatchEndpoint(const std::string &def)
 {
   std::vector<std::string> tokens;
   stringSplit(tokens, def, '.');
-
-  auto compIt =
-      std::find_if(m_components.begin(), m_components.end(),
-                   [tokens](Component *c) { return c->id() == tokens[0]; });
-  if (compIt == m_components.end())
-    throw std::runtime_error("Could not find component \"" + tokens[0] + "\"");
-
-  return std::make_pair(*compIt, (*compIt)->pin(tokens[1]));
+  return component(tokens[0])->pin(tokens[1]);
 }
 
 std::ostream &operator<<(std::ostream &stream, const Circuit &o)
 {
-  stream << "Circuit[\n"
-         << " Components:\n";
-  for (auto it = o.m_components.begin(); it != o.m_components.end(); ++it)
-    stream << " - " << *(*it) << '\n';
+  stream << "Circuit[\n";
 
-  stream << " Wiring:\n";
-  for (auto it = o.m_wiring.begin(); it != o.m_wiring.end(); ++it)
+  for (auto it = o.m_components.begin(); it != o.m_components.end(); ++it)
     stream << " - " << *(*it) << '\n';
 
   stream << ']';

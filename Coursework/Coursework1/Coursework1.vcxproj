@@ -122,7 +122,6 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pin.cpp" />
-    <ClCompile Include="Wire.cpp" />
     <ClCompile Include="XORGate.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -130,7 +129,6 @@
     <ClInclude Include="Circuit.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Encoder.h" />
-    <ClInclude Include="Wire.h" />
     <ClInclude Include="Pin.h" />
     <ClInclude Include="SerialRegisterArray.h" />
     <ClInclude Include="XORGate.h" />

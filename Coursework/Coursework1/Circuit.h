@@ -5,7 +5,6 @@
 #include <vector>
 
 #include "Component.h"
-#include "Wire.h"
 
 class Circuit
 {
@@ -18,14 +17,20 @@ public:
     m_components.push_back(component);
   }
 
+  Component *component(const std::string &name);
+  const Component *component(const std::string &name) const;
+  bool hasComponent(const std::string &name) const;
+
   void patch(const std::string &from, const std::string &to);
+
+  void setInput(const std::string &name, bool value);
+  bool getOutput(const std::string &name) const;
 
   friend std::ostream &operator<<(std::ostream &stream, const Circuit &o);
 
 private:
-  std::pair<Component *, Pin *> findPatchEndpoint(const std::string &def);
+  Pin *findPatchEndpoint(const std::string &def);
 
 private:
   std::vector<Component *> m_components;
-  std::vector<Wire *> m_wiring;
 };
