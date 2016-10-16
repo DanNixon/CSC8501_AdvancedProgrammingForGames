@@ -13,17 +13,19 @@ public:
   Circuit(std::list<std::string> inputs, std::list<std::string> outputs);
   virtual ~Circuit();
 
-  inline void addComponent(IComponent *component)
+  inline void addComponent(Component *component)
   {
     m_components.push_back(component);
   }
 
   void patch(const std::string &from, const std::string &to);
 
-private:
-  std::pair<IComponent *, Pin *> findPatchEndpoint(const std::string &def);
+  friend std::ostream &operator<<(std::ostream &stream, const Circuit &o);
 
 private:
-  std::vector<IComponent *> m_components;
+  std::pair<Component *, Pin *> findPatchEndpoint(const std::string &def);
+
+private:
+  std::vector<Component *> m_components;
   std::vector<Wire *> m_wiring;
 };

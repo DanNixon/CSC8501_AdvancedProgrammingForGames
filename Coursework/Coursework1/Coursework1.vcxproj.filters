@@ -14,7 +14,6 @@
     <ClInclude Include="Circuit.h" />
     <ClInclude Include="Encoder.h" />
     <ClInclude Include="Bus.h" />
-    <ClInclude Include="IComponent.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Pin.h" />
     <ClInclude Include="Wire.h" />

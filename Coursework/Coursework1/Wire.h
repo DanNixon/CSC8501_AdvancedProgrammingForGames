@@ -2,21 +2,21 @@
 
 #include <ostream>
 
-#include "IComponent.h"
+#include "Component.h"
 #include "Pin.h"
 
 class Wire
 {
 public:
-  Wire(IComponent *source, Pin *output, IComponent *dest, Pin *input);
+  Wire(Component *source, Pin *output, Component *dest, Pin *input);
   virtual ~Wire();
 
-  inline const IComponent *source() const
+  inline const Component *source() const
   {
     return m_source;
   }
 
-  inline const IComponent *destination() const
+  inline const Component *destination() const
   {
     return m_destination;
   }
@@ -34,8 +34,8 @@ public:
   friend std::ostream &operator<<(std::ostream &stream, const Wire &o);
 
 private:
-  const IComponent *m_source;
-  const IComponent *m_destination;
+  const Component *m_source;
+  const Component *m_destination;
   const Pin *m_output;
   const Pin *m_input;
 };

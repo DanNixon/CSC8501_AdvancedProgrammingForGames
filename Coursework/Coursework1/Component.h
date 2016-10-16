@@ -1,12 +1,10 @@
 #pragma once
 
-#include "IComponent.h"
-
 #include <list>
 
 #include "Pin.h"
 
-class Component : public IComponent
+class Component
 {
 public:
   Component(const std::string &id, const std::string &name,
@@ -23,6 +21,8 @@ public:
     return m_name;
   }
 
+  virtual Pin *pin(const std::string &name);
+
   bool hasInput(const std::string &name) const;
   bool hasOutput(const std::string &name) const;
 
@@ -30,6 +30,8 @@ public:
   bool getOutput(const std::string &name) const;
 
   virtual void operate() = 0;
+
+  friend std::ostream &operator<<(std::ostream &stream, const Component &o);
 
 protected:
   const std::string m_id;

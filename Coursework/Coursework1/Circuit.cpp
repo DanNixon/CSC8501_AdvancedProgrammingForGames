@@ -35,19 +35,32 @@ void Circuit::patch(const std::string &from, const std::string &to)
       new Wire(source.first, source.second, dest.first, dest.second));
 }
 
-std::pair<IComponent *, Pin *>
-Circuit::findPatchEndpoint(const std::string &def)
+std::pair<Component *, Pin *> Circuit::findPatchEndpoint(const std::string &def)
 {
   std::vector<std::string> tokens;
   stringSplit(tokens, def, '.');
 
   auto compIt =
       std::find_if(m_components.begin(), m_components.end(),
-                   [tokens](IComponent *c) { return c->id() == tokens[0]; });
+                   [tokens](Component *c) { return c->id() == tokens[0]; });
   if (compIt == m_components.end())
     throw std::runtime_error("Could not find component \"" + tokens[0] + "\"");
 
-  // TODO: find pin
+  return std::make_pair(*compIt, (*compIt)->pin(tokens[1]));
+}
 
-  return std::make_pair(*compIt, nullptr);
+std::ostream &operator<<(std::ostream &stream, const Circuit &o)
+{
+  stream << "Circuit[\n"
+         << " Components:\n";
+  for (auto it = o.m_components.begin(); it != o.m_components.end(); ++it)
+    stream << " - " << *(*it) << '\n';
+
+  stream << " Wiring:\n";
+  for (auto it = o.m_wiring.begin(); it != o.m_wiring.end(); ++it)
+    stream << " - " << *(*it) << '\n';
+
+  stream << ']';
+
+  return stream;
 }

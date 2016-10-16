@@ -7,8 +7,7 @@
 Component::Component(const std::string &id, const std::string &name,
                      std::list<std::string> inputs,
                      std::list<std::string> outputs)
-    : IComponent()
-    , m_id(id)
+    : m_id(id)
     , m_name(name)
 {
   for (auto it = inputs.begin(); it != inputs.end(); ++it)
@@ -20,6 +19,15 @@ Component::Component(const std::string &id, const std::string &name,
 
 Component::~Component()
 {
+}
+
+Pin *Component::pin(const std::string &name)
+{
+  auto it = std::find_if(m_pins.begin(), m_pins.end(),
+                         [name](Pin *p) { return p->id() == name; });
+  if (it == m_pins.end())
+    throw std::runtime_error("Cannot find pin \"" + name + "\"");
+  return *it;
 }
 
 bool Component::hasInput(const std::string &name) const
@@ -45,4 +53,10 @@ void Component::setInput(const std::string &name, bool value)
 bool Component::getOutput(const std::string &name) const
 {
   return false;
+}
+
+std::ostream &operator<<(std::ostream &stream, const Component &o)
+{
+  stream << "Component[" << o.m_name << ", id=" << o.m_id << "]";
+  return stream;
 }

@@ -130,7 +130,6 @@
     <ClInclude Include="Circuit.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Encoder.h" />
-    <ClInclude Include="IComponent.h" />
     <ClInclude Include="Wire.h" />
     <ClInclude Include="Pin.h" />
     <ClInclude Include="SerialRegisterArray.h" />
