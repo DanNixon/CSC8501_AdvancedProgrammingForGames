@@ -119,18 +119,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Circuit.cpp" />
+    <ClCompile Include="CLI.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pin.cpp" />
+    <ClCompile Include="StringUtils.cpp" />
     <ClCompile Include="XORGate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bus.h" />
     <ClInclude Include="Circuit.h" />
+    <ClInclude Include="CLI.h" />
+    <ClInclude Include="CLICommand.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Encoder.h" />
     <ClInclude Include="Pin.h" />
     <ClInclude Include="SerialRegisterArray.h" />
+    <ClInclude Include="StringUtils.h" />
     <ClInclude Include="XORGate.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

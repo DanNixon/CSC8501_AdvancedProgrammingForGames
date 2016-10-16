@@ -5,8 +5,12 @@
 #include "Encoder.h"
 #include "XORGate.h"
 
+#include "CLI.h"
+#include "CLICommand.h"
+
 int main()
 {
+#if 0
   Encoder e;
   e.addComponent(new XORGate("xor1"));
   e.addComponent(new XORGate("xor2"));
@@ -28,6 +32,9 @@ int main()
 
   std::cout << "Output bit 1 = " << e.getOutput("output_bit_1") << '\n';
   std::cout << "Output bit 2 = " << e.getOutput("output_bit_2") << '\n';
+#endif
 
-  return 0;
+  CLI cli(std::cin, std::cout);
+  return cli.run();
+  ;
 }

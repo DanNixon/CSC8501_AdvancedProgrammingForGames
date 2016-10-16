@@ -6,6 +6,8 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Pin.cpp" />
     <ClCompile Include="Circuit.cpp" />
+    <ClCompile Include="CLI.cpp" />
+    <ClCompile Include="StringUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SerialRegisterArray.h" />
@@ -15,5 +17,8 @@
     <ClInclude Include="Bus.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Pin.h" />
+    <ClInclude Include="CLI.h" />
+    <ClInclude Include="CLICommand.h" />
+    <ClInclude Include="StringUtils.h" />
   </ItemGroup>
 </Project>
