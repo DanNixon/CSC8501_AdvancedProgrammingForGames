@@ -7,7 +7,9 @@
 class CLICommand
 {
 public:
-  typedef std::function<int(std::vector<std::string>)> CMDHandlerFunc;
+  typedef std::function<int(std::istream &in, std::ostream &out,
+                            std::vector<std::string>)>
+      CMDHandlerFunc;
 
 public:
   CLICommand(const std::string &commandName, CMDHandlerFunc func,
@@ -32,9 +34,10 @@ public:
     return m_description;
   }
 
-  inline int handle(std::vector<std::string> tokens) const
+  inline int handle(std::istream &in, std::ostream &out,
+                    std::vector<std::string> tokens) const
   {
-    return m_handlerFunc(tokens);
+    return m_handlerFunc(in, out, tokens);
   }
 
 private:

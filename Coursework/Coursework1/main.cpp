@@ -35,6 +35,15 @@ int main()
 #endif
 
   CLI cli(std::cin, std::cout);
+
+  cli.registerCommand(new CLICommand(
+      "test",
+      [](std::istream &in, std::ostream &out, std::vector<std::string> argv) {
+        out << argv[1] << '\n';
+        return 0;
+      },
+      "Is a test."));
+
   return cli.run();
   ;
 }
