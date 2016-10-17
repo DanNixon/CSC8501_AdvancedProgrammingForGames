@@ -6,11 +6,15 @@
 
 namespace CircuitSimulator
 {
-template <size_t N> class SerialRegisterArray : public Component
+class SerialRegisterArray : public Component
 {
 public:
-  SerialRegisterArray()
+  SerialRegisterArray(const std::string &id, size_t numElements)
+      : Component(id, "Register Array", {}, {})
   {
+    for (size_t i = 0; i < numElements; i++)
+      m_pins.push_back(new Pin(("bit_" + std::to_string(i)),
+                               PIN_FLAG_OUTPUT | PIN_FLAG_INPUT));
   }
 
   virtual ~SerialRegisterArray()
@@ -22,8 +26,14 @@ public:
     // Nothing to do here
   }
 
-private:
-  std::bitset<N + 1>
-      m_registers; // Number of registers required plus one space for the input
+  void shiftLeft()
+  {
+    // TODO
+  }
+
+  void shiftRight()
+  {
+    // TODO
+  }
 };
 }

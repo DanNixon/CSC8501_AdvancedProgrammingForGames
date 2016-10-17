@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "Encoder.h"
+#include "SerialRegisterArray.h"
 #include "XORGate.h"
 
 #include "CLI.h"
@@ -11,7 +12,7 @@
 
 int main()
 {
-#if 0
+#if 1
   CircuitSimulator::Encoder e;
   e.addComponent(new CircuitSimulator::XORGate("xor1"));
   e.addComponent(new CircuitSimulator::XORGate("xor2"));
@@ -32,6 +33,21 @@ int main()
 
   std::cout << "Output bit 1 = " << e.getOutput("output_bit_1") << '\n';
   std::cout << "Output bit 2 = " << e.getOutput("output_bit_2") << '\n';
+
+  std::cout << '\n';
+
+  CircuitSimulator::SerialRegisterArray re("Register", 4);
+
+  re.setInput("bit_0", true);
+  re.setInput("bit_2", true);
+
+  std::cout << re.getOutput("bit_0") << re.getOutput("bit_1")
+            << re.getOutput("bit_2") << re.getOutput("bit_3") << '\n';
+
+  re.shiftRight();
+
+  std::cout << re.getOutput("bit_0") << re.getOutput("bit_1")
+            << re.getOutput("bit_2") << re.getOutput("bit_3") << '\n';
 #endif
 
   CommandLineInterface::CLI cli(std::cin, std::cout);
