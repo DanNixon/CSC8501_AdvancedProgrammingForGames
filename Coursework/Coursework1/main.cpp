@@ -11,7 +11,7 @@
 
 int main()
 {
-#if 1
+#if 0
   CircuitSimulator::Encoder e;
   e.addComponent(new CircuitSimulator::XORGate("xor1"));
   e.addComponent(new CircuitSimulator::XORGate("xor2"));

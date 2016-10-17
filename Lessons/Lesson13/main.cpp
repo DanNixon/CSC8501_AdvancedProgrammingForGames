@@ -15,6 +15,8 @@ public:
 
 int main(void)
 {
+  // auto v2;
+
   auto v1 = new CA();
   v1->val = "Hello, World!";
   std::cout << v1->val << '\n';

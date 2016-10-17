@@ -9,7 +9,8 @@ using namespace Utility;
 
 namespace CircuitSimulator
 {
-Circuit::Circuit(std::list<std::string> inputs, std::list<std::string> outputs)
+Circuit::Circuit(std::vector<std::string> inputs,
+                 std::vector<std::string> outputs)
 {
   m_components.push_back(new Bus("input_bus", inputs));
   m_components.push_back(new Bus("output_bus", outputs));

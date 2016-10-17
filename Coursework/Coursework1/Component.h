@@ -1,7 +1,5 @@
 #pragma once
 
-#include <list>
-
 #include "Pin.h"
 
 namespace CircuitSimulator
@@ -10,7 +8,7 @@ class Component
 {
 public:
   Component(const std::string &id, const std::string &name,
-            std::list<std::string> inputs, std::list<std::string> outputs);
+            std::vector<std::string> inputs, std::vector<std::string> outputs);
   virtual ~Component();
 
   inline virtual std::string id() const
@@ -37,6 +35,6 @@ public:
 protected:
   const std::string m_id;
   const std::string m_name;
-  std::list<Pin *> m_pins;
+  std::vector<Pin *> m_pins;
 };
 }

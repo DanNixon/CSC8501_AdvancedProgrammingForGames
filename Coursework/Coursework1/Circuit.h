@@ -1,6 +1,5 @@
 #pragma once
 
-#include <list>
 #include <string>
 #include <vector>
 
@@ -11,7 +10,7 @@ namespace CircuitSimulator
 class Circuit
 {
 public:
-  Circuit(std::list<std::string> inputs, std::list<std::string> outputs);
+  Circuit(std::vector<std::string> inputs, std::vector<std::string> outputs);
   virtual ~Circuit();
 
   inline void addComponent(Component *component)

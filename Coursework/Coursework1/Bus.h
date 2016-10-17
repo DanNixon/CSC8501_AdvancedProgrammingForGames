@@ -7,7 +7,7 @@ namespace CircuitSimulator
 class Bus : public Component
 {
 public:
-  Bus(const std::string &id, std::list<std::string> ioNames)
+  Bus(const std::string &id, std::vector<std::string> ioNames)
       : Component(id, "Bus", {}, {})
   {
     for (auto it = ioNames.begin(); it != ioNames.end(); ++it)

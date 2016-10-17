@@ -7,8 +7,8 @@
 namespace CircuitSimulator
 {
 Component::Component(const std::string &id, const std::string &name,
-                     std::list<std::string> inputs,
-                     std::list<std::string> outputs)
+                     std::vector<std::string> inputs,
+                     std::vector<std::string> outputs)
     : m_id(id)
     , m_name(name)
 {
