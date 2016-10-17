@@ -4,6 +4,8 @@
 
 #include "StringUtils.h"
 
+using namespace Utility;
+
 namespace CommandLineInterface
 {
 CLI::CLI(std::istream &in, std::ostream &out)

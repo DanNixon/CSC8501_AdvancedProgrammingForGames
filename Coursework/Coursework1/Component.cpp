@@ -4,6 +4,8 @@
 
 #include <algorithm>
 
+namespace CircuitSimulator
+{
 Component::Component(const std::string &id, const std::string &name,
                      std::list<std::string> inputs,
                      std::list<std::string> outputs)
@@ -76,4 +78,5 @@ std::ostream &operator<<(std::ostream &stream, const Component &o)
 {
   stream << "Component[" << o.m_name << ", id=" << o.m_id << "]";
   return stream;
+}
 }

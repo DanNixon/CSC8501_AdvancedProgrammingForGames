@@ -7,6 +7,8 @@
 #define PIN_FLAG_INPUT 0x01
 #define PIN_FLAG_OUTPUT 0x02
 
+namespace CircuitSimulator
+{
 class Pin
 {
 public:
@@ -43,3 +45,4 @@ private:
   std::vector<Pin *> m_outboundConnections;
   std::function<void(void)> m_onChange;
 };
+}

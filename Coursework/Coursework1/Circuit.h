@@ -6,6 +6,8 @@
 
 #include "Component.h"
 
+namespace CircuitSimulator
+{
 class Circuit
 {
 public:
@@ -21,7 +23,7 @@ public:
   const Component *component(const std::string &name) const;
   bool hasComponent(const std::string &name) const;
 
-  void patch(const std::string &from, const std::string &to);
+  void wireUp(const std::string &from, const std::string &to);
 
   void setInput(const std::string &name, bool value);
   bool getOutput(const std::string &name) const;
@@ -34,3 +36,4 @@ private:
 private:
   std::vector<Component *> m_components;
 };
+}

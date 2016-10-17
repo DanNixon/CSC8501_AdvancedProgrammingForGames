@@ -4,6 +4,8 @@
 
 #include <bitset>
 
+namespace CircuitSimulator
+{
 template <size_t N> class SerialRegisterArray : public Component
 {
 public:
@@ -24,3 +26,4 @@ private:
   std::bitset<N + 1>
       m_registers; // Number of registers required plus one space for the input
 };
+}

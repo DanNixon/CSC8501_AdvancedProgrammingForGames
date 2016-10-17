@@ -2,6 +2,8 @@
 
 #include "Component.h"
 
+namespace CircuitSimulator
+{
 class XORGate : public Component
 {
 public:
@@ -10,3 +12,4 @@ public:
 
   virtual void operate();
 };
+}

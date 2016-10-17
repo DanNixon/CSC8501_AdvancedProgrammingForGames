@@ -4,6 +4,8 @@
 
 #include "Pin.h"
 
+namespace CircuitSimulator
+{
 class Component
 {
 public:
@@ -37,3 +39,4 @@ protected:
   const std::string m_name;
   std::list<Pin *> m_pins;
 };
+}

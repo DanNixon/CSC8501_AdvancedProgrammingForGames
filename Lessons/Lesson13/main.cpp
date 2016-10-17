@@ -19,7 +19,7 @@ int main(void)
   v1->val = "Hello, World!";
   std::cout << v1->val << '\n';
 
-  //v1 = new CB();
+  // v1 = new CB();
 
   return 0;
 }

@@ -11,16 +11,15 @@
 
 int main()
 {
-#if 0
-  Encoder e;
-  e.addComponent(new XORGate("xor1"));
-  e.addComponent(new XORGate("xor2"));
+#if 1
+  CircuitSimulator::Encoder e;
+  e.addComponent(new CircuitSimulator::XORGate("xor1"));
+  e.addComponent(new CircuitSimulator::XORGate("xor2"));
 
-  e.patch("input_bus.input_bit", "xor1.a");
-  e.patch("input_bus.input_bit", "xor2.a");
-  // e.patch("xor2.z", "xor1.b");
-  e.patch("xor1.z", "output_bus.output_bit_1");
-  e.patch("input_bus.input_bit", "output_bus.output_bit_2");
+  e.wireUp("input_bus.input_bit", "xor1.a");
+  e.wireUp("input_bus.input_bit", "xor2.a");
+  e.wireUp("xor1.z", "output_bus.output_bit_1");
+  e.wireUp("input_bus.input_bit", "output_bus.output_bit_2");
 
   std::cout << e << "\n\n";
 

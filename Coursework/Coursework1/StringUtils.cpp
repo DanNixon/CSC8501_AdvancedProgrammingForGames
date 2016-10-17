@@ -1,5 +1,7 @@
 #include "StringUtils.h"
 
+namespace Utility
+{
 void StringUtils::Split(std::vector<std::string> &subStrs,
                         const std::string &str, char delim)
 {
@@ -11,4 +13,5 @@ void StringUtils::Split(std::vector<std::string> &subStrs,
     start = end + 1;
   }
   subStrs.push_back(str.substr(start));
+}
 }

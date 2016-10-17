@@ -2,6 +2,8 @@
 
 #include "Component.h"
 
+namespace CircuitSimulator
+{
 class Bus : public Component
 {
 public:
@@ -21,3 +23,4 @@ public:
     // Nothing to do here
   }
 };
+}

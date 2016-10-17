@@ -2,6 +2,8 @@
 
 #include <algorithm>
 
+namespace CircuitSimulator
+{
 Pin::Pin(const std::string &id, uint8_t flags)
     : m_id(id)
     , m_flags(flags)
@@ -47,4 +49,5 @@ void Pin::setState(bool state)
     (*it)->setState(m_state);
 
   m_onChange();
+}
 }

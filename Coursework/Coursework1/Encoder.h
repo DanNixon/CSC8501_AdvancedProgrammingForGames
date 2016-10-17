@@ -2,6 +2,8 @@
 
 #include "Circuit.h"
 
+namespace CircuitSimulator
+{
 class Encoder : public Circuit
 {
 public:
@@ -14,3 +16,4 @@ public:
   {
   }
 };
+}

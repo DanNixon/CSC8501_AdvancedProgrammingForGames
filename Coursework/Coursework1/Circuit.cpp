@@ -5,6 +5,10 @@
 #include "Bus.h"
 #include "StringUtils.h"
 
+using namespace Utility;
+
+namespace CircuitSimulator
+{
 Circuit::Circuit(std::list<std::string> inputs, std::list<std::string> outputs)
 {
   m_components.push_back(new Bus("input_bus", inputs));
@@ -45,7 +49,7 @@ bool Circuit::hasComponent(const std::string &name) const
   return it != m_components.cend();
 }
 
-void Circuit::patch(const std::string &from, const std::string &to)
+void Circuit::wireUp(const std::string &from, const std::string &to)
 {
   Pin *source = findPatchEndpoint(from);
   Pin *dest = findPatchEndpoint(to);
@@ -81,4 +85,5 @@ std::ostream &operator<<(std::ostream &stream, const Circuit &o)
   stream << ']';
 
   return stream;
+}
 }
