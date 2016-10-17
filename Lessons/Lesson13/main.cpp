@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 #include "ArmedEnemy.h"
 #include "Enemy.h"
@@ -29,44 +30,20 @@ int main(void)
   // v1 = new CB();
 #endif
 
-  std::vector<int> scores(5, 0);
+  std::vector<ArmedEnemy> enemies;
+  enemies.push_back(ArmedEnemy(20, 100));
+  enemies.push_back(ArmedEnemy(90, 100));
+  enemies.push_back(ArmedEnemy(10, 100));
+  enemies.push_back(ArmedEnemy(40, 100));
+  enemies.push_back(ArmedEnemy(70, 100));
+  enemies.push_back(ArmedEnemy(100, 100));
+  enemies.push_back(ArmedEnemy(30, 100));
+  enemies.push_back(ArmedEnemy(80, 100));
 
-  scores[0] = 1;
-  scores[1] = 2;
-  scores[2] = 3;
+  std::sort(enemies.begin(), enemies.end(), [](ArmedEnemy &a, ArmedEnemy &b) { return a.get_hit_points() < b.get_hit_points();  });
 
-  for (int i = 0; i < scores.size(); ++i)
-    std::cout << "scores " << i << " = " << scores[i] << "\n";
-
-  std::vector<Enemy> *enemies = new std::vector<Enemy>(3);
-
-  Enemy fourth, fifth;
-
-  enemies->push_back(fourth);
-  enemies->push_back(fifth);
-  std::cout << "size of enemies = " << enemies->size() << "\n";
-
-  int i = 0;
-  for (auto it = enemies->begin(); it != enemies->end(); ++it)
-  {
-    it->set_score(scores[i]);
-    std::cout << "score = " << it->get_score() << "\n";
-    ++i;
-  }
-
-  Enemy newthird;
-  enemies->insert(enemies->begin() + 2, newthird);
-  enemies->erase(enemies->begin() + 2);
-
-  Enemy &back = enemies->back();
-  std::cout << "hit points last element = " << back.get_hit_points() << "\n";
-
-  enemies->pop_back();
-  std::cout << "new size of enemies = " << enemies->size() << "\n";
-
-  enemies->clear();
-
-  delete enemies;
+  for (auto it = enemies.begin(); it != enemies.end(); ++it)
+    std::cout << it->get_hit_points() << '\n';
 
   return 0;
 }
