@@ -7,6 +7,7 @@
 
 #include "CLI.h"
 #include "CLICommand.h"
+#include "CLISubCommand.h"
 
 int main()
 {
@@ -39,11 +40,22 @@ int main()
   cli.registerCommand(new CLICommand(
       "test",
       [](std::istream &in, std::ostream &out, std::vector<std::string> argv) {
-        out << argv[1] << '\n';
+        out << "Test command.\n";
         return 0;
       },
       "Is a test."));
 
+  CLISubCommand *sub1 = new CLISubCommand("sub1", "Test subcommand.");
+
+  sub1->registerCommand(new CLICommand(
+      "list",
+      [](std::istream &in, std::ostream &out, std::vector<std::string> argv) {
+        out << "Test command => list.\n";
+        return 0;
+      },
+      "Is a test 2."));
+
+  cli.registerCommand(sub1);
+
   return cli.run();
-  ;
 }

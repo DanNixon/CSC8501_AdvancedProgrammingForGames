@@ -34,8 +34,8 @@ public:
     return m_description;
   }
 
-  inline int handle(std::istream &in, std::ostream &out,
-                    std::vector<std::string> tokens) const
+  inline int handleCmdFunc(std::istream &in, std::ostream &out,
+                           std::vector<std::string> tokens) const
   {
     return m_handlerFunc(in, out, tokens);
   }

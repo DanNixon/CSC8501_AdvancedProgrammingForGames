@@ -120,6 +120,7 @@
   <ItemGroup>
     <ClCompile Include="Circuit.cpp" />
     <ClCompile Include="CLI.cpp" />
+    <ClCompile Include="CommandContainer.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pin.cpp" />
@@ -131,6 +132,8 @@
     <ClInclude Include="Circuit.h" />
     <ClInclude Include="CLI.h" />
     <ClInclude Include="CLICommand.h" />
+    <ClInclude Include="CLISubCommand.h" />
+    <ClInclude Include="CommandContainer.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Encoder.h" />
     <ClInclude Include="Pin.h" />

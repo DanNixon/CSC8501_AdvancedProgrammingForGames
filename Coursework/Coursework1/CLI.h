@@ -1,8 +1,7 @@
 #pragma once
 
-#include <vector>
-
 #include "CLICommand.h"
+#include "CommandContainer.h"
 
 enum CLIExit
 {
@@ -11,25 +10,21 @@ enum CLIExit
   CLI_EXIT_EXCEPTION = 1
 };
 
-class CLI
+class CLI : public CommandContainer
 {
 public:
   CLI(std::istream &in, std::ostream &out);
   virtual ~CLI();
 
-  void registerCommand(CLICommand *command);
   int run();
 
   void exit();
-  void help();
 
 private:
   std::istream &m_in;
   std::ostream &m_out;
 
   std::string m_prompt;
-
-  std::vector<CLICommand *> m_commands;
 
   CLIExit m_exitCode;
 };

@@ -8,6 +8,7 @@
     <ClCompile Include="Circuit.cpp" />
     <ClCompile Include="CLI.cpp" />
     <ClCompile Include="StringUtils.cpp" />
+    <ClCompile Include="CommandContainer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SerialRegisterArray.h" />
@@ -20,5 +21,7 @@
     <ClInclude Include="CLI.h" />
     <ClInclude Include="CLICommand.h" />
     <ClInclude Include="StringUtils.h" />
+    <ClInclude Include="CommandContainer.h" />
+    <ClInclude Include="CLISubCommand.h" />
   </ItemGroup>
 </Project>
