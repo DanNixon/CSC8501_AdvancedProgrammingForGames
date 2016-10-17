@@ -2,5 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ArmedEnemy.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ArmedEnemy.h" />
+    <ClInclude Include="Enemy.h" />
   </ItemGroup>
 </Project>
