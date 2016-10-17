@@ -4,6 +4,8 @@
 
 #include "CLICommand.h"
 
+namespace CommandLineInterface
+{
 class CommandContainer
 {
 public:
@@ -19,3 +21,4 @@ public:
 protected:
   std::vector<CLICommand *> m_commands;
 };
+}

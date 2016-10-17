@@ -3,6 +3,8 @@
 #include "CLICommand.h"
 #include "CommandContainer.h"
 
+namespace CommandLineInterface
+{
 enum CLIExit
 {
   CLI_RUN = -1,
@@ -28,3 +30,4 @@ private:
 
   CLIExit m_exitCode;
 };
+}

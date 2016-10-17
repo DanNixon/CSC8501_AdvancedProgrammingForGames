@@ -4,6 +4,8 @@
 
 #include "StringUtils.h"
 
+namespace CommandLineInterface
+{
 CLI::CLI(std::istream &in, std::ostream &out)
     : CommandContainer()
     , m_in(in)
@@ -47,4 +49,5 @@ int CLI::run()
 void CLI::exit()
 {
   m_exitCode = CLI_EXIT_CLEAN;
+}
 }

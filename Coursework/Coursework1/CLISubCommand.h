@@ -3,6 +3,8 @@
 #include "CLICommand.h"
 #include "CommandContainer.h"
 
+namespace CommandLineInterface
+{
 class CLISubCommand : public CLICommand, public CommandContainer
 {
 public:
@@ -22,3 +24,4 @@ public:
   {
   }
 };
+}

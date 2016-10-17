@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+namespace CommandLineInterface
+{
 class CLICommand
 {
 public:
@@ -45,3 +47,4 @@ private:
   const CMDHandlerFunc m_handlerFunc;
   const std::string m_description;
 };
+}

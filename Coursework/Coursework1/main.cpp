@@ -35,9 +35,9 @@ int main()
   std::cout << "Output bit 2 = " << e.getOutput("output_bit_2") << '\n';
 #endif
 
-  CLI cli(std::cin, std::cout);
+  CommandLineInterface::CLI cli(std::cin, std::cout);
 
-  cli.registerCommand(new CLICommand(
+  cli.registerCommand(new CommandLineInterface::CLICommand(
       "test",
       [](std::istream &in, std::ostream &out, std::vector<std::string> argv) {
         out << "Test command.\n";
@@ -45,9 +45,10 @@ int main()
       },
       "Is a test."));
 
-  CLISubCommand *sub1 = new CLISubCommand("sub1", "Test subcommand.");
+  CommandLineInterface::CLISubCommand *sub1 =
+      new CommandLineInterface::CLISubCommand("sub1", "Test subcommand.");
 
-  sub1->registerCommand(new CLICommand(
+  sub1->registerCommand(new CommandLineInterface::CLICommand(
       "list",
       [](std::istream &in, std::ostream &out, std::vector<std::string> argv) {
         out << "Test command => list.\n";

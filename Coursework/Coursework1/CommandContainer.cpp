@@ -2,6 +2,8 @@
 
 #include <algorithm>
 
+namespace CommandLineInterface
+{
 CommandContainer::CommandContainer()
 {
   // Add help command
@@ -39,6 +41,7 @@ int CommandContainer::handle(std::istream &in, std::ostream &out,
   auto it = std::find_if(
       m_commands.begin(), m_commands.end(),
       [tokens](CLICommand *c) { return c->commandName() == tokens[0]; });
+
   if (it == m_commands.end())
   {
     out << "Command \"" << tokens[0] << "\" not found.\n";
@@ -55,4 +58,5 @@ void CommandContainer::help(std::ostream &out)
   for (auto it = m_commands.begin(); it != m_commands.end(); ++it)
     out << ' ' << (*it)->commandName() << "\t\t: " << (*it)->description()
         << '\n';
+}
 }
