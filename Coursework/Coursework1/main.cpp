@@ -36,18 +36,19 @@ int main()
 
   std::cout << '\n';
 
-  CircuitSimulator::SerialRegisterArray re("Register", 4);
+  CircuitSimulator::SerialRegisterArray re("Registers", 4);
 
   re.setInput("bit_0", true);
   re.setInput("bit_2", true);
 
-  std::cout << re.getOutput("bit_0") << re.getOutput("bit_1")
-            << re.getOutput("bit_2") << re.getOutput("bit_3") << '\n';
+  std::cout << re.getOutput("bit_3") << re.getOutput("bit_2")
+            << re.getOutput("bit_1") << re.getOutput("bit_0") << '\n';
 
-  re.shiftRight();
+  // re.shiftRight();
+  re.shiftLeft();
 
-  std::cout << re.getOutput("bit_0") << re.getOutput("bit_1")
-            << re.getOutput("bit_2") << re.getOutput("bit_3") << '\n';
+  std::cout << re.getOutput("bit_3") << re.getOutput("bit_2")
+            << re.getOutput("bit_1") << re.getOutput("bit_0") << '\n';
 #endif
 
   CommandLineInterface::CLI cli(std::cin, std::cout);

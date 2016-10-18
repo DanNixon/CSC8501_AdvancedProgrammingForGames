@@ -28,12 +28,24 @@ public:
 
   void shiftLeft()
   {
-    // TODO
+    if (m_pins.size() < 2)
+      throw std::runtime_error("Cannot shift less than 2 bits");
+
+    for (size_t i = m_pins.size() - 1; i > 0; i--)
+      m_pins[i]->setState(m_pins[i - 1]->getState());
+
+    m_pins.front()->setState(false);
   }
 
   void shiftRight()
   {
-    // TODO
+    if (m_pins.size() < 2)
+      throw std::runtime_error("Cannot shift less than 2 bits");
+
+    for (size_t i = 0; i < m_pins.size() - 1; i++)
+      m_pins[i]->setState(m_pins[i + 1]->getState());
+
+    m_pins.back()->setState(false);
   }
 };
 }
