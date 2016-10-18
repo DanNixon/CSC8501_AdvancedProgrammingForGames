@@ -2,13 +2,13 @@
 #include <string>
 #include <vector>
 
-#include "Encoder.h"
-#include "SerialRegisterArray.h"
-#include "XORGate.h"
+#include "CircuitSimulatorLib/Encoder.h"
+#include "CircuitSimulatorLib/SerialRegisterArray.h"
+#include "CircuitSimulatorLib/XORGate.h"
 
-#include "CLI.h"
-#include "CLICommand.h"
-#include "CLISubCommand.h"
+#include "CLILib/CLI.h"
+#include "CLILib/CLICommand.h"
+#include "CLILib/CLISubCommand.h"
 
 int main()
 {

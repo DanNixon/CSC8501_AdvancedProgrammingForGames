@@ -3,7 +3,7 @@
 #include <algorithm>
 
 #include "Bus.h"
-#include "StringUtils.h"
+#include "UtilityLib/StringUtils.h"
 
 using namespace Utility;
 
