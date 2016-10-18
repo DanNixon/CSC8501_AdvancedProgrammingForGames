@@ -1,3 +1,5 @@
+/** @file */
+
 #include "XORGate.h"
 
 namespace CircuitSimulator

@@ -1,3 +1,5 @@
+/** @file */
+
 #include "Circuit.h"
 
 #include <algorithm>

@@ -1,3 +1,5 @@
+/** @file */
+
 #include "Encoder.h"
 
 namespace CircuitSimulator

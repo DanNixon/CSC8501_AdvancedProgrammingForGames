@@ -1,3 +1,5 @@
+/** @file */
+
 #include "StringUtils.h"
 
 namespace Utility

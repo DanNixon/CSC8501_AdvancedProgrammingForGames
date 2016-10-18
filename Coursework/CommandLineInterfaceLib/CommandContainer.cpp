@@ -1,3 +1,5 @@
+/** @file */
+
 #include "CommandContainer.h"
 
 #include <algorithm>

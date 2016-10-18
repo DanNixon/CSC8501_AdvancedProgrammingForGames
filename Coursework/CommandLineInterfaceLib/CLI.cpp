@@ -1,3 +1,5 @@
+/** @file */
+
 #include "CLI.h"
 
 #include <string>
