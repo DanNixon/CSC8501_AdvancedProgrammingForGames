@@ -18,10 +18,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CircuitSimulatorLib", "Circ
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UtilityLib", "UtilityLib\UtilityLib.vcxproj", "{D116EDDF-8C15-4354-962B-0DA55E06A0AA}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CLILib", "CLILib\CLILib.vcxproj", "{67C67E1B-66DE-49CF-99D4-A72F688BA43E}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D116EDDF-8C15-4354-962B-0DA55E06A0AA} = {D116EDDF-8C15-4354-962B-0DA55E06A0AA}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CommandLineInterfaceLib", "CommandLineInterfaceLib\CommandLineInterfaceLib.vcxproj", "{67C67E1B-66DE-49CF-99D4-A72F688BA43E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

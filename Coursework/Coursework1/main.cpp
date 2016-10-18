@@ -6,9 +6,9 @@
 #include "CircuitSimulatorLib/SerialRegisterArray.h"
 #include "CircuitSimulatorLib/XORGate.h"
 
-#include "CLILib/CLI.h"
-#include "CLILib/CLICommand.h"
-#include "CLILib/CLISubCommand.h"
+#include "CommandLineInterfaceLib/CLI.h"
+#include "CommandLineInterfaceLib/CLICommand.h"
+#include "CommandLineInterfaceLib/CLISubCommand.h"
 
 int main()
 {
