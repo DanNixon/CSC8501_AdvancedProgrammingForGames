@@ -6,8 +6,8 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="Encoder.h" />
     <ClInclude Include="Pin.h" />
-    <ClInclude Include="SerialRegisterArray.h" />
     <ClInclude Include="XORGate.h" />
+    <ClInclude Include="RegisterArray.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Circuit.cpp" />

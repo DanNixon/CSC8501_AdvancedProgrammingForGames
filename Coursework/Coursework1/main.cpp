@@ -3,12 +3,12 @@
 #include <vector>
 
 #include "CircuitSimulatorLib/Encoder.h"
-#include "CircuitSimulatorLib/SerialRegisterArray.h"
+#include "CircuitSimulatorLib/RegisterArray.h"
 #include "CircuitSimulatorLib/XORGate.h"
 
 #include "CommandLineInterfaceLib/CLI.h"
-#include "CommandLineInterfaceLib/CLICommand.h"
-#include "CommandLineInterfaceLib/CLISubCommand.h"
+#include "CommandLineInterfaceLib/Command.h"
+#include "CommandLineInterfaceLib/SubCommand.h"
 
 int main()
 {
@@ -16,7 +16,7 @@ int main()
   CircuitSimulator::Encoder e;
   e.addComponent(new CircuitSimulator::XORGate("xor1"));
   e.addComponent(new CircuitSimulator::XORGate("xor2"));
-  e.addComponent(new CircuitSimulator::SerialRegisterArray("r", 4));
+  e.addComponent(new CircuitSimulator::RegisterArray("r", 4));
 
   // Wiring as per example in CW spec
   e.wireUp("input_bus.bit_0", "r.bit_0");
@@ -49,7 +49,7 @@ int main()
 
   CommandLineInterface::CLI cli(std::cin, std::cout);
 
-  cli.registerCommand(new CommandLineInterface::CLICommand(
+  cli.registerCommand(new CommandLineInterface::Command(
       "test",
       [](std::istream &in, std::ostream &out, std::vector<std::string> argv) {
         out << "Test command.\n";
@@ -57,10 +57,10 @@ int main()
       },
       "Is a test."));
 
-  CommandLineInterface::CLISubCommand *sub1 =
-      new CommandLineInterface::CLISubCommand("sub1", "Test subcommand.");
+  CommandLineInterface::SubCommand *sub1 =
+      new CommandLineInterface::SubCommand("sub1", "Test subcommand.");
 
-  sub1->registerCommand(new CommandLineInterface::CLICommand(
+  sub1->registerCommand(new CommandLineInterface::Command(
       "list",
       [](std::istream &in, std::ostream &out, std::vector<std::string> argv) {
         out << "Test command => list.\n";

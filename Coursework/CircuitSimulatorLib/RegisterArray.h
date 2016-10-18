@@ -6,10 +6,10 @@
 
 namespace CircuitSimulator
 {
-class SerialRegisterArray : public Component
+class RegisterArray : public Component
 {
 public:
-  SerialRegisterArray(const std::string &id, size_t numElements)
+  RegisterArray(const std::string &id, size_t numElements)
       : Component(id, "Register Array", {}, {})
   {
     for (size_t i = 0; i < numElements; i++)
@@ -17,7 +17,7 @@ public:
                                PIN_FLAG_OUTPUT | PIN_FLAG_INPUT));
   }
 
-  virtual ~SerialRegisterArray()
+  virtual ~RegisterArray()
   {
   }
 

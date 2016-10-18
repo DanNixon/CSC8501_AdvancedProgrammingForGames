@@ -136,7 +136,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="Encoder.h" />
     <ClInclude Include="Pin.h" />
-    <ClInclude Include="SerialRegisterArray.h" />
+    <ClInclude Include="RegisterArray.h" />
     <ClInclude Include="XORGate.h" />
   </ItemGroup>
   <ItemGroup>

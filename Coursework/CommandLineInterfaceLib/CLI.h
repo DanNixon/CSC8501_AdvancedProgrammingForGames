@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CLICommand.h"
+#include "Command.h"
 #include "CommandContainer.h"
 
 namespace CommandLineInterface

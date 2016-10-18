@@ -15,7 +15,7 @@ void Encoder::addComponent(Component *component)
 {
   Circuit::addComponent(component);
 
-  SerialRegisterArray *ra = dynamic_cast<SerialRegisterArray *>(component);
+  RegisterArray *ra = dynamic_cast<RegisterArray *>(component);
   if (ra != nullptr)
     m_registers.push_back(ra);
 }

@@ -16,14 +16,13 @@ CLI::CLI(std::istream &in, std::ostream &out)
     , m_exitCode(CLI_RUN)
 {
   // Add exit command
-  m_commands.push_back(
-      new CLICommand("exit",
-                     [this](std::istream &in, std::ostream &out,
-                            std::vector<std::string> argv) {
-                       this->exit();
-                       return 0;
-                     },
-                     "Exit the application."));
+  m_commands.push_back(new Command("exit",
+                                   [this](std::istream &in, std::ostream &out,
+                                          std::vector<std::string> argv) {
+                                     this->exit();
+                                     return 0;
+                                   },
+                                   "Exit the application."));
 }
 
 CLI::~CLI()

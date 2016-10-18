@@ -7,14 +7,13 @@ namespace CommandLineInterface
 CommandContainer::CommandContainer()
 {
   // Add help command
-  m_commands.push_back(
-      new CLICommand("help",
-                     [this](std::istream &in, std::ostream &out,
-                            std::vector<std::string> argv) {
-                       this->help(out);
-                       return 0;
-                     },
-                     "Shows command usage."));
+  m_commands.push_back(new Command("help",
+                                   [this](std::istream &in, std::ostream &out,
+                                          std::vector<std::string> argv) {
+                                     this->help(out);
+                                     return 0;
+                                   },
+                                   "Shows command usage."));
 }
 
 CommandContainer::~CommandContainer()
@@ -24,7 +23,7 @@ CommandContainer::~CommandContainer()
   m_commands.clear();
 }
 
-void CommandContainer::registerCommand(CLICommand *command)
+void CommandContainer::registerCommand(Command *command)
 {
   m_commands.push_back(command);
 }
@@ -38,9 +37,10 @@ int CommandContainer::handle(std::istream &in, std::ostream &out,
     return -1;
   }
 
-  auto it = std::find_if(
-      m_commands.begin(), m_commands.end(),
-      [tokens](CLICommand *c) { return c->commandName() == tokens[0]; });
+  auto it =
+      std::find_if(m_commands.begin(), m_commands.end(), [tokens](Command *c) {
+        return c->commandName() == tokens[0];
+      });
 
   if (it == m_commands.end())
   {

@@ -4,7 +4,7 @@
 
 #include <vector>
 
-#include "SerialRegisterArray.h"
+#include "RegisterArray.h"
 
 namespace CircuitSimulator
 {
@@ -19,6 +19,6 @@ public:
   void advanceRegisters(int8_t direction);
 
 private:
-  std::vector<SerialRegisterArray *> m_registers;
+  std::vector<RegisterArray *> m_registers;
 };
 }

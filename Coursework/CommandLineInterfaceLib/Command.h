@@ -6,7 +6,7 @@
 
 namespace CommandLineInterface
 {
-class CLICommand
+class Command
 {
 public:
   typedef std::function<int(std::istream &in, std::ostream &out,
@@ -14,15 +14,15 @@ public:
       CMDHandlerFunc;
 
 public:
-  CLICommand(const std::string &commandName, CMDHandlerFunc func,
-             const std::string &desc = "")
+  Command(const std::string &commandName, CMDHandlerFunc func,
+          const std::string &desc = "")
       : m_commandName(commandName)
       , m_handlerFunc(func)
       , m_description(desc)
   {
   }
 
-  virtual ~CLICommand()
+  virtual ~Command()
   {
   }
 

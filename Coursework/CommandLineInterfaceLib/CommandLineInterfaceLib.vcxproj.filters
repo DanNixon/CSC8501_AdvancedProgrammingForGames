@@ -6,8 +6,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLI.h" />
-    <ClInclude Include="CLICommand.h" />
-    <ClInclude Include="CLISubCommand.h" />
     <ClInclude Include="CommandContainer.h" />
+    <ClInclude Include="Command.h" />
+    <ClInclude Include="SubCommand.h" />
   </ItemGroup>
 </Project>
