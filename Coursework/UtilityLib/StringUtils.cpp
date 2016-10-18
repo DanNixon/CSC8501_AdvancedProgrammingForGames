@@ -12,7 +12,7 @@ void StringUtils::Split(std::vector<std::string> &subStrs,
   size_t end;
   while ((end = str.find(delim, start)) != std::string::npos)
   {
-    if ((end - start) > 1)
+    if ((end - start) > 0)
       subStrs.push_back(str.substr(start, end - start));
     start = end + 1;
   }

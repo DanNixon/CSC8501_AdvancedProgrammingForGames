@@ -65,11 +65,20 @@ void Component::setInput(const std::string &name, bool value)
   p->setState(value);
 }
 
+bool Component::getInput(const std::string &name) const
+{
+  const Pin *p = pin(name);
+  if (!(p->flags() & PIN_FLAG_INPUT))
+    throw std::runtime_error("Pin \"" + name + "\" is not an output pin.");
+
+  return p->getState();
+}
+
 bool Component::getOutput(const std::string &name) const
 {
   const Pin *p = pin(name);
   if (!(p->flags() & PIN_FLAG_OUTPUT))
-    throw std::runtime_error("Pin \"" + name + "\" is not an input pin.");
+    throw std::runtime_error("Pin \"" + name + "\" is not an output pin.");
 
   return p->getState();
 }

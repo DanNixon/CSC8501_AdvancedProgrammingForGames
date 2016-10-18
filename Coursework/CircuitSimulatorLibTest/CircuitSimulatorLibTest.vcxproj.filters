@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="unittest1.cpp" />
+    <ClCompile Include="BusTest.cpp" />
+    <ClCompile Include="CircuitTest.cpp" />
+    <ClCompile Include="RegisterArrayTest.cpp" />
+    <ClCompile Include="XORGateTest.cpp" />
+    <ClCompile Include="EncoderTest.cpp" />
   </ItemGroup>
 </Project>

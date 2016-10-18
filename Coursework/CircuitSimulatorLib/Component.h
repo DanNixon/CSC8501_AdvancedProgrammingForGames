@@ -26,6 +26,7 @@ public:
   bool hasPin(const std::string &name, uint8_t flag) const;
 
   void setInput(const std::string &name, bool value);
+  bool getInput(const std::string &name) const;
   bool getOutput(const std::string &name) const;
 
   virtual void operate() = 0;

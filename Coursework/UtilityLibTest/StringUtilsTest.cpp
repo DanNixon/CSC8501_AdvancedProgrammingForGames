@@ -29,9 +29,9 @@ public:
   TEST_METHOD(Split_MultipleSubstr)
   {
     std::vector<std::string> tokens;
-    StringUtils::Split(tokens, "test,one,two", ',');
+    StringUtils::Split(tokens, "t,one,two", ',');
     Assert::AreEqual((size_t)3, tokens.size());
-    Assert::AreEqual(std::string("test"), tokens[0]);
+    Assert::AreEqual(std::string("t"), tokens[0]);
     Assert::AreEqual(std::string("one"), tokens[1]);
     Assert::AreEqual(std::string("two"), tokens[2]);
   }
