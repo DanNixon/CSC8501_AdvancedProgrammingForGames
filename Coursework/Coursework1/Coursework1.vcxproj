@@ -122,6 +122,7 @@
     <ClCompile Include="CLI.cpp" />
     <ClCompile Include="CommandContainer.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Encoder.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pin.cpp" />
     <ClCompile Include="StringUtils.cpp" />

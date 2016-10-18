@@ -13,19 +13,16 @@ public:
   Circuit(std::vector<std::string> inputs, std::vector<std::string> outputs);
   virtual ~Circuit();
 
-  inline void addComponent(Component *component)
-  {
-    m_components.push_back(component);
-  }
-
+  virtual void addComponent(Component *component);
   Component *component(const std::string &name);
   const Component *component(const std::string &name) const;
   bool hasComponent(const std::string &name) const;
 
-  void wireUp(const std::string &from, const std::string &to);
+  virtual void wireUp(const std::string &from, const std::string &to);
 
-  void setInput(const std::string &name, bool value);
-  bool getOutput(const std::string &name) const;
+  virtual void setInput(const std::string &name, bool value);
+  virtual bool getInput(const std::string &name) const;
+  virtual bool getOutput(const std::string &name) const;
 
   friend std::ostream &operator<<(std::ostream &stream, const Circuit &o);
 

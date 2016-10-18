@@ -16,39 +16,35 @@ int main()
   CircuitSimulator::Encoder e;
   e.addComponent(new CircuitSimulator::XORGate("xor1"));
   e.addComponent(new CircuitSimulator::XORGate("xor2"));
+  e.addComponent(new CircuitSimulator::SerialRegisterArray("r", 4));
 
-  e.wireUp("input_bus.input_bit", "xor1.a");
-  e.wireUp("input_bus.input_bit", "xor2.a");
-  e.wireUp("xor1.z", "output_bus.output_bit_1");
-  e.wireUp("input_bus.input_bit", "output_bus.output_bit_2");
+  // Wiring as per example in CW spec
+  e.wireUp("input_bus.bit_0", "r.bit_0");
+  e.wireUp("input_bus.bit_0", "xor2.a");
+  e.wireUp("r.bit_1", "xor2.b");
+  e.wireUp("xor2.z", "output_bus.bit_1");
+  e.wireUp("r.bit_2", "xor1.a");
+  e.wireUp("r.bit_3", "xor1.b");
+  e.wireUp("xor1.z", "output_bus.bit_0");
 
   std::cout << e << "\n\n";
 
-  std::cout << "Output bit 1 = " << e.getOutput("output_bit_1") << '\n';
-  std::cout << "Output bit 2 = " << e.getOutput("output_bit_2") << '\n';
-
+  std::cout << "Output bit 0 = " << e.getOutput("bit_0") << '\n';
+  std::cout << "Output bit 1 = " << e.getOutput("bit_1") << '\n';
   std::cout << '\n';
 
-  e.setInput("input_bit", true);
+  std::vector<bool> inputBits = {true, false, false, true};
 
-  std::cout << "Output bit 1 = " << e.getOutput("output_bit_1") << '\n';
-  std::cout << "Output bit 2 = " << e.getOutput("output_bit_2") << '\n';
+  for (auto it = inputBits.begin(); it != inputBits.end(); ++it)
+  {
+    e.setInput("bit_0", *it);
+    e.advanceRegisters(-1);
 
-  std::cout << '\n';
-
-  CircuitSimulator::SerialRegisterArray re("Registers", 4);
-
-  re.setInput("bit_0", true);
-  re.setInput("bit_2", true);
-
-  std::cout << re.getOutput("bit_3") << re.getOutput("bit_2")
-            << re.getOutput("bit_1") << re.getOutput("bit_0") << '\n';
-
-  // re.shiftRight();
-  re.shiftLeft();
-
-  std::cout << re.getOutput("bit_3") << re.getOutput("bit_2")
-            << re.getOutput("bit_1") << re.getOutput("bit_0") << '\n';
+    std::cout << "Input bit = " << e.getInput("bit_0") << '\n';
+    std::cout << "Output bit 0 = " << e.getOutput("bit_0") << '\n';
+    std::cout << "Output bit 1 = " << e.getOutput("bit_1") << '\n';
+    std::cout << '\n';
+  }
 #endif
 
   CommandLineInterface::CLI cli(std::cin, std::cout);

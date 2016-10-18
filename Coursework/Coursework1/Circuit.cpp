@@ -20,6 +20,11 @@ Circuit::~Circuit()
 {
 }
 
+void Circuit::addComponent(Component *component)
+{
+  m_components.push_back(component);
+}
+
 Component *Circuit::component(const std::string &name)
 {
   auto it = std::find_if(m_components.begin(), m_components.end(),
@@ -61,6 +66,12 @@ void Circuit::setInput(const std::string &name, bool value)
 {
   Component *c = component("input_bus");
   c->setInput(name, value);
+}
+
+bool Circuit::getInput(const std::string &name) const
+{
+  const Component *c = component("input_bus");
+  return c->getOutput(name);
 }
 
 bool Circuit::getOutput(const std::string &name) const

@@ -2,18 +2,23 @@
 
 #include "Circuit.h"
 
+#include <vector>
+
+#include "SerialRegisterArray.h"
+
 namespace CircuitSimulator
 {
 class Encoder : public Circuit
 {
 public:
-  Encoder()
-      : Circuit({"input_bit"}, {"output_bit_1", "output_bit_2"})
-  {
-  }
+  Encoder();
+  virtual ~Encoder();
 
-  ~Encoder()
-  {
-  }
+  virtual void addComponent(Component *component);
+
+  void advanceRegisters(int8_t direction);
+
+private:
+  std::vector<SerialRegisterArray *> m_registers;
 };
 }

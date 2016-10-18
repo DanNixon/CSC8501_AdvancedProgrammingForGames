@@ -9,6 +9,7 @@
     <ClCompile Include="CLI.cpp" />
     <ClCompile Include="StringUtils.cpp" />
     <ClCompile Include="CommandContainer.cpp" />
+    <ClCompile Include="Encoder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SerialRegisterArray.h" />
