@@ -10,6 +10,8 @@ using namespace Utility;
 
 namespace CommandLineInterface
 {
+const std::string CLI::PROMPT = "> ";
+
 /**
  * @brief Create a new command line on given streams.
  * @param in Input stream
@@ -21,7 +23,6 @@ CLI::CLI(std::istream &in, std::ostream &out)
     : CommandContainer()
     , m_in(in)
     , m_out(out)
-    , m_prompt("> ")
     , m_exitCode(CLI_RUN)
 {
   /* Add exit command */
@@ -49,7 +50,7 @@ int CLI::run()
 {
   while (m_exitCode == CLI_RUN)
   {
-    m_out << m_prompt;
+    m_out << PROMPT;
 
     std::string command;
     std::getline(m_in, command);
