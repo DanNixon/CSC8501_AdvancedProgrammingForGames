@@ -9,6 +9,11 @@
 
 namespace CircuitSimulator
 {
+/**
+ * @class Circuit
+ * @author Dan Nixon
+ * @brief Stores the setup and state of a virtual circut.
+ */
 class Circuit
 {
 public:

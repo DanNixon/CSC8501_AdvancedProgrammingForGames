@@ -6,6 +6,11 @@
 
 namespace CircuitSimulator
 {
+/**
+ * @class Component
+ * @author Dan Nixon
+ * @brief Abstract class representing a component in a Circuit.
+ */
 class Component
 {
 public:

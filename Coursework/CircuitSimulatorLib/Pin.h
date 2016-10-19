@@ -11,6 +11,11 @@
 
 namespace CircuitSimulator
 {
+/**
+ * @class Pin
+ * @author Dan Nixon
+ * @brief Stores state and connections of a pin of a Component.
+ */
 class Pin
 {
 public:

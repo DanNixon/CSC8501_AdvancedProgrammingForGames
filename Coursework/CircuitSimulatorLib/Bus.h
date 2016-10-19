@@ -6,6 +6,12 @@
 
 namespace CircuitSimulator
 {
+/**
+ * @class Bus
+ * @author Dan Nixon
+ * @brief Provides a method of inserting and extracting pin states from a
+ *        Circuit.
+ */
 class Bus : public Component
 {
 public:

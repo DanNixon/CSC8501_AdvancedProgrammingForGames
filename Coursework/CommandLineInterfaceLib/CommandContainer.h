@@ -8,6 +8,12 @@
 
 namespace CommandLineInterface
 {
+/**
+ * @class CommandContainer
+ * @author Dan Nixon
+ * @brief Abstract class providing functionality required to contain and select
+ *        Command.
+ */
 class CommandContainer
 {
 public:

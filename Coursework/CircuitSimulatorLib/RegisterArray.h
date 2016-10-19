@@ -8,6 +8,11 @@
 
 namespace CircuitSimulator
 {
+/**
+ * @class RegisterArray
+ * @author Dan Nixon
+ * @brief Represents an array of bits in a register with shifting functionality.
+ */
 class RegisterArray : public Component
 {
 public:

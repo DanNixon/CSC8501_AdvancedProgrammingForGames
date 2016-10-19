@@ -10,6 +10,11 @@
 
 namespace CircuitSimulator
 {
+/**
+ * @class Encoder
+ * @author Dan Nixon
+ * @brief Specialisation of a Circuit for a convolutional encoder.
+ */
 class Encoder : public Circuit
 {
 public:
