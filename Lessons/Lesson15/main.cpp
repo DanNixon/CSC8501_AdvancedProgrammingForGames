@@ -2,8 +2,8 @@
 #include <string>
 #include <vector>
 
-#include "Thread.h"
 #include "Mutex.h"
+#include "Thread.h"
 
 Mutex mut;
 std::vector<std::string> buffer;
@@ -38,17 +38,42 @@ protected:
   }
 };
 
+class HelloWorld : public Thread
+{
+public:
+  HelloWorld(std::ostream &str)
+      : m_stream(str)
+  {
+  }
+
+protected:
+  virtual void run()
+  {
+    for (size_t i = 0; i < 10; i++)
+    {
+      m_stream << "Hello, world!\n";
+      Sleep(250);
+    }
+  }
+
+private:
+  std::ostream &m_stream;
+};
+
 int main()
 {
   Producer prod;
   Consumer cons;
+  HelloWorld hw(std::cout);
 
+  hw.start();
   cons.start();
   Sleep(1000);
   prod.start();
 
   prod.join();
   cons.join();
+  hw.join();
 
   return 0;
 }

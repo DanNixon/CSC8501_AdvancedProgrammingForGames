@@ -1,5 +1,6 @@
 #pragma once
 
+#include <mutex>
 #include <ostream>
 
 #include "BSTNode.h"
@@ -8,7 +9,8 @@ template <typename T> class BST
 {
 public:
   BST()
-      : m_tree(nullptr)
+      : m_mutex()
+      , m_tree(nullptr)
   {
   }
 
@@ -20,6 +22,8 @@ public:
 
   void insert(T value)
   {
+    std::lock_guard<std::mutex> lock(m_mutex);
+
     if (m_tree == nullptr)
     {
       m_tree = new BSTNode<T>(value);
@@ -46,5 +50,6 @@ public:
   }
 
 private:
+  std::mutex m_mutex;
   BSTNode<T> *m_tree;
 };
