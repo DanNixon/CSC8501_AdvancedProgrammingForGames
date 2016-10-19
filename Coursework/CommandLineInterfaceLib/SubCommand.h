@@ -15,6 +15,11 @@ namespace CommandLineInterface
 class SubCommand : public Command, public CommandContainer
 {
 public:
+  /**
+   * @brief Creates a new subcommand.
+   * @param commandName Name of the command
+   * @param desc Short description of the command
+   */
   SubCommand(const std::string &commandName, const std::string &desc = "")
       : Command(commandName,
                 [this](std::istream &in, std::ostream & out,

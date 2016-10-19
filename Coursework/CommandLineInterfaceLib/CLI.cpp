@@ -10,6 +10,13 @@ using namespace Utility;
 
 namespace CommandLineInterface
 {
+/**
+ * @brief Create a new command line on given streams.
+ * @param in Input stream
+ * @param out Output stream
+ *
+ * Implicitly adds the "exit" command to exit the application.
+ */
 CLI::CLI(std::istream &in, std::ostream &out)
     : CommandContainer()
     , m_in(in)
@@ -17,20 +24,27 @@ CLI::CLI(std::istream &in, std::ostream &out)
     , m_prompt("> ")
     , m_exitCode(CLI_RUN)
 {
-  // Add exit command
-  m_commands.push_back(new Command("exit",
-                                   [this](std::istream &in, std::ostream &out,
-                                          std::vector<std::string> argv) {
-                                     this->exit();
-                                     return 0;
-                                   },
-                                   "Exit the application."));
+  /* Add exit command */
+  m_commands.push_back(new Command(
+      "exit",
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> argv)
+      {
+        this->exit();
+        return 0;
+      },
+      "Exit the application."));
 }
 
 CLI::~CLI()
 {
 }
 
+/**
+ * @brief Runs the command line interface.
+ * @return Exit code
+ *
+ * This should be called in main() after required setup logic.
+ */
 int CLI::run()
 {
   while (m_exitCode == CLI_RUN)
@@ -49,6 +63,9 @@ int CLI::run()
   return (int)m_exitCode;
 }
 
+/**
+ * @brief Sets the flag to exit the application cleanly.
+ */
 void CLI::exit()
 {
   m_exitCode = CLI_EXIT_CLEAN;
