@@ -7,6 +7,15 @@
 
 const std::string file_name = "data.txt";
 
+class too_few_values_error : public std::runtime_error
+{
+public:
+  too_few_values_error()
+    : std::runtime_error("Too few values in scores vector")
+  {
+  }
+};
+
 void read_scores(std::vector<int> &scores)
 {
   std::ifstream data_file;
@@ -21,6 +30,9 @@ void read_scores(std::vector<int> &scores)
     scores.push_back(temp);
 
   data_file.close();
+
+  if (scores.size() < 10)
+    throw too_few_values_error();
 }
 
 double find_average(const int sum, const int divisor)
@@ -72,16 +84,21 @@ int main()
     {
       sum += scores[i];
     }
-    std::cout << "avg = " << find_average(sum, (int)scores.size()) << "\n";
+    std::cout << "avg = " << find_average(sum, (int)scores.size()) << '\n';
   }
   catch (const std::invalid_argument &iae)
   {
-    std::cout << "unable to read data: " << iae.what() << "\n";
+    std::cout << "unable to read data: " << iae.what() << '\n';
+    exit(1);
+  }
+  catch (const too_few_values_error &e)
+  {
+    std::cout << "error reading data: " << e.what() << '\n';
     exit(1);
   }
   catch (const std::runtime_error &rte)
   {
-    std::cout << "unable to compute average: " << rte.what() << "\n";
+    std::cout << "unable to compute average: " << rte.what() << '\n';
     exit(1);
   }
 
