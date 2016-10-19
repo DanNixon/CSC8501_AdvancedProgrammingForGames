@@ -7,6 +7,9 @@
 
 namespace CommandLineInterface
 {
+/**
+ * @brief Represents reasons for termination and their associated exit codes.
+ */
 enum CLIExit
 {
   CLI_RUN = -1,
@@ -14,6 +17,11 @@ enum CLIExit
   CLI_EXIT_EXCEPTION = 1
 };
 
+/**
+ * @class CLI
+ * @author Dan Nixon
+ * @brief Class handling execution of a persistent command line interface.
+ */
 class CLI : public CommandContainer
 {
 public:

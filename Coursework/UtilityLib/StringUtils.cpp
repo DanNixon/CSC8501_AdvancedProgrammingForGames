@@ -4,6 +4,12 @@
 
 namespace Utility
 {
+/**
+ * @brief Splits a string into tokens by a given delimiter.
+ * @param subStrs Reference to vector to store tokens in
+ * @param str String to split
+ * @param delim Delimiter to split by
+ */
 void StringUtils::Split(std::vector<std::string> &subStrs,
                         const std::string &str, char delim)
 {

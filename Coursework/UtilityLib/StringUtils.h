@@ -7,6 +7,11 @@
 
 namespace Utility
 {
+/**
+ * @class StringUtils
+ * @author Dan Nixon
+ * @brief Contains utility functions for string manipulation.
+ */
 class StringUtils
 {
 public:

@@ -8,12 +8,16 @@
 
 namespace CommandLineInterface
 {
+/**
+ * @class Command
+ * @author Dan Nixon
+ * @brief Stores data for a single executable CLI command.
+ */
 class Command
 {
 public:
   typedef std::function<int(std::istream &in, std::ostream &out,
-                            std::vector<std::string>)>
-      CMDHandlerFunc;
+                            std::vector<std::string>)> CMDHandlerFunc;
 
 public:
   Command(const std::string &commandName, CMDHandlerFunc func,
