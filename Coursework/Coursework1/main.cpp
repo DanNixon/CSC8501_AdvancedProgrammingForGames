@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
 
 #include "CommandLineInterfaceLib/CLI.h"
 #include "CommandLineInterfaceLib/Command.h"
