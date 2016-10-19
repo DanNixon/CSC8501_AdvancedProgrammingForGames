@@ -15,6 +15,8 @@ XORGate::~XORGate()
 
 void XORGate::operate()
 {
-  pin("z")->setState(pin("a")->getState() != pin("b")->getState());
+  bool a = pin("a")->getState();
+  bool b = pin("b")->getState();
+  pin("z")->setState(a != b);
 }
 }

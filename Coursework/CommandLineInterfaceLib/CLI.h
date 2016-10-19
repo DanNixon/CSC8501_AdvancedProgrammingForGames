@@ -25,6 +25,9 @@ enum CLIExit
 class CLI : public CommandContainer
 {
 public:
+  static const std::string PROMPT;
+
+public:
   CLI(std::istream &in, std::ostream &out);
   virtual ~CLI();
 
@@ -35,8 +38,6 @@ public:
 private:
   std::istream &m_in;
   std::ostream &m_out;
-
-  std::string m_prompt;
 
   CLIExit m_exitCode;
 };
