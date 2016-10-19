@@ -22,11 +22,19 @@ public:
   Pin(const std::string &id, uint8_t flags);
   virtual ~Pin();
 
+  /**
+   * @brief Gets the string ID of the pin.
+   * @return String ID
+   */
   inline std::string id() const
   {
     return m_id;
   }
 
+  /**
+   * @brief Gets the IO flags of the pin.
+   * @return IO flags
+   */
   inline uint8_t flags() const
   {
     return m_flags;
@@ -40,6 +48,10 @@ public:
 
   void setState(bool state);
 
+  /**
+   * @brief Gets the state of the pin.
+   * @return State value
+   */
   inline bool getState() const
   {
     return m_state;

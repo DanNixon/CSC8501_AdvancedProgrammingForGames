@@ -26,6 +26,6 @@ public:
   void advanceRegisters(int8_t direction);
 
 private:
-  std::vector<RegisterArray *> m_registers;
+  std::vector<RegisterArray *> m_registers; //!< Components that are registers
 };
 }
