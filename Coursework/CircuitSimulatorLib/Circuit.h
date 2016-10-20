@@ -26,6 +26,7 @@ public:
   bool hasComponent(const std::string &name) const;
 
   virtual void wireUp(const std::string &from, const std::string &to);
+  bool validate() const;
 
   virtual void setInput(const std::string &name, bool value);
   virtual bool getInput(const std::string &name) const;

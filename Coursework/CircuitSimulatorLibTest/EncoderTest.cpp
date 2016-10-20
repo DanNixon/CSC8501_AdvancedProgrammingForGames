@@ -30,6 +30,8 @@ public:
     e.wireUp("r.bit_3", "xor1.b");
     e.wireUp("xor1.z", "output_bus.bit_1");
 
+    Assert::IsTrue(e.validate());
+
     Assert::AreEqual(false, e.getOutput("bit_0"));
     Assert::AreEqual(false, e.getOutput("bit_1"));
 

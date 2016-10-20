@@ -24,6 +24,8 @@ public:
     c.wireUp("xor1.z", "output_bus.out2");
     c.wireUp("input_bus.in3", "output_bus.out3");
 
+    Assert::IsTrue(c.validate());
+
     // Input 000
     c.setInput("in1", false);
     c.setInput("in2", false);

@@ -107,6 +107,19 @@ void Circuit::wireUp(const std::string &from, const std::string &to)
 }
 
 /**
+ * @brief Validates the current configuration of the circuit.
+ * @return True for a valid circuit
+ *
+ * A circuit is valid iff there are no cycles in the graph of component/pin
+ * wiring.
+ */
+bool Circuit::validate() const
+{
+  // TODO
+  return false;
+}
+
+/**
  * @brief Sets the value of a pin on the input bus.
  * @param name Input name
  * @param value Value
