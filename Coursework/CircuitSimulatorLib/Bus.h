@@ -15,6 +15,11 @@ namespace CircuitSimulator
 class Bus : public Component
 {
 public:
+  /**
+   * @brief Creates a new IO bus.
+   * @param id String ID
+   * @param ioNames List if IO pin names
+   */
   Bus(const std::string &id, std::vector<std::string> ioNames)
       : Component(id, "Bus", {}, {})
   {
@@ -26,9 +31,12 @@ public:
   {
   }
 
+  /**
+   * @copydoc Component::operate
+   */
   virtual void operate()
   {
-    // Nothing to do here
+    /* Nothing to do here */
   }
 };
 }

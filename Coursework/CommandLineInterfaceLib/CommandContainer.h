@@ -27,6 +27,6 @@ public:
   void help(std::ostream &out);
 
 protected:
-  std::vector<Command *> m_commands; //<! Commands in this container
+  std::vector<Command *> m_commands; //!< Commands in this container
 };
 }

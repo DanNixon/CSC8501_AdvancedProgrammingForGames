@@ -10,6 +10,9 @@ using namespace Utility;
 
 namespace CommandLineInterface
 {
+/**
+ * @brief String that is shown when the CLI prompt is displayed.
+ */
 const std::string CLI::PROMPT = "> ";
 
 /**

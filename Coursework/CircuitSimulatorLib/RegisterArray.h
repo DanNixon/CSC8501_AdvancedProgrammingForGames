@@ -16,6 +16,11 @@ namespace CircuitSimulator
 class RegisterArray : public Component
 {
 public:
+  /**
+   * @brief Creates a new register array of a given number of bits.
+   * @param id String ID
+   * @param numElements NUmber of register bit positions
+   */
   RegisterArray(const std::string &id, size_t numElements)
       : Component(id, "Register Array", {}, {})
   {
@@ -28,11 +33,17 @@ public:
   {
   }
 
+  /**
+   * @copydoc Component::operate
+   */
   virtual void operate()
   {
-    // Nothing to do here
+    /* Nothing to do here */
   }
 
+  /**
+   * @brief Performs a bit shift left.
+   */
   void shiftLeft()
   {
     if (m_pins.size() < 2)
@@ -44,6 +55,9 @@ public:
     m_pins.front()->setState(false);
   }
 
+  /**
+   * @brief Performs a bit shift right.
+   */
   void shiftRight()
   {
     if (m_pins.size() < 2)
