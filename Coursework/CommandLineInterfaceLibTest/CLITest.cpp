@@ -67,7 +67,7 @@ public:
 
     c.registerCommand(new CommandLineInterface::Command(
       "test",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> argv) {
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
       out << "Test command.\n";
       return 0;
     },
@@ -78,7 +78,7 @@ public:
 
     sub1->registerCommand(new CommandLineInterface::Command(
       "list",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> argv) {
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
       out << "Test command => list.\n";
       return 0;
     },

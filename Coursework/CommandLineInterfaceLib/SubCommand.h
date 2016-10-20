@@ -23,7 +23,7 @@ public:
   SubCommand(const std::string &commandName, const std::string &desc = "")
       : Command(commandName,
                 [this](std::istream &in, std::ostream & out,
-                       std::vector<std::string> argv)
+                       std::vector<std::string> &argv)
                 {
                   argv.erase(argv.begin());
                   return this->handle(in, out, argv);

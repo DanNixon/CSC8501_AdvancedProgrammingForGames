@@ -11,6 +11,8 @@
 
 namespace CircuitSimulator
 {
+class Component;
+
 /**
  * @class Pin
  * @author Dan Nixon
@@ -19,7 +21,7 @@ namespace CircuitSimulator
 class Pin
 {
 public:
-  Pin(const std::string &id, uint8_t flags);
+  Pin(Component * parent, const std::string &id, uint8_t flags);
   virtual ~Pin();
 
   /**
@@ -58,6 +60,7 @@ public:
   }
 
 private:
+  const Component *m_parentComponent;       //!< Pointer to parent component
   const std::string m_id;                   //!< Unique string ID
   const uint8_t m_flags;                    //!< IO pin flags
   bool m_state;                             //!< Current pin state

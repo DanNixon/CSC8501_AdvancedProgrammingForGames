@@ -23,7 +23,7 @@ public:
    * parameters as parameters and returns an exit code.
    */
   typedef std::function<int(std::istream &in, std::ostream &out,
-                            std::vector<std::string>)> CMDHandlerFunc;
+                            std::vector<std::string> &argv)> CMDHandlerFunc;
 
 public:
   /**
@@ -78,7 +78,7 @@ public:
    * being executed (as per argv convention).
    */
   inline int handleCmdFunc(std::istream &in, std::ostream &out,
-                           std::vector<std::string> tokens) const
+                           std::vector<std::string> &tokens) const
   {
     return m_handlerFunc(in, out, tokens);
   }

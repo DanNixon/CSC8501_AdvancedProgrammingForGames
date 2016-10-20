@@ -23,13 +23,13 @@ Component::Component(const std::string &id, const std::string &name,
 {
   for (auto it = inputs.begin(); it != inputs.end(); ++it)
   {
-    Pin *p = new Pin(*it, PIN_FLAG_INPUT);
+    Pin *p = new Pin(this, *it, PIN_FLAG_INPUT);
     p->setOnChange([this]() { this->operate(); });
     m_pins.push_back(p);
   }
 
   for (auto it = outputs.begin(); it != outputs.end(); ++it)
-    m_pins.push_back(new Pin(*it, PIN_FLAG_OUTPUT));
+    m_pins.push_back(new Pin(this, *it, PIN_FLAG_OUTPUT));
 }
 
 Component::~Component()

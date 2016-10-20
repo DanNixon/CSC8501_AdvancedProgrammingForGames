@@ -8,16 +8,16 @@ namespace CircuitSimulator
 {
 /**
  * @brief Create a new pin.
+ * @param parent Pointer to the parent component
  * @param id String ID of the pin
  * @param flags IO flags
  */
-Pin::Pin(const std::string &id, uint8_t flags)
-    : m_id(id)
+Pin::Pin(Component *parent, const std::string &id, uint8_t flags)
+    : m_parentComponent(parent)
+    , m_id(id)
     , m_flags(flags)
     , m_state(false)
-    , m_onChange([]()
-                 {
-                 })
+    , m_onChange([]() {})
 {
 }
 

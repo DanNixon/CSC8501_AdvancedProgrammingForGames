@@ -25,7 +25,7 @@ public:
       : Component(id, "Register Array", {}, {})
   {
     for (size_t i = 0; i < numElements; i++)
-      m_pins.push_back(new Pin(("bit_" + std::to_string(i)),
+      m_pins.push_back(new Pin(this, ("bit_" + std::to_string(i)),
                                PIN_FLAG_OUTPUT | PIN_FLAG_INPUT));
   }
 

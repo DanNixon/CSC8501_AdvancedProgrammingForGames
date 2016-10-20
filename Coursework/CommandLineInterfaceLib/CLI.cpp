@@ -31,7 +31,7 @@ CLI::CLI(std::istream &in, std::ostream &out)
   /* Add exit command */
   m_commands.push_back(new Command(
       "exit",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> argv)
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
       {
         this->exit();
         return 0;
