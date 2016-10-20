@@ -106,25 +106,6 @@ bool Component::validate() const
   return retVal;
 }
 
-bool Component::validate(std::vector<Pin*>& stack, Pin * exclude)
-{
-  bool retVal = true;
-
-  for (auto it = m_pins.begin(); it != m_pins.end(); ++it)
-  {
-    if (!(*it)->isInput() || *it == exclude)
-      continue;
-
-    if (!(*it)->depthFirstValidation(stack))
-    {
-      retVal = false;
-      break;
-    }
-  }
-
-  return retVal;
-}
-
 /**
  * @brief Sets the value of an input pin.
  * @param name Input name

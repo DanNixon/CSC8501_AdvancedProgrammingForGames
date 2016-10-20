@@ -88,7 +88,7 @@ void Pin::setState(bool state)
  * @param stack Reference to the stack of pins traversed
  * @return True if stack contained no duplicates
  */
-bool Pin::depthFirstValidation(std::vector<Pin*> & stack)
+bool Pin::depthFirstValidation(std::vector<Pin*> & stack, bool comp)
 {
   // Check if this pin is in the stack, if so there is a cycle
   if (std::find(stack.begin(), stack.end(), this) != stack.end())
@@ -113,10 +113,19 @@ bool Pin::depthFirstValidation(std::vector<Pin*> & stack)
   }
 
   // Check all input pins of component if this is an output pin
-  if (isOutput() && retVal)
+  if (isOutput() && retVal && !comp)
   {
-    if (!m_parentComponent->validate(stack, this))
-      retVal = false;
+    for (auto it = m_parentComponent->m_pins.begin(); it != m_parentComponent->m_pins.end(); ++it)
+    {
+      if (!(*it)->isInput() || *it == this)
+        continue;
+
+      if (!(*it)->depthFirstValidation(stack, true))
+      {
+        retVal = false;
+        break;
+      }
+    }
   }
 
   // Pop this node from the stack

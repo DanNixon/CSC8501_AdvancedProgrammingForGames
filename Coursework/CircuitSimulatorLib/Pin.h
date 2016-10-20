@@ -59,7 +59,7 @@ public:
     return m_state;
   }
 
-  bool depthFirstValidation(std::vector<Pin *> &stack);
+  bool depthFirstValidation(std::vector<Pin *> &stack, bool comp = false);
 
 private:
   Component *m_parentComponent;       //!< Pointer to parent component

@@ -41,7 +41,6 @@ public:
   bool hasPin(const std::string &name, uint8_t flag) const;
 
   bool validate() const;
-  bool validate(std::vector<Pin *> &stack, Pin * exclude);
 
   void setInput(const std::string &name, bool value);
   bool getInput(const std::string &name) const;
@@ -55,6 +54,7 @@ public:
   friend std::ostream &operator<<(std::ostream &stream, const Component &o);
 
 protected:
+  friend class Pin;
   const std::string m_id;    //!< Unique string ID
   const std::string m_name;  //!< Per component name
   std::vector<Pin *> m_pins; //!< Vector of IO pins
