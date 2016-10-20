@@ -4,6 +4,8 @@
 
 #include <algorithm>
 
+#include "Component.h"
+
 namespace CircuitSimulator
 {
 /**
@@ -79,5 +81,47 @@ void Pin::setState(bool state)
     (*it)->setState(m_state);
 
   m_onChange();
+}
+
+/**
+ * @brief Performs a depth first traversal to validate that there are no cycles in the inbound connections of this pin.
+ * @param stack Reference to the stack of pins traversed
+ * @return True if stack contained no duplicates
+ */
+bool Pin::depthFirstValidation(std::vector<Pin*> & stack)
+{
+  // Check if this pin is in the stack, if so there is a cycle
+  if (std::find(stack.begin(), stack.end(), this) != stack.end())
+    return false;
+
+  // Add this pin to the stack
+  stack.push_back(this);
+
+  bool retVal = true;
+
+  // Check all incomming connections for an input pin
+  if (isInput())
+  {
+    for (auto it = m_inboundConnections.begin(); it != m_inboundConnections.end(); ++it)
+    {
+      if (!(*it)->depthFirstValidation(stack))
+      {
+        retVal = false;
+        break;
+      }
+    }
+  }
+
+  // Check all input pins of component if this is an output pin
+  if (isOutput() && retVal)
+  {
+    if (!m_parentComponent->validate(stack, this))
+      retVal = false;
+  }
+
+  // Pop this node from the stack
+  stack.pop_back();
+
+  return retVal;
 }
 }

@@ -115,8 +115,7 @@ void Circuit::wireUp(const std::string &from, const std::string &to)
  */
 bool Circuit::validate() const
 {
-  // TODO
-  return false;
+  return component("output_bus")->validate();
 }
 
 /**

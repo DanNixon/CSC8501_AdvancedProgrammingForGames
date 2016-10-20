@@ -40,6 +40,9 @@ public:
   const Pin *Component::pin(const std::string &name) const;
   bool hasPin(const std::string &name, uint8_t flag) const;
 
+  bool validate() const;
+  bool validate(std::vector<Pin *> &stack, Pin * exclude);
+
   void setInput(const std::string &name, bool value);
   bool getInput(const std::string &name) const;
   bool getOutput(const std::string &name) const;

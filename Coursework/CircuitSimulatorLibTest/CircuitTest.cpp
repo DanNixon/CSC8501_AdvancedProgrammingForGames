@@ -74,6 +74,24 @@ public:
     Assert::AreEqual(true, c.getOutput("out2"));
     Assert::AreEqual(true, c.getOutput("out3"));
   }
+
+  TEST_METHOD(Circuit_Validation_XORCycle)
+  {
+    Circuit c({ "in1", "in2", "in3" }, { "out1", "out2", "out3" });
+
+    c.addComponent(new XORGate("xor1"));
+    c.addComponent(new XORGate("xor2"));
+
+    c.wireUp("input_bus.in1", "xor1.a");
+    c.wireUp("input_bus.in2", "xor2.b");
+    c.wireUp("xor1.z", "xor2.a");
+    c.wireUp("xor2.z", "xor1.b");
+    c.wireUp("xor1.z", "output_bus.out1");
+    c.wireUp("xor2.z", "output_bus.out2");
+    c.wireUp("input_bus.in3", "output_bus.out3");
+
+    Assert::IsFalse(c.validate());
+  }
 };
 }
 }

@@ -59,8 +59,10 @@ public:
     return m_state;
   }
 
+  bool depthFirstValidation(std::vector<Pin *> &stack);
+
 private:
-  const Component *m_parentComponent;       //!< Pointer to parent component
+  Component *m_parentComponent;       //!< Pointer to parent component
   const std::string m_id;                   //!< Unique string ID
   const uint8_t m_flags;                    //!< IO pin flags
   bool m_state;                             //!< Current pin state
