@@ -65,6 +65,13 @@ const Pin *Component::pin(const std::string &name) const
   return *it;
 }
 
+/**
+ * @brief Checks if a Pin with a given name and IO flags exists on this
+ *        component.
+ * @param name Unique name of the pin
+ * @param flag Pin flags
+ * @return True if a pin with the given name and flags exists
+ */
 bool Component::hasPin(const std::string &name, uint8_t flag) const
 {
   return std::find_if(m_pins.begin(), m_pins.end(), [name, flag](Pin *p)
@@ -73,6 +80,11 @@ bool Component::hasPin(const std::string &name, uint8_t flag) const
                       }) != m_pins.end();
 }
 
+/**
+ * @brief Sets the value of an input pin.
+ * @param name Input name
+ * @param value Value
+ */
 void Component::setInput(const std::string &name, bool value)
 {
   Pin *p = pin(name);
@@ -82,6 +94,11 @@ void Component::setInput(const std::string &name, bool value)
   p->setState(value);
 }
 
+/**
+ * @brief Gets the value of an input pin.
+ * @param name Input name
+ * @return Value
+ */
 bool Component::getInput(const std::string &name) const
 {
   const Pin *p = pin(name);
@@ -91,6 +108,11 @@ bool Component::getInput(const std::string &name) const
   return p->getState();
 }
 
+/**
+ * @brief Gets the value of an output pin.
+ * @param name Input name
+ * @return Value
+ */
 bool Component::getOutput(const std::string &name) const
 {
   const Pin *p = pin(name);
@@ -100,6 +122,12 @@ bool Component::getOutput(const std::string &name) const
   return p->getState();
 }
 
+/**
+ * @brief Output a Component to a stream as a friendly formatted string.
+ * @param stream Reference to output stream
+ * @param o Component to output
+ * @return Reference to output stream
+ */
 std::ostream &operator<<(std::ostream &stream, const Component &o)
 {
   stream << "Component[" << o.m_name << ", id=" << o.m_id << "]";
