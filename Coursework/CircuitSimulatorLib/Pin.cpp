@@ -53,6 +53,7 @@ void Pin::wireTo(Pin *other)
     throw std::runtime_error("Wire has no directionality");
 
   m_outboundConnections.push_back(other);
+  other.m_inboundConnections.push_back(this);
 }
 
 /**

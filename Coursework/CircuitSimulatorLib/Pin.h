@@ -58,10 +58,12 @@ public:
   }
 
 private:
-  const std::string m_id;
-  const uint8_t m_flags;
-  bool m_state;
-  std::vector<Pin *> m_outboundConnections;
-  std::function<void(void)> m_onChange;
+  const std::string m_id;                   //!< Unique string ID
+  const uint8_t m_flags;                    //!< IO pin flags
+  bool m_state;                             //!< Current pin state
+  std::vector<Pin *> m_inboundConnections;  //!< Vector of inbound connections
+  std::vector<Pin *> m_outboundConnections; //!< Vector of outbound connections
+  std::function<void(void)>
+      m_onChange; //!< Function called when pin state is set
 };
 }

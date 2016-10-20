@@ -43,7 +43,7 @@ size_t BinaryFileIO::Read(std::vector<bool> &bits, std::istream &in)
 /**
  * @brief Writes a formatted binary string to an output stream.
  * @param bits Reference to vector containing bits to write
- * @param in Reference to stream to write to
+ * @param out Reference to stream to write to
  * @return Number of bits written
  */
 size_t BinaryFileIO::Write(const std::vector<bool> &bits, std::ostream &out)
