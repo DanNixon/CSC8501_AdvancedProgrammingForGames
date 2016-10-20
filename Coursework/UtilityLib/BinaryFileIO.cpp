@@ -3,6 +3,7 @@
 #include "BinaryFileIO.h"
 
 #include <fstream>
+#include <string>
 
 namespace Utility
 {
@@ -15,11 +16,26 @@ namespace Utility
 size_t BinaryFileIO::Read(std::vector<bool> &bits, std::istream &in)
 {
   size_t numBits = 0;
-  bool b;
-  while ((in >> b).good())
+  while (!in.eof())
   {
-    bits.push_back(b);
-    numBits++;
+    std::string line;
+    std::getline(in, line);
+    for (auto it = line.begin(); it != line.end(); ++it)
+    {
+      switch (*it)
+      {
+      case '0':
+        bits.push_back(false);
+        numBits++;
+        break;
+      case '1':
+        bits.push_back(true);
+        numBits++;
+        break;
+      default:
+        continue;
+      }
+    }
   }
   return numBits;
 }
