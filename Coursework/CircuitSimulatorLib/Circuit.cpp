@@ -14,8 +14,8 @@ using namespace Utility;
 
 namespace CircuitSimulator
 {
-const std::string INPUT_BUS_NAME = "input_bus";
-const std::string OUTPUT_BUS_NAME = "output_bus";
+const std::string Circuit::INPUT_BUS_NAME = "input_bus";
+const std::string Circuit::OUTPUT_BUS_NAME = "output_bus";
 
 /**
  * @brief Create a new component.
