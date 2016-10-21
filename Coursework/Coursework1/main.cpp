@@ -11,24 +11,32 @@ using namespace CommandLineInterface;
 
 int main()
 {
-  SubCommand_ptr encoderPermutation(
-      new SubCommand("permutation", "Work with encoder permutations."));
+  SubCommand_ptr encoderComponents(
+      new SubCommand("components", "Manage encoder components."));
 
-  encoderPermutation->registerCommand(Command_ptr(new Command(
+  encoderComponents->registerCommand(Command_ptr(new Command(
       "list",
       [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
         return 0;
       },
-      "Lists all permutations.")));
+      "Lists encoder components.")));
 
-  encoderPermutation->registerCommand(Command_ptr(new Command(
-      "load",
+  encoderComponents->registerCommand(Command_ptr(new Command(
+      "add",
       [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
         return 0;
       },
-      "Loads a permutation into the active configuration.")));
+      "Adds a component to the encoder.")));
+
+  encoderComponents->registerCommand(Command_ptr(new Command(
+      "remove",
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        out << "TODO\n";
+        return 0;
+      },
+      "Removes a component from the encoder.")));
 
   SubCommand_ptr encoderWire(new SubCommand("wire", "Manage encoder wiring."));
 
@@ -64,8 +72,36 @@ int main()
       },
       "Removes a wire between two pins.")));
 
+  SubCommand_ptr encoderPermutation(
+      new SubCommand("permutation", "Work with encoder permutations."));
+
+  encoderPermutation->registerCommand(Command_ptr(new Command(
+      "set_base",
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        out << "TODO\n";
+        return 0;
+      },
+      "Sets the current encoder configuration as the base configuration.")));
+
+  encoderPermutation->registerCommand(Command_ptr(new Command(
+      "list",
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        out << "TODO\n";
+        return 0;
+      },
+      "Lists all permutations.")));
+
+  encoderPermutation->registerCommand(Command_ptr(new Command(
+      "load",
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        out << "TODO\n";
+        return 0;
+      },
+      "Loads a permutation into the active configuration.")));
+
   SubCommand_ptr encoder(new SubCommand("encoder", "Configures encoder."));
 
+  encoder->registerCommand(encoderComponents);
   encoder->registerCommand(encoderWire);
   encoder->registerCommand(encoderPermutation);
 
