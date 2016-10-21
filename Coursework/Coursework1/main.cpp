@@ -11,98 +11,89 @@ using namespace CommandLineInterface;
 
 int main()
 {
-  SubCommand *encoderPermutation =
-      new SubCommand("permutation", "Work with encoder permutations.");
+  SubCommand_ptr encoderPermutation(
+      new SubCommand("permutation", "Work with encoder permutations."));
 
-  encoderPermutation->registerCommand(new Command(
+  encoderPermutation->registerCommand(Command_ptr(new Command(
       "list",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
-      {
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
         return 0;
       },
-      "Lists all permutations."));
+      "Lists all permutations.")));
 
-  encoderPermutation->registerCommand(new Command(
+  encoderPermutation->registerCommand(Command_ptr(new Command(
       "load",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
-      {
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
         return 0;
       },
-      "Loads a permutation into the active configuration."));
+      "Loads a permutation into the active configuration.")));
 
-  SubCommand *encoderWire = new SubCommand("wire", "Manage encoder wiring.");
+  SubCommand_ptr encoderWire(new SubCommand("wire", "Manage encoder wiring."));
 
-  encoderWire->registerCommand(new Command(
+  encoderWire->registerCommand(Command_ptr(new Command(
       "reset",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
-      {
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
         return 0;
       },
-      "Resets encoder wiring."));
+      "Resets encoder wiring.")));
 
-  encoderWire->registerCommand(new Command(
+  encoderWire->registerCommand(Command_ptr(new Command(
       "list",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
-      {
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
         return 0;
       },
-      "Lists encoder wiring."));
+      "Lists encoder wiring.")));
 
-  encoderWire->registerCommand(new Command(
+  encoderWire->registerCommand(Command_ptr(new Command(
       "add",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
-      {
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
         return 0;
       },
-      "Adds a wire between two pins."));
+      "Adds a wire between two pins.")));
 
-  encoderWire->registerCommand(new Command(
+  encoderWire->registerCommand(Command_ptr(new Command(
       "remove",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
-      {
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
         return 0;
       },
-      "Removes a wire between two pins."));
+      "Removes a wire between two pins.")));
 
-  SubCommand *encoder = new SubCommand("encoder", "Configures encoder.");
+  SubCommand_ptr encoder(new SubCommand("encoder", "Configures encoder."));
 
   encoder->registerCommand(encoderWire);
   encoder->registerCommand(encoderPermutation);
 
-  encoder->registerCommand(new Command(
+  encoder->registerCommand(Command_ptr(new Command(
       "reset",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
-      {
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
         return 0;
       },
-      "Resets the state of the encoder."));
+      "Resets the state of the encoder.")));
 
-  SubCommand *encode = new SubCommand("encode", "Performs encoding.");
+  SubCommand_ptr encode(new SubCommand("encode", "Performs encoding."));
 
-  encode->registerCommand(new Command(
+  encode->registerCommand(Command_ptr(new Command(
       "string",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
-      {
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
         return 0;
       },
-      "Encodes a string."));
+      "Encodes a string.")));
 
-  encode->registerCommand(new Command(
+  encode->registerCommand(Command_ptr(new Command(
       "file",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
-      {
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
         return 0;
       },
-      "Encodes data from a file."));
+      "Encodes data from a file.")));
 
   CLI cli(std::cin, std::cout);
   cli.registerCommand(encoder);

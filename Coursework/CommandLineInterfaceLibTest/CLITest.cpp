@@ -65,24 +65,23 @@ public:
 
     CLI c(in, out);
 
-    c.registerCommand(new CommandLineInterface::Command(
+    c.registerCommand(Command_ptr(new Command(
       "test",
       [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
       out << "Test command.\n";
       return 0;
     },
-      "Is a test."));
+      "Is a test.")));
 
-    CommandLineInterface::SubCommand *sub1 =
-      new CommandLineInterface::SubCommand("sub1", "Test subcommand.");
+    SubCommand_ptr sub1(new CommandLineInterface::SubCommand("sub1", "Test subcommand."));
 
-    sub1->registerCommand(new CommandLineInterface::Command(
+    sub1->registerCommand(Command_ptr(new Command(
       "list",
       [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
       out << "Test command => list.\n";
       return 0;
     },
-      "Is a test 2."));
+      "Is a test 2.")));
 
     c.registerCommand(sub1);
 

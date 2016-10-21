@@ -5,6 +5,7 @@
 #include <functional>
 #include <string>
 #include <vector>
+#include <memory>
 
 namespace CommandLineInterface
 {
@@ -88,4 +89,7 @@ private:
   const CMDHandlerFunc m_handlerFunc;
   const std::string m_description;
 };
+
+typedef std::shared_ptr<Command> Command_ptr;
+typedef std::shared_ptr<const Command> Command_const_ptr;
 }

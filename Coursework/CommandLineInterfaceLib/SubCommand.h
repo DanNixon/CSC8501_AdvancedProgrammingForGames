@@ -5,6 +5,8 @@
 #include "Command.h"
 #include "CommandContainer.h"
 
+#include <memory>
+
 namespace CommandLineInterface
 {
 /**
@@ -37,4 +39,7 @@ public:
   {
   }
 };
+
+typedef std::shared_ptr<SubCommand> SubCommand_ptr;
+typedef std::shared_ptr<const SubCommand> SubCommand_const_ptr;
 }
