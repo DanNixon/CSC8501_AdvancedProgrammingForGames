@@ -170,6 +170,7 @@
   <ItemGroup>
     <ClCompile Include="BusTest.cpp" />
     <ClCompile Include="CircuitTest.cpp" />
+    <ClCompile Include="CircuitValidatorTest.cpp" />
     <ClCompile Include="EncoderTest.cpp" />
     <ClCompile Include="RegisterArrayTest.cpp" />
     <ClCompile Include="XORGateTest.cpp" />

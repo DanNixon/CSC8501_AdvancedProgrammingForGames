@@ -4,14 +4,19 @@
 
 #include <algorithm>
 
-#include "Bus.h"
-#include "Pin.h"
 #include "UtilityLib/StringUtils.h"
+
+#include "Bus.h"
+#include "CircuitValidator.h"
+#include "Pin.h"
 
 using namespace Utility;
 
 namespace CircuitSimulator
 {
+const std::string INPUT_BUS_NAME = "input_bus";
+const std::string OUTPUT_BUS_NAME = "output_bus";
+
 /**
  * @brief Create a new component.
  * @param inputs List of input pin names
@@ -20,8 +25,8 @@ namespace CircuitSimulator
 Circuit::Circuit(std::vector<std::string> inputs,
                  std::vector<std::string> outputs)
 {
-  m_components.push_back(std::make_shared<Bus>("input_bus", inputs));
-  m_components.push_back(std::make_shared<Bus>("output_bus", outputs));
+  m_components.push_back(std::make_shared<Bus>(INPUT_BUS_NAME, inputs));
+  m_components.push_back(std::make_shared<Bus>(OUTPUT_BUS_NAME, outputs));
 }
 
 Circuit::~Circuit()
@@ -107,7 +112,7 @@ void Circuit::wireUp(const std::string &from, const std::string &to)
  */
 bool Circuit::validate() const
 {
-  return component("output_bus")->validate();
+  return CircuitValidator::Validate(this);
 }
 
 /**

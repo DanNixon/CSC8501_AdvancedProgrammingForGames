@@ -18,6 +18,10 @@ namespace CircuitSimulator
 class Circuit
 {
 public:
+  static const std::string INPUT_BUS_NAME;
+  static const std::string OUTPUT_BUS_NAME;
+
+public:
   Circuit(std::vector<std::string> inputs, std::vector<std::string> outputs);
   virtual ~Circuit();
 

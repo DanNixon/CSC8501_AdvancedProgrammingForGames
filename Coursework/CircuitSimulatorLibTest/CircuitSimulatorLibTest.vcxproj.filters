@@ -6,5 +6,6 @@
     <ClCompile Include="RegisterArrayTest.cpp" />
     <ClCompile Include="XORGateTest.cpp" />
     <ClCompile Include="EncoderTest.cpp" />
+    <ClCompile Include="CircuitValidatorTest.cpp" />
   </ItemGroup>
 </Project>

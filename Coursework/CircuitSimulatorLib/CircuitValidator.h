@@ -9,6 +9,6 @@ namespace CircuitSimulator
 class CircuitValidator
 {
 public:
-  bool Validate(Circuit_ptr c);
+  static bool Validate(const Circuit *c);
 };
 }
