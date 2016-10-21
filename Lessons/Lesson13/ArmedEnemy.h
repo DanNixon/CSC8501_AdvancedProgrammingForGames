@@ -20,8 +20,8 @@ public:
   }
 
   ArmedEnemy(const ArmedEnemy &other)
-    : Enemy(other)
-    , ammo_level(other.ammo_level)
+      : Enemy(other)
+      , ammo_level(other.ammo_level)
   {
   }
 
