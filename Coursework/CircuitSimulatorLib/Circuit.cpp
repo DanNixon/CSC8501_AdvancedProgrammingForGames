@@ -43,6 +43,20 @@ void Circuit::addComponent(Component_ptr component)
 }
 
 /**
+ * @brief Checks of a component exists in the circuit.
+ * @param name Name of the component
+ * @return True if a component with the given name exists
+ */
+bool Circuit::hasComponent(const std::string &name) const
+{
+  auto it =
+      std::find_if(m_components.cbegin(), m_components.cend(),
+                   [name](Component_const_ptr c) { return c->id() == name; });
+
+  return it != m_components.cend();
+}
+
+/**
  * @brief Gets a component by name.
  * @param name Name of the component
  * @return Pointer to component
@@ -73,20 +87,6 @@ Component_const_ptr Circuit::component(const std::string &name) const
     throw std::runtime_error("Could not find component \"" + name + "\"");
 
   return *it;
-}
-
-/**
- * @brief Checks of a component exists in the circuit.
- * @param name Name of the component
- * @return True if a component with the given name exists
- */
-bool Circuit::hasComponent(const std::string &name) const
-{
-  auto it =
-      std::find_if(m_components.cbegin(), m_components.cend(),
-                   [name](Component_const_ptr c) { return c->id() == name; });
-
-  return it != m_components.cend();
 }
 
 /**

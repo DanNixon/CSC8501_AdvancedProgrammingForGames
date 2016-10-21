@@ -39,6 +39,20 @@ Component::~Component()
 }
 
 /**
+ * @brief Checks if a Pin with a given name and IO flags exists on this
+ *        component.
+ * @param name Unique name of the pin
+ * @param flag Pin flags
+ * @return True if a pin with the given name and flags exists
+ */
+bool Component::hasPin(const std::string &name, uint8_t flag) const
+{
+  return std::find_if(m_pins.begin(), m_pins.end(), [name, flag](Pin_ptr p) {
+           return p->id() == name && p->flags() & flag;
+         }) != m_pins.end();
+}
+
+/**
  * @brief Gets a Pin from the component.
  * @param name Unique name of the pin
  * @return Pointer to the Pin
@@ -68,20 +82,6 @@ Pin_const_ptr Component::pin(const std::string &name) const
     throw std::runtime_error("Cannot find pin \"" + name + "\"");
 
   return *it;
-}
-
-/**
- * @brief Checks if a Pin with a given name and IO flags exists on this
- *        component.
- * @param name Unique name of the pin
- * @param flag Pin flags
- * @return True if a pin with the given name and flags exists
- */
-bool Component::hasPin(const std::string &name, uint8_t flag) const
-{
-  return std::find_if(m_pins.begin(), m_pins.end(), [name, flag](Pin_ptr p) {
-           return p->id() == name && p->flags() & flag;
-         }) != m_pins.end();
 }
 
 /**

@@ -26,9 +26,21 @@ public:
   virtual ~Circuit();
 
   virtual void addComponent(Component_ptr component);
+
+  bool hasComponent(const std::string &name) const;
+
   Component_ptr component(const std::string &name);
   Component_const_ptr component(const std::string &name) const;
-  bool hasComponent(const std::string &name) const;
+
+  inline ComponentList_const_iter componentsBegin() const
+  {
+    return m_components.cbegin();
+  }
+
+  inline ComponentList_const_iter componentsEnd() const
+  {
+    return m_components.cend();
+  }
 
   virtual void wireUp(const std::string &from, const std::string &to);
   bool validate() const;
@@ -43,6 +55,6 @@ private:
   Pin_ptr findPatchEndpoint(const std::string &def);
 
 private:
-  std::vector<Component_ptr> m_components;
+  ComponentList m_components;
 };
 }
