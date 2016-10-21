@@ -1,6 +1,6 @@
+#include <ctime>
 #include <iostream>
 #include <vector>
-#include <ctime>
 
 #include "BST.h"
 

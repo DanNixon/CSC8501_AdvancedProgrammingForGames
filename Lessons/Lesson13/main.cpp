@@ -1,7 +1,7 @@
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <algorithm>
 
 #include "ArmedEnemy.h"
 #include "Enemy.h"
@@ -40,10 +40,9 @@ int main(void)
   enemies.push_back(ArmedEnemy(30, 100));
   enemies.push_back(ArmedEnemy(80, 100));
 
-  std::sort(enemies.begin(), enemies.end(), [](ArmedEnemy &a, ArmedEnemy &b)
-            {
-              return a.get_hit_points() < b.get_hit_points();
-            });
+  std::sort(enemies.begin(), enemies.end(), [](ArmedEnemy &a, ArmedEnemy &b) {
+    return a.get_hit_points() < b.get_hit_points();
+  });
 
   for (auto it = enemies.begin(); it != enemies.end(); ++it)
     std::cout << it->get_hit_points() << '\n';
