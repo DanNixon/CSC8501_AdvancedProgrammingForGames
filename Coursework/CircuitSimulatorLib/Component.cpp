@@ -85,31 +85,6 @@ Pin_const_ptr Component::pin(const std::string &name) const
 }
 
 /**
- * @brief Performs a depth first validation of the connections leading to this
- * component.
- * @return True iff there are no cycles/recursion in the connections
- */
-bool Component::validate() const
-{
-  bool retVal = true;
-
-  for (auto it = m_pins.begin(); it != m_pins.end(); ++it)
-  {
-    if (!(*it)->isInput())
-      continue;
-
-    std::vector<Pin *> dftStack;
-    if (!(*it)->depthFirstValidation(dftStack))
-    {
-      retVal = false;
-      break;
-    }
-  }
-
-  return retVal;
-}
-
-/**
  * @brief Sets the value of an input pin.
  * @param name Input name
  * @param value Value

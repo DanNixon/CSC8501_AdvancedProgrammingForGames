@@ -82,8 +82,6 @@ public:
     return m_outboundConnections.cend();
   }
 
-  bool depthFirstValidation(std::vector<Pin *> &stack, bool comp = false);
-
 private:
   Component *m_parentComponent;  //!< Pointer to parent component
   const std::string m_id;        //!< Unique string ID

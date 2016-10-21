@@ -54,8 +54,6 @@ public:
     return m_pins.cend();
   }
 
-  bool validate() const;
-
   void setInput(const std::string &name, bool value);
   bool getInput(const std::string &name) const;
   bool getOutput(const std::string &name) const;
