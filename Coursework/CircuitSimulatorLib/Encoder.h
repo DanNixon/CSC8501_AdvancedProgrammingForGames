@@ -21,11 +21,11 @@ public:
   Encoder();
   virtual ~Encoder();
 
-  virtual void addComponent(Component *component);
+  virtual void addComponent(Component_ptr component);
 
   void advanceRegisters(int8_t direction);
 
 private:
-  std::vector<RegisterArray *> m_registers; //!< Components that are registers
+  std::vector<RegisterArray_ptr> m_registers; //!< Components that are registers
 };
 }

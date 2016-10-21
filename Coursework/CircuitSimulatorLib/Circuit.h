@@ -5,7 +5,8 @@
 #include <string>
 #include <vector>
 
-#include "Component.h"
+#include "Component_fwd.h"
+#include "Pin_fwd.h"
 
 namespace CircuitSimulator
 {
@@ -20,9 +21,9 @@ public:
   Circuit(std::vector<std::string> inputs, std::vector<std::string> outputs);
   virtual ~Circuit();
 
-  virtual void addComponent(Component *component);
-  Component *component(const std::string &name);
-  const Component *component(const std::string &name) const;
+  virtual void addComponent(Component_ptr component);
+  Component_ptr component(const std::string &name);
+  Component_const_ptr component(const std::string &name) const;
   bool hasComponent(const std::string &name) const;
 
   virtual void wireUp(const std::string &from, const std::string &to);
@@ -35,9 +36,9 @@ public:
   friend std::ostream &operator<<(std::ostream &stream, const Circuit &o);
 
 private:
-  Pin *findPatchEndpoint(const std::string &def);
+  Pin_ptr findPatchEndpoint(const std::string &def);
 
 private:
-  std::vector<Component *> m_components;
+  std::vector<Component_ptr> m_components;
 };
 }

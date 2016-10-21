@@ -2,6 +2,8 @@
 
 #include "XORGate.h"
 
+#include "Pin.h"
+
 namespace CircuitSimulator
 {
 XORGate::XORGate(const std::string &id)

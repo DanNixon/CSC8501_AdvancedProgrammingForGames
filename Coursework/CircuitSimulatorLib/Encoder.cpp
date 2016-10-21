@@ -22,11 +22,11 @@ Encoder::~Encoder()
 /**
  * @copydoc Circuit::addComponent
  */
-void Encoder::addComponent(Component *component)
+void Encoder::addComponent(Component_ptr component)
 {
   Circuit::addComponent(component);
 
-  RegisterArray *ra = dynamic_cast<RegisterArray *>(component);
+  RegisterArray_ptr ra = std::dynamic_pointer_cast<RegisterArray>(component);
   if (ra != nullptr)
     m_registers.push_back(ra);
 }

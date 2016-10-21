@@ -30,13 +30,13 @@ CLI::CLI(std::istream &in, std::ostream &out)
 {
   /* Add exit command */
   m_commands.push_back(
-      Command_ptr(new Command("exit",
-                              [this](std::istream &in, std::ostream &out,
-                                     std::vector<std::string> &argv) {
-                                this->exit();
-                                return 0;
-                              },
-                              "Exit the application.")));
+      std::make_shared<Command>("exit",
+                                [this](std::istream &in, std::ostream &out,
+                                       std::vector<std::string> &argv) {
+                                  this->exit();
+                                  return 0;
+                                },
+                                "Exit the application."));
 }
 
 CLI::~CLI()

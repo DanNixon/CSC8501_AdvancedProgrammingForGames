@@ -3,9 +3,9 @@
 #pragma once
 
 #include <functional>
+#include <memory>
 #include <string>
 #include <vector>
-#include <memory>
 
 namespace CommandLineInterface
 {
@@ -24,7 +24,8 @@ public:
    * parameters as parameters and returns an exit code.
    */
   typedef std::function<int(std::istream &in, std::ostream &out,
-                            std::vector<std::string> &argv)> CMDHandlerFunc;
+                            std::vector<std::string> &argv)>
+      CMDHandlerFunc;
 
 public:
   /**

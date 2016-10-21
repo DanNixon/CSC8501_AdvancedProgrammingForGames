@@ -5,6 +5,7 @@
 #include <algorithm>
 
 #include "Bus.h"
+#include "Pin.h"
 #include "UtilityLib/StringUtils.h"
 
 using namespace Utility;
@@ -19,8 +20,8 @@ namespace CircuitSimulator
 Circuit::Circuit(std::vector<std::string> inputs,
                  std::vector<std::string> outputs)
 {
-  m_components.push_back(new Bus("input_bus", inputs));
-  m_components.push_back(new Bus("output_bus", outputs));
+  m_components.push_back(std::make_shared<Bus>("input_bus", inputs));
+  m_components.push_back(std::make_shared<Bus>("output_bus", outputs));
 }
 
 Circuit::~Circuit()
@@ -30,10 +31,8 @@ Circuit::~Circuit()
 /**
  * @brief Adds a component to the circuit.
  * @param component Pointer to component
- *
- * Circuit becomes owner of the component pointed to.
  */
-void Circuit::addComponent(Component *component)
+void Circuit::addComponent(Component_ptr component)
 {
   m_components.push_back(component);
 }
@@ -43,13 +42,10 @@ void Circuit::addComponent(Component *component)
  * @param name Name of the component
  * @return Pointer to component
  */
-Component *Circuit::component(const std::string &name)
+Component_ptr Circuit::component(const std::string &name)
 {
   auto it = std::find_if(m_components.begin(), m_components.end(),
-                         [name](Component *c)
-                         {
-                           return c->id() == name;
-                         });
+                         [name](Component_ptr c) { return c->id() == name; });
 
   if (it == m_components.end())
     throw std::runtime_error("Could not find component \"" + name + "\"");
@@ -62,13 +58,11 @@ Component *Circuit::component(const std::string &name)
  * @param name Name of the component
  * @return Const pointer to component
  */
-const Component *Circuit::component(const std::string &name) const
+Component_const_ptr Circuit::component(const std::string &name) const
 {
-  auto it = std::find_if(m_components.cbegin(), m_components.cend(),
-                         [name](Component *c)
-                         {
-                           return c->id() == name;
-                         });
+  auto it =
+      std::find_if(m_components.cbegin(), m_components.cend(),
+                   [name](Component_const_ptr c) { return c->id() == name; });
 
   if (it == m_components.cend())
     throw std::runtime_error("Could not find component \"" + name + "\"");
@@ -83,11 +77,9 @@ const Component *Circuit::component(const std::string &name) const
  */
 bool Circuit::hasComponent(const std::string &name) const
 {
-  auto it = std::find_if(m_components.cbegin(), m_components.cend(),
-                         [name](Component *c)
-                         {
-                           return c->id() == name;
-                         });
+  auto it =
+      std::find_if(m_components.cbegin(), m_components.cend(),
+                   [name](Component_const_ptr c) { return c->id() == name; });
 
   return it != m_components.cend();
 }
@@ -101,9 +93,9 @@ bool Circuit::hasComponent(const std::string &name) const
  */
 void Circuit::wireUp(const std::string &from, const std::string &to)
 {
-  Pin *source = findPatchEndpoint(from);
-  Pin *dest = findPatchEndpoint(to);
-  source->wireTo(dest);
+  Pin_ptr source = findPatchEndpoint(from);
+  Pin_ptr dest = findPatchEndpoint(to);
+  Pin::WireUp(source, dest);
 }
 
 /**
@@ -125,7 +117,7 @@ bool Circuit::validate() const
  */
 void Circuit::setInput(const std::string &name, bool value)
 {
-  Component *c = component("input_bus");
+  Component_ptr c = component("input_bus");
   c->setInput(name, value);
 }
 
@@ -136,7 +128,7 @@ void Circuit::setInput(const std::string &name, bool value)
  */
 bool Circuit::getInput(const std::string &name) const
 {
-  const Component *c = component("input_bus");
+  Component_const_ptr c = component("input_bus");
   return c->getOutput(name);
 }
 
@@ -147,7 +139,7 @@ bool Circuit::getInput(const std::string &name) const
  */
 bool Circuit::getOutput(const std::string &name) const
 {
-  const Component *c = component("output_bus");
+  Component_const_ptr c = component("output_bus");
   return c->getOutput(name);
 }
 
@@ -157,7 +149,7 @@ bool Circuit::getOutput(const std::string &name) const
  * @return Pointer to pin
  * @see wireUp()
  */
-Pin *Circuit::findPatchEndpoint(const std::string &def)
+Pin_ptr Circuit::findPatchEndpoint(const std::string &def)
 {
   std::vector<std::string> tokens;
   StringUtils::Split(tokens, def, '.');

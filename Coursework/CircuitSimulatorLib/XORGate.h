@@ -19,4 +19,7 @@ public:
 
   virtual void operate();
 };
+
+typedef std::shared_ptr<XORGate> XORGate_ptr;
+typedef std::shared_ptr<const XORGate> XORGate_const_ptr;
 }

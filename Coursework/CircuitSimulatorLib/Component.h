@@ -2,7 +2,10 @@
 
 #pragma once
 
-#include "Pin.h"
+#include <string>
+#include <vector>
+
+#include "Pin_fwd.h"
 
 namespace CircuitSimulator
 {
@@ -36,8 +39,8 @@ public:
     return m_name;
   }
 
-  Pin *pin(const std::string &name);
-  const Pin *Component::pin(const std::string &name) const;
+  Pin_ptr pin(const std::string &name);
+  Pin_const_ptr Component::pin(const std::string &name) const;
   bool hasPin(const std::string &name, uint8_t flag) const;
 
   bool validate() const;
@@ -55,8 +58,8 @@ public:
 
 protected:
   friend class Pin;
-  const std::string m_id;    //!< Unique string ID
-  const std::string m_name;  //!< Per component name
-  std::vector<Pin *> m_pins; //!< Vector of IO pins
+  const std::string m_id;      //!< Unique string ID
+  const std::string m_name;    //!< Per component name
+  std::vector<Pin_ptr> m_pins; //!< Vector of IO pins
 };
 }

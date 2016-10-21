@@ -133,14 +133,19 @@
   <ItemGroup>
     <ClInclude Include="Bus.h" />
     <ClInclude Include="Circuit.h" />
+    <ClInclude Include="CircuitValidator.h" />
+    <ClInclude Include="Circuit_fwd.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="Component_fwd.h" />
     <ClInclude Include="Encoder.h" />
     <ClInclude Include="Pin.h" />
+    <ClInclude Include="Pin_fwd.h" />
     <ClInclude Include="RegisterArray.h" />
     <ClInclude Include="XORGate.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Circuit.cpp" />
+    <ClCompile Include="CircuitValidator.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Encoder.cpp" />
     <ClCompile Include="Pin.cpp" />

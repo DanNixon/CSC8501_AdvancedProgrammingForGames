@@ -4,7 +4,7 @@
 
 #include "Component.h"
 
-#include <bitset>
+#include "Pin.h"
 
 namespace CircuitSimulator
 {
@@ -25,8 +25,8 @@ public:
       : Component(id, "Register Array", {}, {})
   {
     for (size_t i = 0; i < numElements; i++)
-      m_pins.push_back(new Pin(this, ("bit_" + std::to_string(i)),
-                               PIN_FLAG_OUTPUT | PIN_FLAG_INPUT));
+      m_pins.push_back(Pin_ptr(new Pin(this, ("bit_" + std::to_string(i)),
+                                       PIN_FLAG_OUTPUT | PIN_FLAG_INPUT)));
   }
 
   virtual ~RegisterArray()
@@ -69,4 +69,7 @@ public:
     m_pins.back()->setState(false);
   }
 };
+
+typedef std::shared_ptr<RegisterArray> RegisterArray_ptr;
+typedef std::shared_ptr<const RegisterArray> RegisterArray_const_ptr;
 }

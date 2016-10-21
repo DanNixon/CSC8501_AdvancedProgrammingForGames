@@ -4,6 +4,8 @@
 
 #include "Component.h"
 
+#include "Pin.h"
+
 namespace CircuitSimulator
 {
 /**
@@ -24,7 +26,8 @@ public:
       : Component(id, "Bus", {}, {})
   {
     for (auto it = ioNames.begin(); it != ioNames.end(); ++it)
-      m_pins.push_back(new Pin(this, *it, PIN_FLAG_OUTPUT | PIN_FLAG_INPUT));
+      m_pins.push_back(
+          Pin_ptr(new Pin(this, *it, PIN_FLAG_OUTPUT | PIN_FLAG_INPUT)));
   }
 
   virtual ~Bus()
@@ -39,4 +42,7 @@ public:
     /* Nothing to do here */
   }
 };
+
+typedef std::shared_ptr<Bus> Bus_ptr;
+typedef std::shared_ptr<const Bus> Bus_const_ptr;
 }

@@ -8,25 +8,34 @@
 
 namespace CircuitSimulator
 {
+void Pin::WireUp(Pin_ptr source, Pin_ptr dest)
+{
+  if (!((PIN_FLAG_INPUT | PIN_FLAG_OUTPUT) & (source->m_flags | dest->m_flags)))
+    throw std::runtime_error("Wire has no directionality");
+
+  source->m_outboundConnections.push_back(dest);
+  dest->m_inboundConnections.push_back(source);
+}
+
 /**
- * @brief Create a new pin.
- * @param parent Pointer to the parent component
- * @param id String ID of the pin
- * @param flags IO flags
- */
+*@brief Create a new pin.
+*@param parent Pointer to the parent component
+*@param id String ID of the pin
+*@param flags IO flags
+*/
 Pin::Pin(Component *parent, const std::string &id, uint8_t flags)
     : m_parentComponent(parent)
     , m_id(id)
     , m_flags(flags)
     , m_state(false)
-    , m_onChange([]()
-                 {
-                 })
+    , m_onChange([]() {})
 {
 }
 
 Pin::~Pin()
 {
+  m_inboundConnections.clear();
+  m_outboundConnections.clear();
 }
 
 /**
@@ -45,19 +54,6 @@ bool Pin::isInput() const
 bool Pin::isOutput() const
 {
   return (m_flags & PIN_FLAG_OUTPUT) > 0;
-}
-
-/**
- * @brief Wires this pin to another pin.
- * @param other Other pin to wire to
- */
-void Pin::wireTo(Pin *other)
-{
-  if (!((PIN_FLAG_INPUT | PIN_FLAG_OUTPUT) & (m_flags | other->m_flags)))
-    throw std::runtime_error("Wire has no directionality");
-
-  m_outboundConnections.push_back(other);
-  other->m_inboundConnections.push_back(this);
 }
 
 /**
@@ -122,7 +118,7 @@ bool Pin::depthFirstValidation(std::vector<Pin *> &stack, bool comp)
     for (auto it = m_parentComponent->m_pins.begin();
          it != m_parentComponent->m_pins.end(); ++it)
     {
-      if (!(*it)->isInput() || *it == this)
+      if (!(*it)->isInput() || (*it).get() == this)
         continue;
 
       if (!(*it)->depthFirstValidation(stack, true))

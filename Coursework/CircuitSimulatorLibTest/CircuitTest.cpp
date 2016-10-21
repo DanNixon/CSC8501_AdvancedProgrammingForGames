@@ -17,7 +17,7 @@ public:
   {
     Circuit c({ "in1", "in2", "in3" }, { "out1", "out2", "out3" });
 
-    c.addComponent(new XORGate("xor1"));
+    c.addComponent(std::make_shared<XORGate>("xor1"));
 
     c.wireUp("input_bus.in1", "xor1.a");
     c.wireUp("input_bus.in2", "xor1.b");
@@ -80,8 +80,8 @@ public:
   {
     Circuit c({ "in1", "in2", "in3" }, { "out1", "out2", "out3" });
 
-    c.addComponent(new XORGate("xor1"));
-    c.addComponent(new XORGate("xor2"));
+    c.addComponent(std::make_shared<XORGate>("xor1"));
+    c.addComponent(std::make_shared<XORGate>("xor2"));
 
     c.wireUp("input_bus.in1", "xor1.a");
     c.wireUp("input_bus.in2", "xor2.b");
@@ -108,7 +108,7 @@ public:
   {
     Circuit c({ "in1", "in2", "in3" }, { "out1", "out2", "out3" });
 
-    c.addComponent(new RegisterArray("r", 2));
+    c.addComponent(std::make_shared<RegisterArray>("r", 2));
 
     c.wireUp("input_bus.in1", "r.bit_0");
     c.wireUp("r.bit_0", "r.bit_1");
@@ -121,7 +121,7 @@ public:
   {
     Circuit c({ "in1", "in2", "in3" }, { "out1", "out2", "out3" });
 
-    c.addComponent(new RegisterArray("r", 2));
+    c.addComponent(std::make_shared<RegisterArray>("r", 2));
 
     c.wireUp("input_bus.in1", "r.bit_0");
     c.wireUp("r.bit_1", "r.bit_1");

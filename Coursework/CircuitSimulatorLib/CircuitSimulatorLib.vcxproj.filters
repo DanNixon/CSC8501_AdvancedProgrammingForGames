@@ -8,6 +8,10 @@
     <ClInclude Include="Pin.h" />
     <ClInclude Include="XORGate.h" />
     <ClInclude Include="RegisterArray.h" />
+    <ClInclude Include="CircuitValidator.h" />
+    <ClInclude Include="Circuit_fwd.h" />
+    <ClInclude Include="Component_fwd.h" />
+    <ClInclude Include="Pin_fwd.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Circuit.cpp" />
@@ -15,5 +19,6 @@
     <ClCompile Include="Encoder.cpp" />
     <ClCompile Include="Pin.cpp" />
     <ClCompile Include="XORGate.cpp" />
+    <ClCompile Include="CircuitValidator.cpp" />
   </ItemGroup>
 </Project>

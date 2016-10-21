@@ -15,13 +15,13 @@ CommandContainer::CommandContainer()
 {
   /* Add help command */
   m_commands.push_back(
-      Command_ptr(new Command("help",
-                              [this](std::istream &in, std::ostream &out,
-                                     std::vector<std::string> argv) {
-                                this->help(out);
-                                return 0;
-                              },
-                              "Shows command usage.")));
+      std::make_shared<Command>("help",
+                                [this](std::istream &in, std::ostream &out,
+                                       std::vector<std::string> argv) {
+                                  this->help(out);
+                                  return 0;
+                                },
+                                "Shows command usage."));
 }
 
 CommandContainer::~CommandContainer()

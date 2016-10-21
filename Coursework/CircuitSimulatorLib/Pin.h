@@ -6,13 +6,14 @@
 #include <string>
 #include <vector>
 
+#include "Component_fwd.h"
+#include "Pin_fwd.h"
+
 #define PIN_FLAG_INPUT 0x01
 #define PIN_FLAG_OUTPUT 0x02
 
 namespace CircuitSimulator
 {
-class Component;
-
 /**
  * @class Pin
  * @author Dan Nixon
@@ -20,6 +21,9 @@ class Component;
  */
 class Pin
 {
+public:
+  static void WireUp(Pin_ptr source, Pin_ptr dest);
+
 public:
   Pin(Component *parent, const std::string &id, uint8_t flags);
   virtual ~Pin();
@@ -45,7 +49,6 @@ public:
   bool isInput() const;
   bool isOutput() const;
 
-  void wireTo(Pin *other);
   void setOnChange(std::function<void(void)> func);
 
   void setState(bool state);
@@ -62,12 +65,13 @@ public:
   bool depthFirstValidation(std::vector<Pin *> &stack, bool comp = false);
 
 private:
-  Component *m_parentComponent;             //!< Pointer to parent component
-  const std::string m_id;                   //!< Unique string ID
-  const uint8_t m_flags;                    //!< IO pin flags
-  bool m_state;                             //!< Current pin state
-  std::vector<Pin *> m_inboundConnections;  //!< Vector of inbound connections
-  std::vector<Pin *> m_outboundConnections; //!< Vector of outbound connections
+  Component *m_parentComponent;              //!< Pointer to parent component
+  const std::string m_id;                    //!< Unique string ID
+  const uint8_t m_flags;                     //!< IO pin flags
+  bool m_state;                              //!< Current pin state
+  std::vector<Pin_ptr> m_inboundConnections; //!< Vector of inbound connections
+  std::vector<Pin_ptr>
+      m_outboundConnections; //!< Vector of outbound connections
   std::function<void(void)>
       m_onChange; //!< Function called when pin state is set
 };

@@ -17,9 +17,9 @@ public:
   {
     Encoder e;
 
-    e.addComponent(new XORGate("xor1"));
-    e.addComponent(new XORGate("xor2"));
-    e.addComponent(new RegisterArray("r", 4));
+    e.addComponent(std::make_shared<XORGate>("xor1"));
+    e.addComponent(std::make_shared<XORGate>("xor2"));
+    e.addComponent(std::make_shared<RegisterArray>("r", 4));
 
     // Wiring as per example in CW spec
     e.wireUp("input_bus.bit_0", "r.bit_0");
