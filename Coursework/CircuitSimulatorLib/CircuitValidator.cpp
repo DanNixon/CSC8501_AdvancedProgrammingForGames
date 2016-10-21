@@ -1,30 +1,31 @@
 /** @file */
 
 #include "CircuitValidator.h"
+
 #include "Circuit.h"
+#include "Component.h"
+#include "Pin.h"
 
 namespace CircuitSimulator
 {
 bool CircuitValidator::Validate(const Circuit *c)
 {
   Component_const_ptr root = c->component(Circuit::OUTPUT_BUS_NAME);
-
-  // TODO
-  return false;
+  PinStack stack;
+  return ValidateComponent(root, stack);
 }
 
-#if 0
-bool Component::validate() const
+bool CircuitValidator::ValidateComponent(Component_const_ptr component,
+                                         PinStack &stack)
 {
   bool retVal = true;
 
-  for (auto it = m_pins.begin(); it != m_pins.end(); ++it)
+  for (auto it = component->pinsBegin(); it != component->pinsEnd(); ++it)
   {
     if (!(*it)->isInput())
       continue;
 
-    std::vector<Pin *> dftStack;
-    if (!(*it)->depthFirstValidation(dftStack))
+    if (!ValidatePin(*it, stack))
     {
       retVal = false;
       break;
@@ -34,24 +35,25 @@ bool Component::validate() const
   return retVal;
 }
 
-bool Pin::depthFirstValidation(std::vector<Pin *> &stack, bool comp)
+bool CircuitValidator::ValidatePin(Pin_const_ptr pin, PinStack &stack,
+                                   bool comp)
 {
   // Check if this pin is in the stack, if so there is a cycle
-  if (std::find(stack.begin(), stack.end(), this) != stack.end())
+  if (std::find(stack.begin(), stack.end(), pin.get()) != stack.end())
     return false;
 
   // Add this pin to the stack
-  stack.push_back(this);
+  stack.push_back(pin.get());
 
   bool retVal = true;
 
   // Check all incomming connections for an input pin
-  if (isInput())
+  if (pin->isInput())
   {
-    for (auto it = m_inboundConnections.begin();
-         it != m_inboundConnections.end(); ++it)
+    for (auto it = pin->inboundConnectionsBegin();
+         it != pin->inboundConnectionsEnd(); ++it)
     {
-      if (!(*it)->depthFirstValidation(stack))
+      if (!ValidatePin(*it, stack))
       {
         retVal = false;
         break;
@@ -60,15 +62,15 @@ bool Pin::depthFirstValidation(std::vector<Pin *> &stack, bool comp)
   }
 
   // Check all input pins of component if this is an output pin
-  if (isOutput() && retVal && !comp)
+  if (pin->isOutput() && retVal && !comp)
   {
-    for (auto it = m_parentComponent->m_pins.begin();
-         it != m_parentComponent->m_pins.end(); ++it)
+    for (auto it = pin->parentComponent()->pinsBegin();
+         it != pin->parentComponent()->pinsEnd(); ++it)
     {
-      if (!(*it)->isInput() || (*it).get() == this)
+      if (!(*it)->isInput() || *it == pin)
         continue;
 
-      if (!(*it)->depthFirstValidation(stack, true))
+      if (!ValidatePin(*it, stack, true))
       {
         retVal = false;
         break;
@@ -81,6 +83,4 @@ bool Pin::depthFirstValidation(std::vector<Pin *> &stack, bool comp)
 
   return retVal;
 }
-#endif
-
 }

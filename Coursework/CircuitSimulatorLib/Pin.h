@@ -28,6 +28,11 @@ public:
   Pin(Component *parent, const std::string &id, uint8_t flags);
   virtual ~Pin();
 
+  Component *parentComponent() const
+  {
+    return m_parentComponent;
+  }
+
   /**
    * @brief Gets the string ID of the pin.
    * @return String ID
