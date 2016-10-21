@@ -26,12 +26,16 @@ int main()
   bst_print_tree(std::cout, tree);
 #endif
 
-  std::cout << "\nMin depth: "
-            << bst_depth(tree,
-                         [](size_t a, size_t b) { return std::min(a, b); })
-            << "\nMax depth: "
-            << bst_depth(tree,
-                         [](size_t a, size_t b) { return std::max(a, b); })
+  std::cout << "\nMin depth: " << bst_depth(tree,
+                                            [](size_t a, size_t b)
+                                            {
+                                              return std::min(a, b);
+                                            })
+            << "\nMax depth: " << bst_depth(tree,
+                                            [](size_t a, size_t b)
+                                            {
+                                              return std::max(a, b);
+                                            })
             << '\n';
 
   bst_release_tree(tree);

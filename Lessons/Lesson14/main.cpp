@@ -11,7 +11,7 @@ class too_few_values_error : public std::runtime_error
 {
 public:
   too_few_values_error()
-    : std::runtime_error("Too few values in scores vector")
+      : std::runtime_error("Too few values in scores vector")
   {
   }
 };

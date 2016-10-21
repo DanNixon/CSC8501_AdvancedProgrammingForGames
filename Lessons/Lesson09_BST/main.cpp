@@ -16,7 +16,7 @@ void insert_func(TYPE value)
 
 int main(void)
 {
-  std::srand((unsigned int) std::time(0));
+  std::srand((unsigned int)std::time(0));
 
   gBST = new BST<TYPE>();
 
