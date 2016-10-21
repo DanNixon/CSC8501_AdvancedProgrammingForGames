@@ -16,7 +16,8 @@ int main()
 
   encoderPermutation->registerCommand(new Command(
       "list",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
+      {
         out << "TODO\n";
         return 0;
       },
@@ -24,7 +25,8 @@ int main()
 
   encoderPermutation->registerCommand(new Command(
       "load",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
+      {
         out << "TODO\n";
         return 0;
       },
@@ -34,7 +36,8 @@ int main()
 
   encoderWire->registerCommand(new Command(
       "reset",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
+      {
         out << "TODO\n";
         return 0;
       },
@@ -42,7 +45,8 @@ int main()
 
   encoderWire->registerCommand(new Command(
       "list",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
+      {
         out << "TODO\n";
         return 0;
       },
@@ -50,7 +54,8 @@ int main()
 
   encoderWire->registerCommand(new Command(
       "add",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
+      {
         out << "TODO\n";
         return 0;
       },
@@ -58,7 +63,8 @@ int main()
 
   encoderWire->registerCommand(new Command(
       "remove",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
+      {
         out << "TODO\n";
         return 0;
       },
@@ -71,7 +77,8 @@ int main()
 
   encoder->registerCommand(new Command(
       "reset",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
+      {
         out << "TODO\n";
         return 0;
       },
@@ -81,7 +88,8 @@ int main()
 
   encode->registerCommand(new Command(
       "string",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
+      {
         out << "TODO\n";
         return 0;
       },
@@ -89,7 +97,8 @@ int main()
 
   encode->registerCommand(new Command(
       "file",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
+      {
         out << "TODO\n";
         return 0;
       },

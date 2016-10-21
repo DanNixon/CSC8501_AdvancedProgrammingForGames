@@ -19,7 +19,9 @@ Pin::Pin(Component *parent, const std::string &id, uint8_t flags)
     , m_id(id)
     , m_flags(flags)
     , m_state(false)
-    , m_onChange([]() {})
+    , m_onChange([]()
+                 {
+                 })
 {
 }
 
@@ -84,11 +86,12 @@ void Pin::setState(bool state)
 }
 
 /**
- * @brief Performs a depth first traversal to validate that there are no cycles in the inbound connections of this pin.
+ * @brief Performs a depth first traversal to validate that there are no cycles
+ * in the inbound connections of this pin.
  * @param stack Reference to the stack of pins traversed
  * @return True if stack contained no duplicates
  */
-bool Pin::depthFirstValidation(std::vector<Pin*> & stack, bool comp)
+bool Pin::depthFirstValidation(std::vector<Pin *> &stack, bool comp)
 {
   // Check if this pin is in the stack, if so there is a cycle
   if (std::find(stack.begin(), stack.end(), this) != stack.end())
@@ -102,7 +105,8 @@ bool Pin::depthFirstValidation(std::vector<Pin*> & stack, bool comp)
   // Check all incomming connections for an input pin
   if (isInput())
   {
-    for (auto it = m_inboundConnections.begin(); it != m_inboundConnections.end(); ++it)
+    for (auto it = m_inboundConnections.begin();
+         it != m_inboundConnections.end(); ++it)
     {
       if (!(*it)->depthFirstValidation(stack))
       {
@@ -115,7 +119,8 @@ bool Pin::depthFirstValidation(std::vector<Pin*> & stack, bool comp)
   // Check all input pins of component if this is an output pin
   if (isOutput() && retVal && !comp)
   {
-    for (auto it = m_parentComponent->m_pins.begin(); it != m_parentComponent->m_pins.end(); ++it)
+    for (auto it = m_parentComponent->m_pins.begin();
+         it != m_parentComponent->m_pins.end(); ++it)
     {
       if (!(*it)->isInput() || *it == this)
         continue;
