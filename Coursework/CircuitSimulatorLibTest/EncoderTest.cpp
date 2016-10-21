@@ -22,13 +22,13 @@ public:
     e.addComponent(std::make_shared<RegisterArray>("r", 4));
 
     // Wiring as per example in CW spec
-    e.wireUp("input_bus.bit_0", "r.bit_0");
-    e.wireUp("input_bus.bit_0", "xor2.a");
-    e.wireUp("r.bit_1", "xor2.b");
-    e.wireUp("xor2.z", "output_bus.bit_0");
-    e.wireUp("r.bit_2", "xor1.a");
-    e.wireUp("r.bit_3", "xor1.b");
-    e.wireUp("xor1.z", "output_bus.bit_1");
+    e.attachWire("input_bus.bit_0", "r.bit_0");
+    e.attachWire("input_bus.bit_0", "xor2.a");
+    e.attachWire("r.bit_1", "xor2.b");
+    e.attachWire("xor2.z", "output_bus.bit_0");
+    e.attachWire("r.bit_2", "xor1.a");
+    e.attachWire("r.bit_3", "xor1.b");
+    e.attachWire("xor1.z", "output_bus.bit_1");
 
     Assert::IsTrue(e.validate());
 

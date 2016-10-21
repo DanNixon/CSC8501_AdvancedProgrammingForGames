@@ -22,7 +22,8 @@ namespace CircuitSimulator
 class Pin
 {
 public:
-  static void WireUp(Pin_ptr source, Pin_ptr dest);
+  static void AttachWire(Pin_ptr source, Pin_ptr dest);
+  static void RemoveWire(Pin_ptr source, Pin_ptr dest);
 
 public:
   Pin(Component *parent, const std::string &id, uint8_t flags);

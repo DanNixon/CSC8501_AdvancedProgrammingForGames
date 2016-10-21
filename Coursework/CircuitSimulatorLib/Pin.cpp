@@ -8,13 +8,39 @@
 
 namespace CircuitSimulator
 {
-void Pin::WireUp(Pin_ptr source, Pin_ptr dest)
+/**
+ * @brief Attaches a wire between two pins.
+ * @param source Source (output) pin
+ * @param dest Destination (input) pin
+ */
+void Pin::AttachWire(Pin_ptr source, Pin_ptr dest)
 {
   if (!((PIN_FLAG_INPUT | PIN_FLAG_OUTPUT) & (source->m_flags | dest->m_flags)))
     throw std::runtime_error("Wire has no directionality");
 
   source->m_outboundConnections.push_back(dest);
   dest->m_inboundConnections.push_back(source);
+}
+
+/**
+ * @brief Removes and existing wire between two pins.
+ * @param source Source (output) pin
+ * @param dest Destination (input) pin
+ */
+void Pin::RemoveWire(Pin_ptr source, Pin_ptr dest)
+{
+  auto destIt = std::find(dest->m_inboundConnections.begin(),
+                          dest->m_inboundConnections.end(), source);
+
+  auto sourceIt = std::find(source->m_outboundConnections.begin(),
+                            source->m_outboundConnections.end(), dest);
+
+  if (destIt != dest->m_inboundConnections.end() &&
+      sourceIt != source->m_outboundConnections.end())
+  {
+    dest->m_inboundConnections.erase(destIt);
+    source->m_outboundConnections.erase(sourceIt);
+  }
 }
 
 /**

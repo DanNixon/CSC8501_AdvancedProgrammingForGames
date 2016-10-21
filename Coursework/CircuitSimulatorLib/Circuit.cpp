@@ -96,11 +96,26 @@ Component_const_ptr Circuit::component(const std::string &name) const
  *
  * Source and destination are in format "[component name].[pin name]".
  */
-void Circuit::wireUp(const std::string &from, const std::string &to)
+void Circuit::attachWire(const std::string &from, const std::string &to)
 {
   Pin_ptr source = findPatchEndpoint(from);
   Pin_ptr dest = findPatchEndpoint(to);
-  Pin::WireUp(source, dest);
+  Pin::AttachWire(source, dest);
+}
+
+/**
+ * @brief Removes wiring betweem the output pin of one component to the input
+ *        pin of another.
+ * @param from Source pin
+ * @param to Destination pin
+ *
+ * Source and destination are in format "[component name].[pin name]".
+ */
+void Circuit::removeWire(const std::string &from, const std::string &to)
+{
+  Pin_ptr source = findPatchEndpoint(from);
+  Pin_ptr dest = findPatchEndpoint(to);
+  Pin::RemoveWire(source, dest);
 }
 
 /**
@@ -152,7 +167,8 @@ bool Circuit::getOutput(const std::string &name) const
  * @brief Finds the pin to connect a wire to.
  * @param def Pin name
  * @return Pointer to pin
- * @see wireUp()
+ * @see attachWire()
+ * @see removeWire()
  */
 Pin_ptr Circuit::findPatchEndpoint(const std::string &def)
 {

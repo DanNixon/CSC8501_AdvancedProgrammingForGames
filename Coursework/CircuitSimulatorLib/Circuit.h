@@ -50,7 +50,9 @@ public:
     return m_components.cend();
   }
 
-  virtual void wireUp(const std::string &from, const std::string &to);
+  virtual void attachWire(const std::string &from, const std::string &to);
+  virtual void removeWire(const std::string &from, const std::string &to);
+
   bool validate() const;
 
   virtual void setInput(const std::string &name, bool value);

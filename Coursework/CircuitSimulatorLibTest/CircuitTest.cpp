@@ -19,11 +19,13 @@ public:
 
     c.addComponent(std::make_shared<XORGate>("xor1"));
 
-    c.wireUp("input_bus.in1", "xor1.a");
-    c.wireUp("input_bus.in2", "xor1.b");
-    c.wireUp("xor1.z", "output_bus.out1");
-    c.wireUp("xor1.z", "output_bus.out2");
-    c.wireUp("input_bus.in3", "output_bus.out3");
+    c.attachWire("input_bus.in1", "xor1.a");
+    c.attachWire("input_bus.in2", "xor1.b");
+    c.attachWire("input_bus.in3", "output_bus.out2");
+    c.attachWire("input_bus.in3", "output_bus.out3");
+    c.removeWire("input_bus.in3", "output_bus.out2");
+    c.attachWire("xor1.z", "output_bus.out1");
+    c.attachWire("xor1.z", "output_bus.out2");
 
     Assert::IsTrue(c.validate());
 
