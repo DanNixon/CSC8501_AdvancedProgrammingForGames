@@ -28,6 +28,13 @@ public:
   Pin(Component *parent, const std::string &id, uint8_t flags);
   virtual ~Pin();
 
+  /**
+   * @brief Gets a pointer to the component that owns this pin.
+   * @return Pointer to parent component
+   *
+   * Ownership is never transfered using this function, the Component pointed to
+   * should not be deleted.
+   */
   Component *parentComponent() const
   {
     return m_parentComponent;
@@ -67,21 +74,37 @@ public:
     return m_state;
   }
 
+  /**
+   * @brief Gets a const iterator to the start of the list of inbound connecting pins.
+   * @return Const pin iterator
+   */
   inline PinList_const_iter inboundConnectionsBegin() const
   {
     return m_inboundConnections.cbegin();
   }
 
+  /**
+   * @brief Gets a const iterator to the end of the list of inbound connecting pins.
+   * @return Const pin iterator
+   */
   inline PinList_const_iter inboundConnectionsEnd() const
   {
     return m_inboundConnections.cend();
   }
 
+  /**
+   * @brief Gets a const iterator to the start of the list of outbound connecting pins.
+   * @return Const pin iterator
+   */
   inline PinList_const_iter outboundConnectionsBegin() const
   {
     return m_outboundConnections.cbegin();
   }
 
+  /**
+   * @brief Gets a const iterator to the end of the list of outbound connecting pins.
+   * @return Const pin iterator
+   */
   inline PinList_const_iter outboundConnectionsEnd() const
   {
     return m_outboundConnections.cend();

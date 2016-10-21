@@ -28,7 +28,3 @@ in turn create an infinate recursive loop when evaluating the circuit.
 
 This validation is done using a depth first traversal of the circuit starting
 from the output bus.
-
-Owing to the fact that the graph structure is represented over two levels of
-the circuit tree (circuit/component and component/pin), the logic for
-performing this DFT is split over the `Component` and `Pin` classes.

@@ -32,11 +32,19 @@ public:
   Component_ptr component(const std::string &name);
   Component_const_ptr component(const std::string &name) const;
 
+  /**
+   * @brief Gets a const iterator to the start of the list of components.
+   * @return Const component iterator
+   */
   inline ComponentList_const_iter componentsBegin() const
   {
     return m_components.cbegin();
   }
 
+  /**
+   * @brief Gets a const iterator to the end of the list of components.
+   * @return Const component iterator
+   */
   inline ComponentList_const_iter componentsEnd() const
   {
     return m_components.cend();
@@ -55,6 +63,6 @@ private:
   Pin_ptr findPatchEndpoint(const std::string &def);
 
 private:
-  ComponentList m_components;
+  ComponentList m_components; //!< List of components in circuit
 };
 }

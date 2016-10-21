@@ -8,6 +8,10 @@
 
 namespace CircuitSimulator
 {
+/**
+ * @brief Validates the connections in a Circuit.
+ * @return True if the circuit wiring is valid
+ */
 bool CircuitValidator::Validate(const Circuit *c)
 {
   Component_const_ptr root = c->component(Circuit::OUTPUT_BUS_NAME);
@@ -15,6 +19,12 @@ bool CircuitValidator::Validate(const Circuit *c)
   return ValidateComponent(root, stack);
 }
 
+/**
+ * @brief Recursively validates wiring of a component in a circuit.
+ * @param component Const pointer to component to validate
+ * @param stack Reference to the current DFT stack
+ * @return True if the circuit wiring is valid for the current path
+ */
 bool CircuitValidator::ValidateComponent(Component_const_ptr component,
                                          PinStack &stack)
 {
@@ -35,19 +45,30 @@ bool CircuitValidator::ValidateComponent(Component_const_ptr component,
   return retVal;
 }
 
+/**
+ * @brief Recursively validates wiring of a pin in a circuit.
+ * @param pin Const pointer to the pin to validate
+ * @param stack Reference to the current DFT stack
+ * @param biDirPin True if the last pin tested was an output pin
+ * @return True if the circuit wiring is valid for the current path
+ *
+ * biDirPin must be set to true if the last pin verified was an output pin,
+ * this stops the case of infinite recursion caused by validating
+ * bi-directional pins on a component.
+ */
 bool CircuitValidator::ValidatePin(Pin_const_ptr pin, PinStack &stack,
-                                   bool comp)
+                                   bool biDirPin)
 {
-  // Check if this pin is in the stack, if so there is a cycle
+  /* Check if this pin is in the stack, if so there is a cycle */
   if (std::find(stack.begin(), stack.end(), pin.get()) != stack.end())
     return false;
 
-  // Add this pin to the stack
+  /* Add this pin to the stack */
   stack.push_back(pin.get());
 
   bool retVal = true;
 
-  // Check all incomming connections for an input pin
+  /* Check all incomming connections for an input pin */
   if (pin->isInput())
   {
     for (auto it = pin->inboundConnectionsBegin();
@@ -61,8 +82,8 @@ bool CircuitValidator::ValidatePin(Pin_const_ptr pin, PinStack &stack,
     }
   }
 
-  // Check all input pins of component if this is an output pin
-  if (pin->isOutput() && retVal && !comp)
+  /* Check all input pins of component if this is an output pin */
+  if (pin->isOutput() && retVal && !biDirPin)
   {
     for (auto it = pin->parentComponent()->pinsBegin();
          it != pin->parentComponent()->pinsEnd(); ++it)
@@ -78,7 +99,7 @@ bool CircuitValidator::ValidatePin(Pin_const_ptr pin, PinStack &stack,
     }
   }
 
-  // Pop this node from the stack
+  /* Pop this node from the stack */
   stack.pop_back();
 
   return retVal;
