@@ -28,4 +28,7 @@ public:
 private:
   std::vector<RegisterArray_ptr> m_registers; //!< Components that are registers
 };
+
+typedef std::shared_ptr<Encoder> Encoder_ptr;
+typedef std::shared_ptr<const Encoder> Encoder_const_ptr;
 }

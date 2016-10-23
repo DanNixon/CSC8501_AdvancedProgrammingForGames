@@ -7,16 +7,21 @@
 #include "CommandLineInterfaceLib/Command.h"
 #include "CommandLineInterfaceLib/SubCommand.h"
 
+#include "CircuitSimulatorLib/Encoder.h"
+
 using namespace CommandLineInterface;
+using namespace CircuitSimulator;
 
 int main()
 {
+  Encoder_ptr encoder = std::make_shared<Encoder>();
+
   SubCommand_ptr encoderComponents(
       new SubCommand("components", "Manage encoder components."));
 
   encoderComponents->registerCommand(Command_ptr(new Command(
       "list",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [&encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
         return 0;
       },
@@ -24,7 +29,7 @@ int main()
 
   encoderComponents->registerCommand(Command_ptr(new Command(
       "add",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [&encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
         return 0;
       },
@@ -32,7 +37,7 @@ int main()
 
   encoderComponents->registerCommand(Command_ptr(new Command(
       "remove",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [&encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
         return 0;
       },
@@ -42,7 +47,7 @@ int main()
 
   encoderWire->registerCommand(Command_ptr(new Command(
       "reset",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [&encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
         return 0;
       },
@@ -50,7 +55,7 @@ int main()
 
   encoderWire->registerCommand(Command_ptr(new Command(
       "list",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [&encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
         return 0;
       },
@@ -58,7 +63,7 @@ int main()
 
   encoderWire->registerCommand(Command_ptr(new Command(
       "add",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
         return 0;
       },
@@ -66,7 +71,7 @@ int main()
 
   encoderWire->registerCommand(Command_ptr(new Command(
       "remove",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [&encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
         return 0;
       },
@@ -77,7 +82,7 @@ int main()
 
   encoderPermutation->registerCommand(Command_ptr(new Command(
       "set_base",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [&encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
         return 0;
       },
@@ -92,48 +97,56 @@ int main()
       "Lists all permutations.")));
 
   encoderPermutation->registerCommand(Command_ptr(new Command(
-      "load",
+      "save",
       [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
         return 0;
       },
-      "Loads a permutation into the active configuration.")));
+      "Saves all permutations to a text file.")));
 
-  SubCommand_ptr encoder(new SubCommand("encoder", "Configures encoder."));
-
-  encoder->registerCommand(encoderComponents);
-  encoder->registerCommand(encoderWire);
-  encoder->registerCommand(encoderPermutation);
-
-  encoder->registerCommand(Command_ptr(new Command(
-      "reset",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+  encoderPermutation->registerCommand(Command_ptr(new Command(
+      "load",
+      [&encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
+        return 0;
+      },
+      "Loads a permutation into the active encoder.")));
+
+  SubCommand_ptr encoderCmd(new SubCommand("encoder", "Configures encoder."));
+
+  encoderCmd->registerCommand(encoderComponents);
+  encoderCmd->registerCommand(encoderWire);
+  encoderCmd->registerCommand(encoderPermutation);
+
+  encoderCmd->registerCommand(Command_ptr(new Command(
+      "reset",
+      [&encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        encoder = std::make_shared<Encoder>();
         return 0;
       },
       "Resets the state of the encoder.")));
 
-  SubCommand_ptr encode(new SubCommand("encode", "Performs encoding."));
+  SubCommand_ptr encodeCmd(new SubCommand("encode", "Performs encoding."));
 
-  encode->registerCommand(Command_ptr(new Command(
+  encodeCmd->registerCommand(Command_ptr(new Command(
       "string",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [&encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
         return 0;
       },
       "Encodes a string.")));
 
-  encode->registerCommand(Command_ptr(new Command(
+  encodeCmd->registerCommand(Command_ptr(new Command(
       "file",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [&encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
         return 0;
       },
       "Encodes data from a file.")));
 
   CLI cli(std::cin, std::cout);
-  cli.registerCommand(encoder);
-  cli.registerCommand(encode);
+  cli.registerCommand(encoderCmd);
+  cli.registerCommand(encodeCmd);
 
   return cli.run();
 }
