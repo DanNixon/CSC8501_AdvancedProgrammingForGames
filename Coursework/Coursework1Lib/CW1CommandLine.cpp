@@ -90,16 +90,38 @@ void CW1CommandLine::initCLI()
   registerCommand(encodeCmd);
 
   registerCommand(std::make_shared<Command>(
-    "compare",
-    [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-    std::vector<std::string> filenames(argv.begin() + 1, argv.end());
-    if (BitStreamComparator::CompareMultiple(filenames))
-      out << "All files match.\n";
-    else
-      out << (filenames.size() > 2 ? "Some f" : "F") << "iles differ.\n";
-    return COMMAND_EXIT_CLEAN;
-  },
-    3, "Compares two or more data files to check for similarity."));
+      "compare",
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        std::vector<std::string> filenames(argv.begin() + 1, argv.end());
+        if (BitStreamComparator::CompareMultiple(filenames))
+          out << "All files match.\n";
+        else
+          out << (filenames.size() > 2 ? "Some f" : "F") << "iles differ.\n";
+        return COMMAND_EXIT_CLEAN;
+      },
+      3, "Compares two or more data files to check for similarity."));
+
+  registerCommand(std::make_shared<Command>(
+      "find_matching",
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        std::vector<std::string> filenames(argv.begin() + 1, argv.end());
+        BitStreamComparator::IndexListList results;
+        BitStreamComparator::FindSimilar(results, filenames);
+        if (!results.empty())
+        {
+          out << "Matching groups:\n";
+          size_t i = 0;
+          for (auto rIt = results.begin(); rIt != results.end(); ++rIt)
+          {
+            out << ('a' + (i++)) << ": ";
+            for (auto gIt = rIt->begin(); gIt != rIt->end(); ++gIt)
+              out << *gIt << ' ';
+            out << '\n';
+          }
+        }
+        return COMMAND_EXIT_CLEAN;
+      },
+      3, "Finds matching datasets given a list of filenames."));
 }
 
 SubCommand_ptr CW1CommandLine::generateComponentCmd()

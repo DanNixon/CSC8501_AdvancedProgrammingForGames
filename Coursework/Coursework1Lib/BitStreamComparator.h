@@ -23,6 +23,6 @@ public:
   static void FindSimilar(IndexListList &results, const std::vector<std::string> &filenames);
 
 private:
-  static void LoadData(std::vector<BitStream>& data, const std::vector<std::string> &filenames);
+  static void LoadData(std::vector<BitStream> &data, const std::vector<std::string> &filenames);
 };
 }
