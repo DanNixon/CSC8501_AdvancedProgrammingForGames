@@ -11,6 +11,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Coursework1", "Coursework1\
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Coursework2", "Coursework2\Coursework2.vcxproj", "{FCD7915C-AD81-43CD-B7AB-57DCC4EF8EA7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{990C8209-DCB4-4849-A610-4D9EBE07C64A} = {990C8209-DCB4-4849-A610-4D9EBE07C64A}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CircuitSimulatorLib", "CircuitSimulatorLib\CircuitSimulatorLib.vcxproj", "{6E201AB4-B579-4871-BD6F-6D501F5D15EE}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -40,6 +43,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CommandLineInterfaceLibTest
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Coursework1Lib", "Coursework1Lib\Coursework1Lib.vcxproj", "{8CDF6858-E094-438D-B3AB-809FBBDEE93C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Coursework2Lib", "Coursework2Lib\Coursework2Lib.vcxproj", "{990C8209-DCB4-4849-A610-4D9EBE07C64A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D116EDDF-8C15-4354-962B-0DA55E06A0AA} = {D116EDDF-8C15-4354-962B-0DA55E06A0AA}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,6 +129,14 @@ Global
 		{8CDF6858-E094-438D-B3AB-809FBBDEE93C}.Release|x64.Build.0 = Release|x64
 		{8CDF6858-E094-438D-B3AB-809FBBDEE93C}.Release|x86.ActiveCfg = Release|Win32
 		{8CDF6858-E094-438D-B3AB-809FBBDEE93C}.Release|x86.Build.0 = Release|Win32
+		{990C8209-DCB4-4849-A610-4D9EBE07C64A}.Debug|x64.ActiveCfg = Debug|x64
+		{990C8209-DCB4-4849-A610-4D9EBE07C64A}.Debug|x64.Build.0 = Debug|x64
+		{990C8209-DCB4-4849-A610-4D9EBE07C64A}.Debug|x86.ActiveCfg = Debug|Win32
+		{990C8209-DCB4-4849-A610-4D9EBE07C64A}.Debug|x86.Build.0 = Debug|Win32
+		{990C8209-DCB4-4849-A610-4D9EBE07C64A}.Release|x64.ActiveCfg = Release|x64
+		{990C8209-DCB4-4849-A610-4D9EBE07C64A}.Release|x64.Build.0 = Release|x64
+		{990C8209-DCB4-4849-A610-4D9EBE07C64A}.Release|x86.ActiveCfg = Release|Win32
+		{990C8209-DCB4-4849-A610-4D9EBE07C64A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
