@@ -12,8 +12,11 @@
 #include "CircuitSimulatorLib/Component_fwd.h"
 #include "CircuitSimulatorLib/Encoder.h"
 
+#include "UtilityLib/BinaryFileIO.h"
+
 using namespace CommandLineInterface;
 using namespace CircuitSimulator;
+using namespace Utility;
 
 int main()
 {
@@ -144,7 +147,18 @@ int main()
   encodeCmd->registerCommand(Command_ptr(
       new Command("string",
                   [&encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-                    out << "TODO\n";
+                    std::vector<bool> dataIn;
+                    std::vector<bool> dataOut;
+
+                    BinaryFileIO::Read(dataIn, in);
+                    dataOut.reserve(dataIn.size() * 2);
+
+                    encoder->encode(dataIn, dataOut);
+
+                    for (auto it = dataOut.begin(); it != dataOut.end(); ++it)
+                      out << (*it);
+                    out << "\n";
+
                     return COMMAND_EXIT_CLEAN;
                   },
                   1, "Encodes a string.")));
@@ -152,10 +166,19 @@ int main()
   encodeCmd->registerCommand(Command_ptr(
       new Command("file",
                   [&encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-                    out << "TODO\n";
+                    std::vector<bool> dataIn;
+                    std::vector<bool> dataOut;
+
+                    BinaryFileIO::ReadFile(dataIn, argv[1]);
+                    dataOut.reserve(dataIn.size() * 2);
+
+                    encoder->encode(dataIn, dataOut);
+
+                    BinaryFileIO::WriteFile(dataOut, argv[2]);
+
                     return COMMAND_EXIT_CLEAN;
                   },
-                  1, "Encodes data from a file.")));
+                  3, "Encodes data from a file.")));
 
   CLI cli(std::cin, std::cout);
 

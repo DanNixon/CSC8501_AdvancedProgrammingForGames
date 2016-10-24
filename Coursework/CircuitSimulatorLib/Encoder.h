@@ -25,7 +25,7 @@ public:
 
   void advanceRegisters(int8_t direction);
 
-  void encode(const std::vector<bool> &in, std::vector<bool> out);
+  void encode(const std::vector<bool> &in, std::vector<bool> &out);
 
 private:
   std::vector<RegisterArray_ptr> m_registers; //!< Components that are registers

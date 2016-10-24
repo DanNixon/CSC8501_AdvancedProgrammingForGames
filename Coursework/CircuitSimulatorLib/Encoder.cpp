@@ -53,8 +53,14 @@ void Encoder::advanceRegisters(int8_t direction)
   }
 }
 
-void Encoder::encode(const std::vector<bool> &in, std::vector<bool> out)
+void Encoder::encode(const std::vector<bool> &in, std::vector<bool> &out)
 {
-  // TODO
+  for (auto it = in.cbegin(); it != in.cend(); ++it)
+  {
+    setInput("bit_0", *it);
+    out.push_back(getOutput("bit_0"));
+    out.push_back(getOutput("bit_1"));
+    advanceRegisters(-1);
+  }
 }
 }
