@@ -5,8 +5,6 @@
 #include "CommandLineInterfaceLib/SubCommand.h"
 #include "UtilityLib/BinaryFileIO.h"
 
-#include "BitStreamComparator.h"
-
 using namespace CommandLineInterface;
 using namespace Utility;
 
@@ -23,18 +21,6 @@ CW2CommandLine::~CW2CommandLine()
 
 void CW2CommandLine::initCLI()
 {
-  registerCommand(std::make_shared<Command>(
-      "compare",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-        std::vector<std::string> filenames(argv.begin() + 1, argv.end());
-        if (BitStreamComparator::CompareMultiple(filenames))
-          out << "All files match.\n";
-        else
-          out << "SOme files differ.\n";
-        return COMMAND_EXIT_CLEAN;
-      },
-      3, "Compares two or more data files to check for similarity."));
-
   registerCommand(std::make_shared<Command>(
       "inject_error",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {

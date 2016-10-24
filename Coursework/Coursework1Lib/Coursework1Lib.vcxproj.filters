@@ -3,9 +3,11 @@
   <ItemGroup>
     <ClCompile Include="CW1CommandLine.cpp" />
     <ClCompile Include="Permutation.cpp" />
+    <ClCompile Include="BitStreamComparator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CW1CommandLine.h" />
     <ClInclude Include="Permutation.h" />
+    <ClInclude Include="BitStreamComparator.h" />
   </ItemGroup>
 </Project>

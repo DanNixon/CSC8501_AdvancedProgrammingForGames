@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Coursework1", "Coursework1\Coursework1.vcxproj", "{48600FAC-8930-437C-8DCC-EA360CCA533F}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -47,6 +47,13 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Coursework2Lib", "Coursework2Lib\Coursework2Lib.vcxproj", "{990C8209-DCB4-4849-A610-4D9EBE07C64A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{D116EDDF-8C15-4354-962B-0DA55E06A0AA} = {D116EDDF-8C15-4354-962B-0DA55E06A0AA}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Coursework2LibTest", "Coursework2LibTest\Coursework2LibTest.vcxproj", "{D7D0E775-12C6-46AB-8BB8-FA2299724604}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Coursework1LibTest", "Coursework1LibTest\Coursework1LibTest.vcxproj", "{8BB0C1C2-343F-4670-9972-00D257211671}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8CDF6858-E094-438D-B3AB-809FBBDEE93C} = {8CDF6858-E094-438D-B3AB-809FBBDEE93C}
 	EndProjectSection
 EndProject
 Global
@@ -137,6 +144,22 @@ Global
 		{990C8209-DCB4-4849-A610-4D9EBE07C64A}.Release|x64.Build.0 = Release|x64
 		{990C8209-DCB4-4849-A610-4D9EBE07C64A}.Release|x86.ActiveCfg = Release|Win32
 		{990C8209-DCB4-4849-A610-4D9EBE07C64A}.Release|x86.Build.0 = Release|Win32
+		{D7D0E775-12C6-46AB-8BB8-FA2299724604}.Debug|x64.ActiveCfg = Debug|x64
+		{D7D0E775-12C6-46AB-8BB8-FA2299724604}.Debug|x64.Build.0 = Debug|x64
+		{D7D0E775-12C6-46AB-8BB8-FA2299724604}.Debug|x86.ActiveCfg = Debug|Win32
+		{D7D0E775-12C6-46AB-8BB8-FA2299724604}.Debug|x86.Build.0 = Debug|Win32
+		{D7D0E775-12C6-46AB-8BB8-FA2299724604}.Release|x64.ActiveCfg = Release|x64
+		{D7D0E775-12C6-46AB-8BB8-FA2299724604}.Release|x64.Build.0 = Release|x64
+		{D7D0E775-12C6-46AB-8BB8-FA2299724604}.Release|x86.ActiveCfg = Release|Win32
+		{D7D0E775-12C6-46AB-8BB8-FA2299724604}.Release|x86.Build.0 = Release|Win32
+		{8BB0C1C2-343F-4670-9972-00D257211671}.Debug|x64.ActiveCfg = Debug|x64
+		{8BB0C1C2-343F-4670-9972-00D257211671}.Debug|x64.Build.0 = Debug|x64
+		{8BB0C1C2-343F-4670-9972-00D257211671}.Debug|x86.ActiveCfg = Debug|Win32
+		{8BB0C1C2-343F-4670-9972-00D257211671}.Debug|x86.Build.0 = Debug|Win32
+		{8BB0C1C2-343F-4670-9972-00D257211671}.Release|x64.ActiveCfg = Release|x64
+		{8BB0C1C2-343F-4670-9972-00D257211671}.Release|x64.Build.0 = Release|x64
+		{8BB0C1C2-343F-4670-9972-00D257211671}.Release|x86.ActiveCfg = Release|Win32
+		{8BB0C1C2-343F-4670-9972-00D257211671}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

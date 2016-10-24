@@ -11,6 +11,8 @@
 #include "CommandLineInterfaceLib/Command.h"
 #include "UtilityLib/BinaryFileIO.h"
 
+#include "BitStreamComparator.h"
+
 using namespace CommandLineInterface;
 using namespace CircuitSimulator;
 using namespace Utility;
@@ -86,6 +88,18 @@ void CW1CommandLine::initCLI()
 
   registerCommand(encoderCmd);
   registerCommand(encodeCmd);
+
+  registerCommand(std::make_shared<Command>(
+    "compare",
+    [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+    std::vector<std::string> filenames(argv.begin() + 1, argv.end());
+    if (BitStreamComparator::CompareMultiple(filenames))
+      out << "All files match.\n";
+    else
+      out << (filenames.size() > 2 ? "Some f" : "F") << "iles differ.\n";
+    return COMMAND_EXIT_CLEAN;
+  },
+    3, "Compares two or more data files to check for similarity."));
 }
 
 SubCommand_ptr CW1CommandLine::generateComponentCmd()

@@ -8,7 +8,7 @@
 
 using namespace Utility;
 
-namespace Coursework2
+namespace Coursework1
 {
   size_t BitStreamComparator::Compare(const BitStream & a, const BitStream & b)
   {
@@ -54,14 +54,48 @@ namespace Coursework2
   bool BitStreamComparator::CompareMultiple(const std::vector<std::string> &filenames)
   {
     std::vector<BitStream> data;
+    LoadData(data, filenames);
+    return CompareMultiple(data);
+  }
 
+  void BitStreamComparator::FindSimilar(IndexListList & results, const std::vector<BitStream>& data)
+  {
+    // For each input data set
+    for (size_t inIdx = 0; inIdx < data.size(); inIdx++)
+    {
+      bool matchFound = false;
+
+      // Check for a matching dataset already processed
+      for (size_t fIdx = 0; !matchFound && fIdx < results.size(); fIdx++)
+      {
+        // If a match is found add the index to the list of matches
+        if (Compare(data[inIdx], data[results[fIdx][0]]) == 0)
+        {
+          results[fIdx].push_back(inIdx);
+          matchFound = true;
+        }
+      }
+
+      // If no match then add this as another group of unique data
+      if(!matchFound)
+        results.push_back({ inIdx });
+    }
+  }
+
+  void BitStreamComparator::FindSimilar(IndexListList &results, const std::vector<std::string> &filenames)
+  {
+    std::vector<BitStream> data;
+    LoadData(data, filenames);
+    FindSimilar(results, data);
+  }
+
+  void BitStreamComparator::LoadData(std::vector<BitStream>& data, const std::vector<std::string> &filenames)
+  {
     for (auto it = filenames.cbegin(); it != filenames.cend(); ++it)
     {
       BitStream s;
       BinaryFileIO::ReadFile(s, *it);
       data.push_back(s);
     }
-
-    return CompareMultiple(data);
   }
 }

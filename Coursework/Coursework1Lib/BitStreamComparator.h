@@ -4,12 +4,13 @@
 
 #include <vector>
 
-namespace Coursework2
+namespace Coursework1
 {
 class BitStreamComparator
 {
 public:
   typedef std::vector<bool> BitStream;
+  typedef std::vector<std::vector<size_t>> IndexListList;
 
 public:
   static size_t Compare(const BitStream &a, const BitStream &b);
@@ -17,5 +18,11 @@ public:
 
   static bool CompareMultiple(const std::vector<BitStream> &data);
   static bool CompareMultiple(const std::vector<std::string> &filenames);
+
+  static void FindSimilar(IndexListList &results, const std::vector<BitStream> &data);
+  static void FindSimilar(IndexListList &results, const std::vector<std::string> &filenames);
+
+private:
+  static void LoadData(std::vector<BitStream>& data, const std::vector<std::string> &filenames);
 };
 }
