@@ -3,8 +3,10 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CW1CommandLine.cpp" />
+    <ClCompile Include="Permutation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CW1CommandLine.h" />
+    <ClInclude Include="Permutation.h" />
   </ItemGroup>
 </Project>

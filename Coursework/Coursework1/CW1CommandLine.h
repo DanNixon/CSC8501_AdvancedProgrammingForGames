@@ -11,6 +11,8 @@
 
 #include "CircuitSimulatorLib/Encoder.h"
 
+#include "Permutation.h"
+
 class CW1CommandLine : public CommandLineInterface::CLI
 {
 public:
@@ -28,4 +30,5 @@ private:
 private:
   CircuitSimulator::Encoder_ptr m_activeEncoder;
   std::map<std::string, CircuitSimulator::Encoder_ptr> m_encoderPresets;
+  std::vector<Permutation> m_permutations;
 };

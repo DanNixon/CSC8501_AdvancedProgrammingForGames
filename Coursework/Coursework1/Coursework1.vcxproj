@@ -141,9 +141,11 @@
   <ItemGroup>
     <ClCompile Include="CW1CommandLine.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Permutation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CW1CommandLine.h" />
+    <ClInclude Include="Permutation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

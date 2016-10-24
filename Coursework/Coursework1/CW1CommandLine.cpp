@@ -36,6 +36,7 @@ void CW1CommandLine::initCLI()
   encoderCmd->registerCommand(std::make_shared<Command>(
       "reset",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        this->m_permutations.clear();
         this->m_activeEncoder = std::make_shared<Encoder>();
         return COMMAND_EXIT_CLEAN;
       },
@@ -177,9 +178,21 @@ SubCommand_ptr CW1CommandLine::generatePermutationCmd()
       std::make_shared<SubCommand>("permutation", "Work with encoder permutations.");
 
   cmd->registerCommand(std::make_shared<Command>(
+      "generate",
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        this->m_permutations.clear();
+        out << Permutation::GenerateAll(this->m_permutations, this->m_activeEncoder)
+            << " permutations generated from active encoder setup.\n";
+        return COMMAND_EXIT_CLEAN;
+      },
+      1, "Generates permutations."));
+
+  cmd->registerCommand(std::make_shared<Command>(
       "list",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-        out << "TODO\n";
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        size_t i = 0;
+        for (auto it = this->m_permutations.begin(); it != this->m_permutations.end(); ++it)
+          out << (i++) << ' ' << *it << '\n';
         return COMMAND_EXIT_CLEAN;
       },
       1, "Lists all permutations."));
@@ -187,6 +200,7 @@ SubCommand_ptr CW1CommandLine::generatePermutationCmd()
   cmd->registerCommand(std::make_shared<Command>(
       "save",
       [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        // TODO
         out << "TODO\n";
         return COMMAND_EXIT_CLEAN;
       },
@@ -195,6 +209,7 @@ SubCommand_ptr CW1CommandLine::generatePermutationCmd()
   cmd->registerCommand(std::make_shared<Command>(
       "load",
       [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        // TODO
         out << "TODO\n";
         return COMMAND_EXIT_CLEAN;
       },
@@ -210,6 +225,7 @@ SubCommand_ptr CW1CommandLine::generatePresetCmd()
   cmd->registerCommand(std::make_shared<Command>(
       "cw_basic",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        this->m_permutations.clear();
         this->m_activeEncoder = std::make_shared<Encoder>();
 
         this->m_activeEncoder->addComponent(std::make_shared<XORGate>("xor1"));
@@ -227,6 +243,7 @@ SubCommand_ptr CW1CommandLine::generatePresetCmd()
   cmd->registerCommand(std::make_shared<Command>(
       "cw_example",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        this->m_permutations.clear();
         this->m_activeEncoder = std::make_shared<Encoder>();
 
         this->m_activeEncoder->addComponent(std::make_shared<XORGate>("xor1"));
