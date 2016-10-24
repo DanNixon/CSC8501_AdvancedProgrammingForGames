@@ -3,6 +3,7 @@
 #include "CW1CommandLine.h"
 
 #include <algorithm>
+#include <sstream>
 
 #include "CircuitSimulatorLib/ComponentFactory.h"
 #include "CircuitSimulatorLib/RegisterArray.h"
@@ -24,47 +25,8 @@ CW1CommandLine::~CW1CommandLine()
 {
 }
 
-void CW1CommandLine::generatePresets()
-{
-  // Encoder as per CW spec with minimal essential wiring
-  {
-    Encoder_ptr cwBasic = std::make_shared<Encoder>();
-
-    cwBasic->addComponent(std::make_shared<XORGate>("xor1"));
-    cwBasic->addComponent(std::make_shared<XORGate>("xor2"));
-    cwBasic->addComponent(std::make_shared<RegisterArray>("r", 4));
-
-    cwBasic->attachWire("input_bus.bit_0", "r.bit_0");
-    cwBasic->attachWire("input_bus.bit_0", "xor2.a");
-    cwBasic->attachWire("r.bit_1", "xor2.b");
-    cwBasic->attachWire("xor2.z", "output_bus.bit_0");
-    cwBasic->attachWire("r.bit_2", "xor1.a");
-    cwBasic->attachWire("r.bit_3", "xor1.b");
-    cwBasic->attachWire("xor1.z", "output_bus.bit_1");
-
-    m_encoderPresets["cw_basic"] = cwBasic;
-  }
-
-  // Example encoder wiring form CW spec
-  {
-    Encoder_ptr cwExample = std::make_shared<Encoder>();
-
-    cwExample->addComponent(std::make_shared<XORGate>("xor1"));
-    cwExample->addComponent(std::make_shared<XORGate>("xor2"));
-    cwExample->addComponent(std::make_shared<RegisterArray>("r", 4));
-
-    cwExample->attachWire("input_bus.bit_0", "r.bit_0");
-    cwExample->attachWire("xor2.z", "output_bus.bit_0");
-    cwExample->attachWire("xor1.z", "output_bus.bit_1");
-
-    m_encoderPresets["cw_example"] = cwExample;
-  }
-}
-
 void CW1CommandLine::initCLI()
 {
-  generatePresets();
-
   SubCommand_ptr encoderCmd = std::make_shared<SubCommand>("encoder", "Configures encoder.");
   encoderCmd->registerCommand(generateComponentCmd());
   encoderCmd->registerCommand(generateWireCmd());
@@ -84,10 +46,12 @@ void CW1CommandLine::initCLI()
   encodeCmd->registerCommand(std::make_shared<Command>(
       "string",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        std::stringstream inStr(argv[1]);
+
         std::vector<bool> dataIn;
         std::vector<bool> dataOut;
 
-        BinaryFileIO::Read(dataIn, in);
+        BinaryFileIO::Read(dataIn, inStr);
         dataOut.reserve(dataIn.size() * 2);
 
         this->m_activeEncoder->encode(dataIn, dataOut);
@@ -98,7 +62,7 @@ void CW1CommandLine::initCLI()
 
         return COMMAND_EXIT_CLEAN;
       },
-      1, "Encodes a string."));
+      2, "Encodes a string."));
 
   encodeCmd->registerCommand(std::make_shared<Command>(
       "file",
@@ -213,14 +177,6 @@ SubCommand_ptr CW1CommandLine::generatePermutationCmd()
       std::make_shared<SubCommand>("permutation", "Work with encoder permutations.");
 
   cmd->registerCommand(std::make_shared<Command>(
-      "set_base",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-        out << "TODO\n";
-        return COMMAND_EXIT_CLEAN;
-      },
-      1, "Sets the current encoder configuration as the base configuration."));
-
-  cmd->registerCommand(std::make_shared<Command>(
       "list",
       [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << "TODO\n";
@@ -249,24 +205,45 @@ SubCommand_ptr CW1CommandLine::generatePermutationCmd()
 
 SubCommand_ptr CW1CommandLine::generatePresetCmd()
 {
-  SubCommand_ptr cmd = std::make_shared<SubCommand>("presets", "Work with encoder presets.");
+  SubCommand_ptr cmd = std::make_shared<SubCommand>("presets", "Load encoder presets.");
 
   cmd->registerCommand(std::make_shared<Command>(
-      "list",
+      "cw_basic",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-        for (auto it = this->m_encoderPresets.begin(); it != this->m_encoderPresets.end(); ++it)
-          out << it->first << '\n';
+        this->m_activeEncoder = std::make_shared<Encoder>();
+
+        this->m_activeEncoder->addComponent(std::make_shared<XORGate>("xor1"));
+        this->m_activeEncoder->addComponent(std::make_shared<XORGate>("xor2"));
+        this->m_activeEncoder->addComponent(std::make_shared<RegisterArray>("r", 4));
+
+        this->m_activeEncoder->attachWire("input_bus.bit_0", "r.bit_0");
+        this->m_activeEncoder->attachWire("xor2.z", "output_bus.bit_0");
+        this->m_activeEncoder->attachWire("xor1.z", "output_bus.bit_1");
+
         return COMMAND_EXIT_CLEAN;
       },
-      1, "Lists all encoder presets."));
+      1, "Minimal wiring configuration form coursework spec."));
 
   cmd->registerCommand(std::make_shared<Command>(
-      "load",
+      "cw_example",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-        out << "TODO\n";
+        this->m_activeEncoder = std::make_shared<Encoder>();
+
+        this->m_activeEncoder->addComponent(std::make_shared<XORGate>("xor1"));
+        this->m_activeEncoder->addComponent(std::make_shared<XORGate>("xor2"));
+        this->m_activeEncoder->addComponent(std::make_shared<RegisterArray>("r", 4));
+
+        this->m_activeEncoder->attachWire("input_bus.bit_0", "r.bit_0");
+        this->m_activeEncoder->attachWire("input_bus.bit_0", "xor2.a");
+        this->m_activeEncoder->attachWire("r.bit_1", "xor2.b");
+        this->m_activeEncoder->attachWire("xor2.z", "output_bus.bit_0");
+        this->m_activeEncoder->attachWire("r.bit_2", "xor1.a");
+        this->m_activeEncoder->attachWire("r.bit_3", "xor1.b");
+        this->m_activeEncoder->attachWire("xor1.z", "output_bus.bit_1");
+
         return COMMAND_EXIT_CLEAN;
       },
-      2, "Loads an encoder presets."));
+      1, "Minimal wiring configuration form coursework spec."));
 
   return cmd;
 }

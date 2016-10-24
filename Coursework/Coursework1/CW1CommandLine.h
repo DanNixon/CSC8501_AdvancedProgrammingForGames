@@ -17,7 +17,6 @@ public:
   CW1CommandLine(std::istream &in, std::ostream &out);
   virtual ~CW1CommandLine();
 
-  void generatePresets();
   void initCLI();
 
 private:
