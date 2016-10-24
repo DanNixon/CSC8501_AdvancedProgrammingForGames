@@ -136,6 +136,7 @@
     <ClInclude Include="CircuitValidator.h" />
     <ClInclude Include="Circuit_fwd.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="ComponentFactory.h" />
     <ClInclude Include="Component_fwd.h" />
     <ClInclude Include="Encoder.h" />
     <ClInclude Include="Pin.h" />
@@ -147,6 +148,7 @@
     <ClCompile Include="Circuit.cpp" />
     <ClCompile Include="CircuitValidator.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="ComponentFactory.cpp" />
     <ClCompile Include="Encoder.cpp" />
     <ClCompile Include="Pin.cpp" />
     <ClCompile Include="XORGate.cpp" />

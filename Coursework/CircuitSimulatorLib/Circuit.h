@@ -26,6 +26,7 @@ public:
   virtual ~Circuit();
 
   virtual void addComponent(Component_ptr component);
+  virtual bool removeComponent(const std::string &id);
 
   bool hasComponent(const std::string &name) const;
 

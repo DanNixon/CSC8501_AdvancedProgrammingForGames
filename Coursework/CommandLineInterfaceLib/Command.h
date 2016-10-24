@@ -10,6 +10,16 @@
 namespace CommandLineInterface
 {
 /**
+ * @brief Represents reasons for termination and their associated exit codes.
+ */
+enum CommandExit
+{
+  COMMAND_EXIT_CLEAN = 0,
+  COMMAND_EXIT_EXCEPTION = 50,
+  COMMAND_EXIT_TOO_FEW_ARGUMENTS = 51
+};
+
+/**
  * @class Command
  * @author Dan Nixon
  * @brief Stores data for a single executable CLI command.
@@ -31,6 +41,7 @@ public:
    * @brief Creates a new command.
    * @param commandName Name of the command
    * @param func Function to be executed when command is invoked
+   * @param numArguments Number of arguments required for this command
    * @param desc Short description of the command
    *
    * commandName is what is matched to input on the command line when selecting
@@ -38,9 +49,11 @@ public:
    *
    * desc is shown when the CommandContainer::help() function is invoked.
    */
-  Command(const std::string &commandName, CMDHandlerFunc func, const std::string &desc = "")
+  Command(const std::string &commandName, CMDHandlerFunc func, size_t numArguments = 0,
+          const std::string &desc = "")
       : m_commandName(commandName)
       , m_handlerFunc(func)
+      , m_numArguments(numArguments)
       , m_description(desc)
   {
   }
@@ -80,12 +93,29 @@ public:
   inline int handleCmdFunc(std::istream &in, std::ostream &out,
                            std::vector<std::string> &tokens) const
   {
-    return m_handlerFunc(in, out, tokens);
+    if (tokens.size() < m_numArguments)
+      return COMMAND_EXIT_TOO_FEW_ARGUMENTS;
+
+    try
+    {
+      return m_handlerFunc(in, out, tokens);
+    }
+    catch (std::runtime_error &rte)
+    {
+      out << "Runtime error: " << rte.what() << '\n';
+      return COMMAND_EXIT_EXCEPTION;
+    }
+    catch (...)
+    {
+      out << "Unknown exception\n";
+      return COMMAND_EXIT_EXCEPTION;
+    }
   }
 
 private:
   const std::string m_commandName;
   const CMDHandlerFunc m_handlerFunc;
+  const size_t m_numArguments;
   const std::string m_description;
 };
 

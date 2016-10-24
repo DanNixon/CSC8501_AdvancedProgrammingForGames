@@ -35,7 +35,7 @@ CLI::CLI(std::istream &in, std::ostream &out)
         this->exit();
         return 0;
       },
-      "Exit the application."));
+      0, "Exit the application."));
 }
 
 CLI::~CLI()

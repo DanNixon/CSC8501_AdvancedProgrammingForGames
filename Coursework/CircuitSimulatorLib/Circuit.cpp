@@ -42,6 +42,25 @@ void Circuit::addComponent(Component_ptr component)
 }
 
 /**
+* @brief Removes a component from the circuit given its ID.
+* @param id Unique string ID of the component
+* @return True if the component was deleted
+*/
+bool Circuit::removeComponent(const std::string &id)
+{
+  auto it = std::find_if(m_components.begin(), m_components.end(),
+                         [&id](Component_ptr c) { return c->id() == id; });
+
+  if (it != m_components.end())
+  {
+    m_components.erase(it);
+    return true;
+  }
+
+  return false;
+}
+
+/**
  * @brief Checks of a component exists in the circuit.
  * @param name Name of the component
  * @return True if a component with the given name exists

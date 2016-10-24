@@ -20,7 +20,7 @@ CommandContainer::CommandContainer()
         this->help(out);
         return 0;
       },
-      "Shows command usage."));
+      0, "Shows command usage."));
 }
 
 CommandContainer::~CommandContainer()

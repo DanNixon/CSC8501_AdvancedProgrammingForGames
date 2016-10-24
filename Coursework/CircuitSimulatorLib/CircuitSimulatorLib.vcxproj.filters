@@ -12,6 +12,7 @@
     <ClInclude Include="Circuit_fwd.h" />
     <ClInclude Include="Component_fwd.h" />
     <ClInclude Include="Pin_fwd.h" />
+    <ClInclude Include="ComponentFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Circuit.cpp" />
@@ -20,5 +21,6 @@
     <ClCompile Include="Pin.cpp" />
     <ClCompile Include="XORGate.cpp" />
     <ClCompile Include="CircuitValidator.cpp" />
+    <ClCompile Include="ComponentFactory.cpp" />
   </ItemGroup>
 </Project>

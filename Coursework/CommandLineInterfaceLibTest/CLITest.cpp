@@ -70,7 +70,7 @@ public:
       [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
       out << "Test command.\n";
       return 0;
-    },
+    }, 0,
       "Is a test.")));
 
     SubCommand_ptr sub1(new CommandLineInterface::SubCommand("sub1", "Test subcommand."));
@@ -80,7 +80,7 @@ public:
       [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
       out << "Test command => list.\n";
       return 0;
-    },
+    }, 0,
       "Is a test 2.")));
 
     c.registerCommand(sub1);

@@ -28,7 +28,7 @@ public:
                   argv.erase(argv.begin());
                   return this->handle(in, out, argv);
                 },
-                desc)
+                0, desc)
       , CommandContainer()
   {
   }
