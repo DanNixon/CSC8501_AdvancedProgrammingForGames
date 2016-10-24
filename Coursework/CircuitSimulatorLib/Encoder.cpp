@@ -52,4 +52,9 @@ void Encoder::advanceRegisters(int8_t direction)
     }
   }
 }
+
+void Encoder::encode(const std::vector<bool> &in, std::vector<bool> out)
+{
+  // TODO
+}
 }

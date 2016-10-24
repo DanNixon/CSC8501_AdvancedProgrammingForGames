@@ -32,8 +32,8 @@ int main()
             return 1;
 
           for (auto pIt = (*cIt)->pinsBegin(); pIt != (*cIt)->pinsEnd(); ++pIt)
-            out << ((*pIt)->isInput() ? 'I' : ' ') << ((*pIt)->isOutput() ? 'O' : ' ')
-                << ": " << (*pIt)->id() << '\n';
+            out << ((*pIt)->isInput() ? 'I' : ' ') << ((*pIt)->isOutput() ? 'O' : ' ') << ": "
+                << (*pIt)->id() << '\n';
         }
         else
         {
@@ -55,10 +55,8 @@ int main()
                   3, "Adds a component to the encoder.")));
 
   encoderComponents->registerCommand(Command_ptr(new Command(
-      "remove",
-      [&encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv) -> int {
-        return encoder->removeComponent(argv[1]) ? COMMAND_EXIT_CLEAN : 1;
-      },
+      "remove", [&encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
+                    -> int { return encoder->removeComponent(argv[1]) ? COMMAND_EXIT_CLEAN : 1; },
       2, "Removes a component from the encoder.")));
 
   SubCommand_ptr encoderWire(new SubCommand("wire", "Manage encoder wiring."));

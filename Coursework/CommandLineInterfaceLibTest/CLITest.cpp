@@ -55,6 +55,33 @@ public:
     Assert::AreEqual(expected, out.str());
   }
 
+  TEST_METHOD(CLI_TooFewArguments)
+  {
+    // Simulated input
+    std::stringstream in("test 111\nexit\n");
+
+    // Capture output
+    std::stringstream out;
+
+    CLI c(in, out);
+
+    c.registerCommand(Command_ptr(new Command(
+      "test",
+      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        out << "Test command.\n";
+        return 0;
+      }, 3,
+      "Is a test.")));
+
+    const std::string expected =
+      "> "
+      "Too few arguments (got 2, expected 3).\n"
+      "> ";
+
+    Assert::AreEqual(0, c.run());
+    Assert::AreEqual(expected, out.str());
+  }
+
   TEST_METHOD(CLI_SubCommand)
   {
     // Simulated input
@@ -68,9 +95,9 @@ public:
     c.registerCommand(Command_ptr(new Command(
       "test",
       [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-      out << "Test command.\n";
-      return 0;
-    }, 0,
+        out << "Test command.\n";
+        return 0;
+      }, 0,
       "Is a test.")));
 
     SubCommand_ptr sub1(new CommandLineInterface::SubCommand("sub1", "Test subcommand."));
@@ -78,9 +105,9 @@ public:
     sub1->registerCommand(Command_ptr(new Command(
       "list",
       [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-      out << "Test command => list.\n";
-      return 0;
-    }, 0,
+        out << "Test command => list.\n";
+        return 0;
+      }, 0,
       "Is a test 2.")));
 
     c.registerCommand(sub1);

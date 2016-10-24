@@ -94,7 +94,11 @@ public:
                            std::vector<std::string> &tokens) const
   {
     if (tokens.size() < m_numArguments)
+    {
+      out << "Too few arguments (got " << tokens.size() << ", expected " << m_numArguments
+          << ").\n";
       return COMMAND_EXIT_TOO_FEW_ARGUMENTS;
+    }
 
     try
     {
