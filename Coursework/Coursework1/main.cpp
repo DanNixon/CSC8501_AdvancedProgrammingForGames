@@ -19,9 +19,9 @@ int main()
 {
   Encoder_ptr encoder = std::make_shared<Encoder>();
 
-  SubCommand_ptr encoderComponents(new SubCommand("components", "Manage encoder components."));
+  SubCommand_ptr encoderComponentsCmd(new SubCommand("components", "Manage encoder components."));
 
-  encoderComponents->registerCommand(Command_ptr(new Command(
+  encoderComponentsCmd->registerCommand(Command_ptr(new Command(
       "list",
       [&encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv) -> int {
         if (argv.size() > 1)
@@ -44,7 +44,7 @@ int main()
       },
       1, "Lists encoder components and component pins.")));
 
-  encoderComponents->registerCommand(Command_ptr(
+  encoderComponentsCmd->registerCommand(Command_ptr(
       new Command("add",
                   [&encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
                     std::vector<std::string> args(argv.begin() + 3, argv.end());
@@ -54,14 +54,14 @@ int main()
                   },
                   3, "Adds a component to the encoder.")));
 
-  encoderComponents->registerCommand(Command_ptr(new Command(
+  encoderComponentsCmd->registerCommand(Command_ptr(new Command(
       "remove", [&encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
                     -> int { return encoder->removeComponent(argv[1]) ? COMMAND_EXIT_CLEAN : 1; },
       2, "Removes a component from the encoder.")));
 
-  SubCommand_ptr encoderWire(new SubCommand("wire", "Manage encoder wiring."));
+  SubCommand_ptr encoderWireCmd(new SubCommand("wire", "Manage encoder wiring."));
 
-  encoderWire->registerCommand(Command_ptr(new Command(
+  encoderWireCmd->registerCommand(Command_ptr(new Command(
       "list",
       [&encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         for (auto cIt = encoder->componentsBegin(); cIt != encoder->componentsEnd(); ++cIt)
@@ -74,7 +74,7 @@ int main()
       },
       1, "Lists encoder wiring.")));
 
-  encoderWire->registerCommand(Command_ptr(
+  encoderWireCmd->registerCommand(Command_ptr(
       new Command("add",
                   [encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
                     encoder->attachWire(argv[1], argv[2]);
@@ -82,7 +82,7 @@ int main()
                   },
                   3, "Adds a wire between two pins.")));
 
-  encoderWire->registerCommand(Command_ptr(
+  encoderWireCmd->registerCommand(Command_ptr(
       new Command("remove",
                   [&encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
                     encoder->removeWire(argv[1], argv[2]);
@@ -90,10 +90,10 @@ int main()
                   },
                   1, "Removes a wire between two pins.")));
 
-  SubCommand_ptr encoderPermutation(
+  SubCommand_ptr encoderPermutationCmd(
       new SubCommand("permutation", "Work with encoder permutations."));
 
-  encoderPermutation->registerCommand(Command_ptr(
+  encoderPermutationCmd->registerCommand(Command_ptr(
       new Command("set_base",
                   [&encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
                     out << "TODO\n";
@@ -101,7 +101,7 @@ int main()
                   },
                   1, "Sets the current encoder configuration as the base configuration.")));
 
-  encoderPermutation->registerCommand(Command_ptr(
+  encoderPermutationCmd->registerCommand(Command_ptr(
       new Command("list",
                   [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
                     out << "TODO\n";
@@ -109,7 +109,7 @@ int main()
                   },
                   1, "Lists all permutations.")));
 
-  encoderPermutation->registerCommand(Command_ptr(
+  encoderPermutationCmd->registerCommand(Command_ptr(
       new Command("save",
                   [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
                     out << "TODO\n";
@@ -117,7 +117,7 @@ int main()
                   },
                   1, "Saves all permutations to a text file.")));
 
-  encoderPermutation->registerCommand(Command_ptr(
+  encoderPermutationCmd->registerCommand(Command_ptr(
       new Command("load",
                   [&encoder](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
                     out << "TODO\n";
@@ -127,9 +127,9 @@ int main()
 
   SubCommand_ptr encoderCmd(new SubCommand("encoder", "Configures encoder."));
 
-  encoderCmd->registerCommand(encoderComponents);
-  encoderCmd->registerCommand(encoderWire);
-  encoderCmd->registerCommand(encoderPermutation);
+  encoderCmd->registerCommand(encoderComponentsCmd);
+  encoderCmd->registerCommand(encoderWireCmd);
+  encoderCmd->registerCommand(encoderPermutationCmd);
 
   encoderCmd->registerCommand(Command_ptr(
       new Command("reset",
@@ -158,6 +158,7 @@ int main()
                   1, "Encodes data from a file.")));
 
   CLI cli(std::cin, std::cout);
+
   cli.registerCommand(encoderCmd);
   cli.registerCommand(encodeCmd);
 
