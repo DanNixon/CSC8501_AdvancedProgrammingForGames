@@ -6,6 +6,8 @@
 
 using namespace CircuitSimulator;
 
+namespace Coursework1
+{
 size_t Permutation::GenerateAll(std::vector<Permutation>, CircuitSimulator::Circuit_const_ptr c)
 {
   // TODO
@@ -41,4 +43,5 @@ std::ostream &operator<<(std::ostream &stream, const Permutation &o)
   stream << ']';
 
   return stream;
+}
 }

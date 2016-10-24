@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Coursework1", "Coursework1\Coursework1.vcxproj", "{48600FAC-8930-437C-8DCC-EA360CCA533F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{67C67E1B-66DE-49CF-99D4-A72F688BA43E} = {67C67E1B-66DE-49CF-99D4-A72F688BA43E}
+		{8CDF6858-E094-438D-B3AB-809FBBDEE93C} = {8CDF6858-E094-438D-B3AB-809FBBDEE93C}
 		{6E201AB4-B579-4871-BD6F-6D501F5D15EE} = {6E201AB4-B579-4871-BD6F-6D501F5D15EE}
 	EndProjectSection
 EndProject
@@ -37,6 +38,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CommandLineInterfaceLibTest
 	ProjectSection(ProjectDependencies) = postProject
 		{67C67E1B-66DE-49CF-99D4-A72F688BA43E} = {67C67E1B-66DE-49CF-99D4-A72F688BA43E}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Coursework1Lib", "Coursework1Lib\Coursework1Lib.vcxproj", "{8CDF6858-E094-438D-B3AB-809FBBDEE93C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -110,6 +113,14 @@ Global
 		{DCB6D64F-045C-4500-80BD-803DBBE88F1E}.Release|x64.Build.0 = Release|x64
 		{DCB6D64F-045C-4500-80BD-803DBBE88F1E}.Release|x86.ActiveCfg = Release|Win32
 		{DCB6D64F-045C-4500-80BD-803DBBE88F1E}.Release|x86.Build.0 = Release|Win32
+		{8CDF6858-E094-438D-B3AB-809FBBDEE93C}.Debug|x64.ActiveCfg = Debug|x64
+		{8CDF6858-E094-438D-B3AB-809FBBDEE93C}.Debug|x64.Build.0 = Debug|x64
+		{8CDF6858-E094-438D-B3AB-809FBBDEE93C}.Debug|x86.ActiveCfg = Debug|Win32
+		{8CDF6858-E094-438D-B3AB-809FBBDEE93C}.Debug|x86.Build.0 = Debug|Win32
+		{8CDF6858-E094-438D-B3AB-809FBBDEE93C}.Release|x64.ActiveCfg = Release|x64
+		{8CDF6858-E094-438D-B3AB-809FBBDEE93C}.Release|x64.Build.0 = Release|x64
+		{8CDF6858-E094-438D-B3AB-809FBBDEE93C}.Release|x86.ActiveCfg = Release|Win32
+		{8CDF6858-E094-438D-B3AB-809FBBDEE93C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

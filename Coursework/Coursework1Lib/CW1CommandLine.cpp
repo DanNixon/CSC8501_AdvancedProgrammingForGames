@@ -15,6 +15,8 @@ using namespace CommandLineInterface;
 using namespace CircuitSimulator;
 using namespace Utility;
 
+namespace Coursework1
+{
 CW1CommandLine::CW1CommandLine(std::istream &in, std::ostream &out)
     : CLI(in, out)
     , m_activeEncoder(std::make_shared<Encoder>())
@@ -263,4 +265,5 @@ SubCommand_ptr CW1CommandLine::generatePresetCmd()
       1, "Minimal wiring configuration form coursework spec."));
 
   return cmd;
+}
 }

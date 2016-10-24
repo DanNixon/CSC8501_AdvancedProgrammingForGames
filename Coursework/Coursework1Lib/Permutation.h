@@ -6,6 +6,8 @@
 
 #include "CircuitSimulatorLib/Circuit_fwd.h"
 
+namespace Coursework1
+{
 class Permutation
 {
 public:
@@ -27,3 +29,4 @@ public:
 private:
   WiringList m_wiring;
 };
+}

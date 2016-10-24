@@ -2,11 +2,11 @@
 
 #include <iostream>
 
-#include "CW1CommandLine.h"
+#include "Coursework1Lib/CW1CommandLine.h"
 
 int main()
 {
-  CW1CommandLine cli(std::cin, std::cout);
+  Coursework1::CW1CommandLine cli(std::cin, std::cout);
   cli.initCLI();
   return cli.run();
 }

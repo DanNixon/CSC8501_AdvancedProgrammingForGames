@@ -2,11 +2,5 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="CW1CommandLine.cpp" />
-    <ClCompile Include="Permutation.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CW1CommandLine.h" />
-    <ClInclude Include="Permutation.h" />
   </ItemGroup>
 </Project>

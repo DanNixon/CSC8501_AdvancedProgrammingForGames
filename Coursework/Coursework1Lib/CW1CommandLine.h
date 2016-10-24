@@ -13,6 +13,8 @@
 
 #include "Permutation.h"
 
+namespace Coursework1
+{
 class CW1CommandLine : public CommandLineInterface::CLI
 {
 public:
@@ -32,3 +34,4 @@ private:
   std::map<std::string, CircuitSimulator::Encoder_ptr> m_encoderPresets;
   std::vector<Permutation> m_permutations;
 };
+}
