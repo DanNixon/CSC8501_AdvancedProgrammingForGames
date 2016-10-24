@@ -17,15 +17,13 @@ int main()
   int a = 100;
 
   std::cout << "Value in memory location a is " << a << "\n";
-  std::cout << "Address of (the reference to) memory location a is " << &a
-            << "\n";
+  std::cout << "Address of (the reference to) memory location a is " << &a << "\n";
 
   int *b = &a;
 
   std::cout << "Value in memory location pointed to by b is " << *b << "\n";
   std::cout << "Value in memory location b is " << b << "\n";
-  std::cout << b << " should be the same as the memory location for a: " << &a
-            << '\n';
+  std::cout << b << " should be the same as the memory location for a: " << &a << '\n';
   std::cout << "b is actually at memory location " << &b << '\n';
 
   int **c;
@@ -36,8 +34,7 @@ int main()
   std::cout << "c actually holds the value: " << c << '\n';
   std::cout << c << " is the same value as b's memory location: " << &b << '\n';
   std::cout << "c is actually at memory location " << &c << '\n';
-  std::cout << "c is eventually retrieving what is in memory location " << **&c
-            << '\n';
+  std::cout << "c is eventually retrieving what is in memory location " << **&c << '\n';
   std::cout << "the value of a is in memory location " << &a << '\n';
 
   return 0;

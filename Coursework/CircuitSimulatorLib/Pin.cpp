@@ -29,14 +29,13 @@ void Pin::AttachWire(Pin_ptr source, Pin_ptr dest)
  */
 void Pin::RemoveWire(Pin_ptr source, Pin_ptr dest)
 {
-  auto destIt = std::find(dest->m_inboundConnections.begin(),
-                          dest->m_inboundConnections.end(), source);
+  auto destIt =
+      std::find(dest->m_inboundConnections.begin(), dest->m_inboundConnections.end(), source);
 
-  auto sourceIt = std::find(source->m_outboundConnections.begin(),
-                            source->m_outboundConnections.end(), dest);
+  auto sourceIt =
+      std::find(source->m_outboundConnections.begin(), source->m_outboundConnections.end(), dest);
 
-  if (destIt != dest->m_inboundConnections.end() &&
-      sourceIt != source->m_outboundConnections.end())
+  if (destIt != dest->m_inboundConnections.end() && sourceIt != source->m_outboundConnections.end())
   {
     dest->m_inboundConnections.erase(destIt);
     source->m_outboundConnections.erase(sourceIt);
@@ -100,8 +99,7 @@ void Pin::setState(bool state)
   m_state = state;
 
   /* Set state of outbound connections */
-  for (auto it = m_outboundConnections.begin();
-       it != m_outboundConnections.end(); ++it)
+  for (auto it = m_outboundConnections.begin(); it != m_outboundConnections.end(); ++it)
     (*it)->setState(m_state);
 
   m_onChange();

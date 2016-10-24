@@ -8,12 +8,10 @@ int main(void)
 {
 #if 1
   Player p1(5, "yuuka");
-  std::cout << "P1 HP: " << p1.get_hit_points()
-            << "\nP1 name: " << p1.get_name() << '\n';
+  std::cout << "P1 HP: " << p1.get_hit_points() << "\nP1 name: " << p1.get_name() << '\n';
 
   p1.set_name("tenshi");
-  std::cout << "P1 HP: " << p1.get_hit_points()
-            << "\nP1 name: " << p1.get_name() << '\n';
+  std::cout << "P1 HP: " << p1.get_hit_points() << "\nP1 name: " << p1.get_name() << '\n';
 
   Enemy e1(2);
   std::cout << "hit points = " << e1.get_hit_points() << '\n';

@@ -25,8 +25,7 @@ bool CircuitValidator::Validate(const Circuit *c)
  * @param stack Reference to the current DFT stack
  * @return True if the circuit wiring is valid for the current path
  */
-bool CircuitValidator::ValidateComponent(Component_const_ptr component,
-                                         PinStack &stack)
+bool CircuitValidator::ValidateComponent(Component_const_ptr component, PinStack &stack)
 {
   bool retVal = true;
 
@@ -56,8 +55,7 @@ bool CircuitValidator::ValidateComponent(Component_const_ptr component,
  * this stops the case of infinite recursion caused by validating
  * bi-directional pins on a component.
  */
-bool CircuitValidator::ValidatePin(Pin_const_ptr pin, PinStack &stack,
-                                   bool biDirPin)
+bool CircuitValidator::ValidatePin(Pin_const_ptr pin, PinStack &stack, bool biDirPin)
 {
   /* Check if this pin is in the stack, if so there is a cycle */
   if (std::find(stack.begin(), stack.end(), pin.get()) != stack.end())
@@ -71,8 +69,7 @@ bool CircuitValidator::ValidatePin(Pin_const_ptr pin, PinStack &stack,
   /* Check all incomming connections for an input pin */
   if (pin->isInput())
   {
-    for (auto it = pin->inboundConnectionsBegin();
-         it != pin->inboundConnectionsEnd(); ++it)
+    for (auto it = pin->inboundConnectionsBegin(); it != pin->inboundConnectionsEnd(); ++it)
     {
       if (!ValidatePin(*it, stack))
       {
@@ -85,8 +82,8 @@ bool CircuitValidator::ValidatePin(Pin_const_ptr pin, PinStack &stack,
   /* Check all input pins of component if this is an output pin */
   if (pin->isOutput() && retVal && !biDirPin)
   {
-    for (auto it = pin->parentComponent()->pinsBegin();
-         it != pin->parentComponent()->pinsEnd(); ++it)
+    for (auto it = pin->parentComponent()->pinsBegin(); it != pin->parentComponent()->pinsEnd();
+         ++it)
     {
       if (!(*it)->isInput() || *it == pin)
         continue;

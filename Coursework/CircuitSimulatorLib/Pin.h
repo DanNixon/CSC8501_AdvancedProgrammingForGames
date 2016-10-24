@@ -112,13 +112,12 @@ public:
   }
 
 private:
-  Component *m_parentComponent;  //!< Pointer to parent component
-  const std::string m_id;        //!< Unique string ID
-  const uint8_t m_flags;         //!< IO pin flags
-  bool m_state;                  //!< Current pin state
-  PinList m_inboundConnections;  //!< Vector of inbound connections
-  PinList m_outboundConnections; //!< Vector of outbound connections
-  std::function<void(void)>
-      m_onChange; //!< Function called when pin state is set
+  Component *m_parentComponent;         //!< Pointer to parent component
+  const std::string m_id;               //!< Unique string ID
+  const uint8_t m_flags;                //!< IO pin flags
+  bool m_state;                         //!< Current pin state
+  PinList m_inboundConnections;         //!< Vector of inbound connections
+  PinList m_outboundConnections;        //!< Vector of outbound connections
+  std::function<void(void)> m_onChange; //!< Function called when pin state is set
 };
 }

@@ -17,8 +17,8 @@ namespace CircuitSimulator
 class Component
 {
 public:
-  Component(const std::string &id, const std::string &name,
-            std::vector<std::string> inputs, std::vector<std::string> outputs);
+  Component(const std::string &id, const std::string &name, std::vector<std::string> inputs,
+            std::vector<std::string> outputs);
   virtual ~Component();
 
   /**

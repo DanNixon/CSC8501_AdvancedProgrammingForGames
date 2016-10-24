@@ -14,7 +14,6 @@ public:
   static size_t Write(const std::vector<bool> &bits, std::ostream &out);
 
   static size_t ReadFile(std::vector<bool> &bits, const std::string &filename);
-  static size_t WriteFile(const std::vector<bool> &bits,
-                          const std::string &filename);
+  static size_t WriteFile(const std::vector<bool> &bits, const std::string &filename);
 };
 }

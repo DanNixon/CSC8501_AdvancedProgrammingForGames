@@ -2,8 +2,7 @@
 #include <vector>
 
 bool geqZero(int x);
-int getNegativeInt(bool &result,
-                   size_t limit = std::numeric_limits<size_t>::max());
+int getNegativeInt(bool &result, size_t limit = std::numeric_limits<size_t>::max());
 int add(int x, int y);
 int loopedFactorial(int x);
 int recursiveFactorial(int x);
@@ -28,8 +27,8 @@ int main()
     int rf = recursiveFactorial(*it);
     int rfi = recursiveFactorialInv(*it);
 
-    std::cout << *it << "\tLooped: " << lf << "\tRecursive: " << rf
-              << "\tRecursive (inv): " << rfi << '\n';
+    std::cout << *it << "\tLooped: " << lf << "\tRecursive: " << rf << "\tRecursive (inv): " << rfi
+              << '\n';
 
     if (lf != rf || lf != rfi)
       std::cout << "Well, fuck. (" << *it << ")\n";
@@ -38,8 +37,7 @@ int main()
   int total = 0;
   int x;
 
-  std::cout
-      << "Please enter numbers, will finish if sum of factorals exceeds 2000\n";
+  std::cout << "Please enter numbers, will finish if sum of factorals exceeds 2000\n";
 
   while (total <= 2000)
   {

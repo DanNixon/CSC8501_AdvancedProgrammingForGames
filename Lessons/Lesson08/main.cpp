@@ -31,8 +31,7 @@ size_t findSpace(const char *str);
 void printStr(const char *str);
 size_t strCopy(char *dest, size_t destLen, const char *src, size_t srcLen);
 
-void printGridToStream(grid_square_t grid[][BS_GRID_DIMENSIONS],
-                       std::ostream &str);
+void printGridToStream(grid_square_t grid[][BS_GRID_DIMENSIONS], std::ostream &str);
 size_t shipSpacesRemaining(grid_square_t grid[][BS_GRID_DIMENSIONS]);
 std::pair<size_t, size_t> getPositionFromStream(std::istream &str);
 battleship_t *fireMissile(grid_square_t grid[][BS_GRID_DIMENSIONS],
@@ -149,8 +148,7 @@ size_t strCopy(char *dest, size_t destLen, const char *src, size_t srcLen)
   return i;
 }
 
-void printGridToStream(grid_square_t grid[][BS_GRID_DIMENSIONS],
-                       std::ostream &str)
+void printGridToStream(grid_square_t grid[][BS_GRID_DIMENSIONS], std::ostream &str)
 {
   static const char DELIMITER = ' ';
 

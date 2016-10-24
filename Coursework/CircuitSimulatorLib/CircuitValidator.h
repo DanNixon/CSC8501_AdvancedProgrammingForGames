@@ -29,7 +29,6 @@ public:
 
 private:
   static bool ValidateComponent(Component_const_ptr component, PinStack &stack);
-  static bool ValidatePin(Pin_const_ptr pin, PinStack &stack,
-                          bool biDirPin = false);
+  static bool ValidatePin(Pin_const_ptr pin, PinStack &stack, bool biDirPin = false);
 };
 }

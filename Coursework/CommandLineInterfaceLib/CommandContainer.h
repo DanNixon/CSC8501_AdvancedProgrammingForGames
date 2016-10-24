@@ -22,8 +22,7 @@ public:
 
   void registerCommand(Command_ptr command);
 
-  int handle(std::istream &in, std::ostream &out,
-             std::vector<std::string> &tokens);
+  int handle(std::istream &in, std::ostream &out, std::vector<std::string> &tokens);
   void help(std::ostream &out);
 
 protected:

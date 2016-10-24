@@ -10,8 +10,7 @@ namespace Utility
  * @param str String to split
  * @param delim Delimiter to split by
  */
-void StringUtils::Split(std::vector<std::string> &subStrs,
-                        const std::string &str, char delim)
+void StringUtils::Split(std::vector<std::string> &subStrs, const std::string &str, char delim)
 {
   if (str.length() == 0)
     return;

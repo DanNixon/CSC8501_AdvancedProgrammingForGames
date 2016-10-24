@@ -18,8 +18,7 @@ namespace CircuitSimulator
  * @param outputs List of names of output pins
  */
 Component::Component(const std::string &id, const std::string &name,
-                     std::vector<std::string> inputs,
-                     std::vector<std::string> outputs)
+                     std::vector<std::string> inputs, std::vector<std::string> outputs)
     : m_id(id)
     , m_name(name)
 {
@@ -59,8 +58,8 @@ bool Component::hasPin(const std::string &name, uint8_t flag) const
  */
 Pin_ptr Component::pin(const std::string &name)
 {
-  auto it = std::find_if(m_pins.begin(), m_pins.end(),
-                         [name](Pin_ptr p) { return p->id() == name; });
+  auto it =
+      std::find_if(m_pins.begin(), m_pins.end(), [name](Pin_ptr p) { return p->id() == name; });
 
   if (it == m_pins.end())
     throw std::runtime_error("Cannot find pin \"" + name + "\"");

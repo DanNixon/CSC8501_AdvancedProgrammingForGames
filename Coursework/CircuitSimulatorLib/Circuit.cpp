@@ -22,8 +22,7 @@ const std::string Circuit::OUTPUT_BUS_NAME = "output_bus";
  * @param inputs List of input pin names
  * @param outputs List of output pin names
  */
-Circuit::Circuit(std::vector<std::string> inputs,
-                 std::vector<std::string> outputs)
+Circuit::Circuit(std::vector<std::string> inputs, std::vector<std::string> outputs)
 {
   m_components.push_back(std::make_shared<Bus>(INPUT_BUS_NAME, inputs));
   m_components.push_back(std::make_shared<Bus>(OUTPUT_BUS_NAME, outputs));
@@ -49,9 +48,8 @@ void Circuit::addComponent(Component_ptr component)
  */
 bool Circuit::hasComponent(const std::string &name) const
 {
-  auto it =
-      std::find_if(m_components.cbegin(), m_components.cend(),
-                   [name](Component_const_ptr c) { return c->id() == name; });
+  auto it = std::find_if(m_components.cbegin(), m_components.cend(),
+                         [name](Component_const_ptr c) { return c->id() == name; });
 
   return it != m_components.cend();
 }
@@ -79,9 +77,8 @@ Component_ptr Circuit::component(const std::string &name)
  */
 Component_const_ptr Circuit::component(const std::string &name) const
 {
-  auto it =
-      std::find_if(m_components.cbegin(), m_components.cend(),
-                   [name](Component_const_ptr c) { return c->id() == name; });
+  auto it = std::find_if(m_components.cbegin(), m_components.cend(),
+                         [name](Component_const_ptr c) { return c->id() == name; });
 
   if (it == m_components.cend())
     throw std::runtime_error("Could not find component \"" + name + "\"");

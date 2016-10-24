@@ -10,12 +10,10 @@ public:
   Matrix<T, X, Y> &operator=(const Matrix<T, X, Y> &rhs);
 
   template <typename E>
-  friend std::ostream &operator<<(std::ostream &ostr,
-                                  const Matrix<E, X, Y> &mtx);
+  friend std::ostream &operator<<(std::ostream &ostr, const Matrix<E, X, Y> &mtx);
 
   template <typename E>
-  friend Matrix<E, X, Y> operator*(const Matrix<E, X, Y> &a,
-                                   const Matrix<E, X, Y> &b);
+  friend Matrix<E, X, Y> operator*(const Matrix<E, X, Y> &a, const Matrix<E, X, Y> &b);
 
   inline size_t get_x_size() const
   {
@@ -108,14 +106,12 @@ Matrix<E, X, Y> operator*(const Matrix<E, X, Y> &a, const Matrix<E, X, Y> &b)
   return result;
 }
 
-template <typename T, size_t X, size_t Y>
-T Matrix<T, X, Y>::get_element(size_t x, size_t y) const
+template <typename T, size_t X, size_t Y> T Matrix<T, X, Y>::get_element(size_t x, size_t y) const
 {
   return m_data[x * Y + y];
 }
 
-template <typename T, size_t X, size_t Y>
-T &Matrix<T, X, Y>::get_element(size_t x, size_t y)
+template <typename T, size_t X, size_t Y> T &Matrix<T, X, Y>::get_element(size_t x, size_t y)
 {
   return m_data[x * Y + y];
 }

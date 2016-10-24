@@ -23,8 +23,7 @@ public:
    * Takes a reference to the input and output streams and a vector of string
    * parameters as parameters and returns an exit code.
    */
-  typedef std::function<int(std::istream &in, std::ostream &out,
-                            std::vector<std::string> &argv)>
+  typedef std::function<int(std::istream &in, std::ostream &out, std::vector<std::string> &argv)>
       CMDHandlerFunc;
 
 public:
@@ -39,8 +38,7 @@ public:
    *
    * desc is shown when the CommandContainer::help() function is invoked.
    */
-  Command(const std::string &commandName, CMDHandlerFunc func,
-          const std::string &desc = "")
+  Command(const std::string &commandName, CMDHandlerFunc func, const std::string &desc = "")
       : m_commandName(commandName)
       , m_handlerFunc(func)
       , m_description(desc)

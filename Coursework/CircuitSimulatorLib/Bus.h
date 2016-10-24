@@ -26,8 +26,7 @@ public:
       : Component(id, "Bus", {}, {})
   {
     for (auto it = ioNames.begin(); it != ioNames.end(); ++it)
-      m_pins.push_back(
-          Pin_ptr(new Pin(this, *it, PIN_FLAG_OUTPUT | PIN_FLAG_INPUT)));
+      m_pins.push_back(Pin_ptr(new Pin(this, *it, PIN_FLAG_OUTPUT | PIN_FLAG_INPUT)));
   }
 
   virtual ~Bus()

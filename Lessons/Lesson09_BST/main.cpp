@@ -33,8 +33,7 @@ int main(void)
 
   std::vector<TYPE> bstSearchVals = {10, 75, -65, 100, 0};
   for (auto it = bstSearchVals.begin(); it != bstSearchVals.end(); ++it)
-    std::cout << "Contains " << *it << "? "
-              << (gBST->search(*it) ? "true" : "false") << '\n';
+    std::cout << "Contains " << *it << "? " << (gBST->search(*it) ? "true" : "false") << '\n';
 
   delete gBST;
   gBST = nullptr;
