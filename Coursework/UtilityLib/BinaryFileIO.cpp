@@ -16,25 +16,21 @@ namespace Utility
 size_t BinaryFileIO::Read(std::vector<bool> &bits, std::istream &in)
 {
   size_t numBits = 0;
-  while (!in.eof())
+  char c;
+  while (in.get(c))
   {
-    std::string line;
-    std::getline(in, line);
-    for (auto it = line.begin(); it != line.end(); ++it)
+    switch (c)
     {
-      switch (*it)
-      {
-      case '0':
-        bits.push_back(false);
-        numBits++;
-        break;
-      case '1':
-        bits.push_back(true);
-        numBits++;
-        break;
-      default:
-        continue;
-      }
+    case '0':
+      bits.push_back(false);
+      numBits++;
+      break;
+    case '1':
+      bits.push_back(true);
+      numBits++;
+      break;
+    default:
+      continue;
     }
   }
   return numBits;
@@ -67,6 +63,8 @@ size_t BinaryFileIO::ReadFile(std::vector<bool> &bits, const std::string &filena
 {
   std::ifstream in;
   in.open(filename, std::fstream::in);
+  if (!in.good())
+    throw std::runtime_error("Failed to open file for reading: " + filename);
   return Read(bits, in);
 }
 

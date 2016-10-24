@@ -113,7 +113,7 @@ void CW1CommandLine::initCLI()
           size_t i = 0;
           for (auto rIt = results.begin(); rIt != results.end(); ++rIt)
           {
-            out << ('a' + (i++)) << ": ";
+            out << (char)('a' + (i++)) << ": ";
             for (auto gIt = rIt->begin(); gIt != rIt->end(); ++gIt)
               out << *gIt << ' ';
             out << '\n';
