@@ -3,7 +3,10 @@
 #pragma once
 
 #include "CommandLineInterfaceLib/CLI.h"
-#include "CommandLineInterfaceLib/Command.h"
+
+#include <map>
+#include <string>
+
 #include "CommandLineInterfaceLib/SubCommand.h"
 
 #include "CircuitSimulatorLib/Encoder.h"
@@ -14,7 +17,8 @@ public:
   CW1CommandLine(std::istream &in, std::ostream &out);
   virtual ~CW1CommandLine();
 
-  void init();
+  void generatePresets();
+  void initCLI();
 
 private:
   CommandLineInterface::SubCommand_ptr generateComponentCmd();
@@ -24,5 +28,5 @@ private:
 
 private:
   CircuitSimulator::Encoder_ptr m_activeEncoder;
+  std::map<std::string, CircuitSimulator::Encoder_ptr> m_encoderPresets;
 };
-

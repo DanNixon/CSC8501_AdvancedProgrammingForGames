@@ -5,6 +5,9 @@
 #include <algorithm>
 
 #include "CircuitSimulatorLib/ComponentFactory.h"
+#include "CircuitSimulatorLib/RegisterArray.h"
+#include "CircuitSimulatorLib/XORGate.h"
+#include "CommandLineInterfaceLib/Command.h"
 #include "UtilityLib/BinaryFileIO.h"
 
 using namespace CommandLineInterface;
@@ -21,8 +24,47 @@ CW1CommandLine::~CW1CommandLine()
 {
 }
 
-void CW1CommandLine::init()
+void CW1CommandLine::generatePresets()
 {
+  // Encoder as per CW spec with minimal essential wiring
+  {
+    Encoder_ptr cwBasic = std::make_shared<Encoder>();
+
+    cwBasic->addComponent(std::make_shared<XORGate>("xor1"));
+    cwBasic->addComponent(std::make_shared<XORGate>("xor2"));
+    cwBasic->addComponent(std::make_shared<RegisterArray>("r", 4));
+
+    cwBasic->attachWire("input_bus.bit_0", "r.bit_0");
+    cwBasic->attachWire("input_bus.bit_0", "xor2.a");
+    cwBasic->attachWire("r.bit_1", "xor2.b");
+    cwBasic->attachWire("xor2.z", "output_bus.bit_0");
+    cwBasic->attachWire("r.bit_2", "xor1.a");
+    cwBasic->attachWire("r.bit_3", "xor1.b");
+    cwBasic->attachWire("xor1.z", "output_bus.bit_1");
+
+    m_encoderPresets["cw_basic"] = cwBasic;
+  }
+
+  // Example encoder wiring form CW spec
+  {
+    Encoder_ptr cwExample = std::make_shared<Encoder>();
+
+    cwExample->addComponent(std::make_shared<XORGate>("xor1"));
+    cwExample->addComponent(std::make_shared<XORGate>("xor2"));
+    cwExample->addComponent(std::make_shared<RegisterArray>("r", 4));
+
+    cwExample->attachWire("input_bus.bit_0", "r.bit_0");
+    cwExample->attachWire("xor2.z", "output_bus.bit_0");
+    cwExample->attachWire("xor1.z", "output_bus.bit_1");
+
+    m_encoderPresets["cw_example"] = cwExample;
+  }
+}
+
+void CW1CommandLine::initCLI()
+{
+  generatePresets();
+
   SubCommand_ptr encoderCmd = std::make_shared<SubCommand>("encoder", "Configures encoder.");
   encoderCmd->registerCommand(generateComponentCmd());
   encoderCmd->registerCommand(generateWireCmd());
@@ -212,7 +254,8 @@ SubCommand_ptr CW1CommandLine::generatePresetCmd()
   cmd->registerCommand(std::make_shared<Command>(
       "list",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-        out << "TODO\n";
+        for (auto it = this->m_encoderPresets.begin(); it != this->m_encoderPresets.end(); ++it)
+          out << it->first << '\n';
         return COMMAND_EXIT_CLEAN;
       },
       1, "Lists all encoder presets."));

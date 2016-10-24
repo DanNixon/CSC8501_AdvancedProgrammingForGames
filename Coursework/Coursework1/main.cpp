@@ -7,6 +7,7 @@
 int main()
 {
   CW1CommandLine cli(std::cin, std::cout);
-  cli.init();
+  cli.generatePresets();
+  cli.initCLI();
   return cli.run();
 }
