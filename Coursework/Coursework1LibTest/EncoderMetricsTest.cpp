@@ -20,11 +20,10 @@ public:
   TEST_METHOD(Encoder_Metrics)
   {
     // Static seed for deterministic results
-    std::srand(100);
+    std::srand(0);
 
     BitStream data;
-    data.reserve(100);
-    EncoderMetrics::GenerateRandomData(data, 100);
+    EncoderMetrics::GenerateRandomData(data, 500);
 
     Encoder_ptr e = std::make_shared<Encoder>();
 

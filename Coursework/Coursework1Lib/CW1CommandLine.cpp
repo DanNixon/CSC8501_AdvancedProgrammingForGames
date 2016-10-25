@@ -53,13 +53,12 @@ void CW1CommandLine::initCLI()
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         EncoderMetrics m(this->m_activeEncoder);
         BitStream data;
-        data.reserve(100);
-        EncoderMetrics::GenerateRandomData(data, 100);
+        EncoderMetrics::GenerateRandomData(data, 500);
         m.measure(data);
         out << m;
         return COMMAND_EXIT_CLEAN;
       },
-      1, "Resets the state of the encoder."));
+      1, "Shows metrics of state changes with random input data."));
 
   SubCommand_ptr encodeCmd = std::make_shared<SubCommand>("encode", "Performs encoding.");
 

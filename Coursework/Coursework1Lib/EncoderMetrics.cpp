@@ -10,6 +10,8 @@ namespace Coursework1
 {
 void EncoderMetrics::GenerateRandomData(BitStream &out, size_t len)
 {
+  out.reserve(len);
+
   for (size_t i = 0; i < len; i++)
     out.push_back((std::rand() % 2) == 0);
 }
