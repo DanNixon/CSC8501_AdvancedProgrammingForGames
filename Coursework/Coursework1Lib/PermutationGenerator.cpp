@@ -4,11 +4,13 @@
 
 using namespace CircuitSimulator;
 
+#define IS_ACTIVE_BIT (mask & (size_t)0x1 << i) > 0
+
 namespace Coursework1
 {
 PermutationGenerator::PermutationGenerator(const CircuitSimulator::WireDefList &wires)
     : m_wires(wires)
-    , m_numPermutations((size_t)std::pow(2, wires.size()))
+    , m_numPermutations((size_t)(std::pow(2, wires.size() + 1) - 1))
 {
 }
 
@@ -22,12 +24,19 @@ Permutation PermutationGenerator::permutation(size_t mask)
 
   for (size_t i = 0; i < m_wires.size(); i++)
   {
-    size_t m = (size_t)0x1 << i;
-    size_t mm = mask & m;
-    if (mm > 0)
+    if (IS_ACTIVE_BIT)
       wires.push_back(m_wires[i]);
   }
 
   return Permutation(wires);
+}
+
+void PermutationGenerator::printPermutation(size_t mask, std::ostream &str)
+{
+  for (size_t i = 0; i < m_wires.size(); i++)
+  {
+    if (IS_ACTIVE_BIT)
+      str << m_wires[i].first << " -> " << m_wires[i].second << '\n';
+  }
 }
 }

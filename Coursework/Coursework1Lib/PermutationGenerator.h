@@ -20,6 +20,7 @@ public:
   }
 
   Permutation permutation(size_t mask);
+  void printPermutation(size_t mask, std::ostream &str);
 
 private:
   const CircuitSimulator::WireDefList &m_wires;

@@ -22,6 +22,7 @@ namespace Coursework1
 CW1CommandLine::CW1CommandLine(std::istream &in, std::ostream &out)
     : CLI(in, out)
     , m_activeEncoder(std::make_shared<Encoder>())
+    , m_permutationGenerator(nullptr)
 {
 }
 
@@ -40,7 +41,6 @@ void CW1CommandLine::initCLI()
   encoderCmd->registerCommand(std::make_shared<Command>(
       "reset",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-        this->m_permutations.clear();
         this->m_activeEncoder = std::make_shared<Encoder>();
         return COMMAND_EXIT_CLEAN;
       },
@@ -218,41 +218,46 @@ SubCommand_ptr CW1CommandLine::generatePermutationCmd()
   cmd->registerCommand(std::make_shared<Command>(
       "generate",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-        this->m_permutations.clear();
-        // TOOD
-        // out << Permutation::GenerateAllStrict(this->m_permutations)
-        //     << " permutations generated from active encoder setup.\n";
+        if (this->m_permutationGenerator != nullptr)
+          delete this->m_permutationGenerator;
+        this->m_permutationGenerator = new PermutationGenerator({}); // TODO
+        out << this->m_permutationGenerator->numPermutations()
+            << " permutations generated from wire set.\n";
         return COMMAND_EXIT_CLEAN;
       },
       1, "Generates permutations."));
 
   cmd->registerCommand(std::make_shared<Command>(
       "list",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-        size_t i = 0;
-        for (auto it = this->m_permutations.begin(); it != this->m_permutations.end(); ++it)
-          out << (i++) << ' ' << *it << '\n';
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) -> int {
+        if (this->m_permutationGenerator == nullptr)
+        {
+          out << "No permutations (try running generate first).";
+          return 1;
+        }
+
+        for (size_t i = 0; i < this->m_permutationGenerator->numPermutations(); i++)
+          this->m_permutationGenerator->printPermutation(i, out);
+
         return COMMAND_EXIT_CLEAN;
       },
       1, "Lists all permutations."));
 
   cmd->registerCommand(std::make_shared<Command>(
-      "save",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-        // TODO
-        out << "TODO\n";
-        return COMMAND_EXIT_CLEAN;
-      },
-      1, "Saves all permutations to a text file."));
-
-  cmd->registerCommand(std::make_shared<Command>(
       "load",
-      [](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-        // TODO
-        out << "TODO\n";
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) -> int {
+        if (this->m_permutationGenerator == nullptr)
+        {
+          out << "No permutations (try running generate first).";
+          return 1;
+        }
+
+        Permutation p = this->m_permutationGenerator->permutation(std::stoi(argv[1]));
+        p.apply(this->m_activeEncoder);
+
         return COMMAND_EXIT_CLEAN;
       },
-      1, "Loads a permutation into the active encoder."));
+      2, "Loads a permutation into the active encoder."));
 
   return cmd;
 }
@@ -264,7 +269,6 @@ SubCommand_ptr CW1CommandLine::generatePresetCmd()
   cmd->registerCommand(std::make_shared<Command>(
       "cw_basic",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-        this->m_permutations.clear();
         this->m_activeEncoder = std::make_shared<Encoder>();
 
         this->m_activeEncoder->addComponent(std::make_shared<XORGate>("xor1"));
@@ -282,7 +286,6 @@ SubCommand_ptr CW1CommandLine::generatePresetCmd()
   cmd->registerCommand(std::make_shared<Command>(
       "cw_example",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-        this->m_permutations.clear();
         this->m_activeEncoder = std::make_shared<Encoder>();
 
         this->m_activeEncoder->addComponent(std::make_shared<XORGate>("xor1"));

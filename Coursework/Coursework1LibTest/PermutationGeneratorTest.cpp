@@ -35,7 +35,7 @@ public:
     WireDefList wires = { w1, w2, w3, w4, w5, w6, w7, w8 };
 
     PermutationGenerator g(wires);
-    Assert::AreEqual((size_t)256, g.numPermutations());
+    Assert::AreEqual((size_t)511, g.numPermutations());
 
     // 0 should give no wires
     Permutation p0 = g.permutation(0);
@@ -60,6 +60,9 @@ public:
     WIRES_EQUAL(w4, pA.wire(1));
     WIRES_EQUAL(w6, pA.wire(2));
     WIRES_EQUAL(w8, pA.wire(3));
+    std::stringstream pBstr;
+    g.printPermutation(0b10101010, pBstr);
+    Assert::AreEqual(std::string("a1 -> b2\nb1 -> c1\nb2 -> c2\nb2 -> c4\n"), pBstr.str());
 
     // Odd bits
     Permutation pB = g.permutation(0b01010101);
@@ -68,6 +71,9 @@ public:
     WIRES_EQUAL(w3, pB.wire(1));
     WIRES_EQUAL(w5, pB.wire(2));
     WIRES_EQUAL(w7, pB.wire(3));
+    std::stringstream pAstr;
+    g.printPermutation(0b01010101, pAstr);
+    Assert::AreEqual(std::string("a1 -> b1\na1 -> b3\nb1 -> c2\nb2 -> c3\n"), pAstr.str());
   }
 };
 }

@@ -11,7 +11,7 @@
 
 #include "CircuitSimulatorLib/Encoder.h"
 
-#include "Permutation.h"
+#include "PermutationGenerator.h"
 
 namespace Coursework1
 {
@@ -31,7 +31,6 @@ private:
 
 private:
   CircuitSimulator::Encoder_ptr m_activeEncoder;
-  std::map<std::string, CircuitSimulator::Encoder_ptr> m_encoderPresets;
-  std::vector<Permutation> m_permutations;
+  PermutationGenerator *m_permutationGenerator;
 };
 }
