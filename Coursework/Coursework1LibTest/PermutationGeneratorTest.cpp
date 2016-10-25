@@ -34,7 +34,7 @@ public:
 
     WireDefList wires = { w1, w2, w3, w4, w5, w6, w7, w8 };
 
-    PermutationGenerator g(wires);
+    PermutationGenerator g(wires, {});
     Assert::AreEqual((size_t)511, g.numPermutations());
 
     // 0 should give no wires
@@ -62,7 +62,7 @@ public:
     WIRES_EQUAL(w8, pA.wire(3));
     std::stringstream pBstr;
     g.printPermutation(0b10101010, pBstr);
-    Assert::AreEqual(std::string("a1 -> b2\nb1 -> c1\nb2 -> c2\nb2 -> c4\n"), pBstr.str());
+    Assert::AreEqual(std::string("P[mask=170\na1 -> b2\nb1 -> c1\nb2 -> c2\nb2 -> c4\n]\n"), pBstr.str());
 
     // Odd bits
     Permutation pB = g.permutation(0b01010101);
@@ -73,7 +73,27 @@ public:
     WIRES_EQUAL(w7, pB.wire(3));
     std::stringstream pAstr;
     g.printPermutation(0b01010101, pAstr);
-    Assert::AreEqual(std::string("a1 -> b1\na1 -> b3\nb1 -> c2\nb2 -> c3\n"), pAstr.str());
+    Assert::AreEqual(std::string("P[mask=85\na1 -> b1\na1 -> b3\nb1 -> c2\nb2 -> c3\n]\n"), pAstr.str());
+  }
+
+  TEST_METHOD(Permutations_Validation)
+  {
+    WireDef w1("a1", "b1");
+    WireDef w2("a1", "b2");
+    WireDef w3("a1", "b3");
+    WireDef w4("b1", "c1");
+    WireDef w5("b1", "c2");
+    WireDef w6("b2", "c2");
+    WireDef w7("b2", "c3");
+    WireDef w8("b2", "c4");
+
+    WireDefList wires = { w1, w2, w3, w4, w5, w6, w7, w8 };
+
+    PermutationGenerator g(wires, {"a1", "b2", "c2"});
+    Assert::AreEqual((size_t)511, g.numPermutations());
+    Assert::AreEqual((size_t)511, g.numValidPermutations()); // TODO
+
+    // TODO
   }
 };
 }

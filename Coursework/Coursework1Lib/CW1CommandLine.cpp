@@ -220,12 +220,12 @@ SubCommand_ptr CW1CommandLine::generatePermutationCmd()
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         if (this->m_permutationGenerator != nullptr)
           delete this->m_permutationGenerator;
-        this->m_permutationGenerator = new PermutationGenerator({}); // TODO
+        this->m_permutationGenerator = new PermutationGenerator({}, {}); // TODO
         out << this->m_permutationGenerator->numPermutations()
             << " permutations generated from wire set.\n";
         return COMMAND_EXIT_CLEAN;
       },
-      1, "Generates permutations."));
+      2, "Generates permutations."));
 
   cmd->registerCommand(std::make_shared<Command>(
       "list",

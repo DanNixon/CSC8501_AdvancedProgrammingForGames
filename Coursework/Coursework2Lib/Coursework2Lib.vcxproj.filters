@@ -3,9 +3,11 @@
   <ItemGroup>
     <ClCompile Include="CW2CommandLine.cpp" />
     <ClCompile Include="ErrorInjector.cpp" />
+    <ClCompile Include="Decoder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CW2CommandLine.h" />
     <ClInclude Include="ErrorInjector.h" />
+    <ClInclude Include="Decoder.h" />
   </ItemGroup>
 </Project>
