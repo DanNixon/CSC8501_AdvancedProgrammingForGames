@@ -3,12 +3,14 @@
 #include "CW2CommandLine.h"
 
 #include "CommandLineInterfaceLib/SubCommand.h"
+#include "Coursework1Lib/BitStreamComparator.h"
 #include "Coursework2Lib/ErrorInjector.h"
 #include "UtilityLib/BinaryFileIO.h"
 
 using namespace CommandLineInterface;
 using namespace CircuitSimulator;
 using namespace Utility;
+using namespace Coursework1;
 
 namespace Coursework2
 {
@@ -47,5 +49,27 @@ void CW2CommandLine::initCLI()
         return COMMAND_EXIT_CLEAN;
       },
       3, "Decodes encoded data."));
+
+  registerCommand(std::make_shared<Command>(
+      "compare",
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        BitStream original;
+        BitStream cleanDecode;
+        BitStream noisyDecode;
+
+        BinaryFileIO::ReadFile(original, argv[1]);
+        BinaryFileIO::ReadFile(cleanDecode, argv[2]);
+        BinaryFileIO::ReadFile(noisyDecode, argv[3]);
+
+        out << "Clean decode "
+            << (BitStreamComparator::Compare(original, cleanDecode) ? "matches" : "differs")
+            << ".\n";
+        out << "Noisy decode "
+            << (BitStreamComparator::Compare(original, noisyDecode) ? "matches" : "differs")
+            << ".\n";
+
+        return COMMAND_EXIT_CLEAN;
+      },
+      4, "Comapres decoded datasets to original."));
 }
 }
