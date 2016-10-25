@@ -4,9 +4,11 @@
 
 #include <algorithm>
 
+#include "CircuitSimulatorLib/BitStream.h"
 #include "UtilityLib/BinaryFileIO.h"
 
 using namespace Utility;
+using namespace CircuitSimulator;
 
 namespace Coursework1
 {

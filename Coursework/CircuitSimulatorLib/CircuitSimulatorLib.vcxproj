@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BitStream.h" />
     <ClInclude Include="Bus.h" />
     <ClInclude Include="Circuit.h" />
     <ClInclude Include="CircuitValidator.h" />

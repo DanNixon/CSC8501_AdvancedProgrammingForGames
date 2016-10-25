@@ -2,8 +2,10 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="CW2CommandLine.cpp" />
+    <ClCompile Include="ErrorInjector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CW2CommandLine.h" />
+    <ClInclude Include="ErrorInjector.h" />
   </ItemGroup>
 </Project>

@@ -5,6 +5,7 @@
 #include "Coursework1Lib/BitStreamComparator.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+using namespace CircuitSimulator;
 
 namespace Coursework1
 {
@@ -15,9 +16,9 @@ TEST_CLASS(BitStreamComparatorTest)
 public:
   TEST_METHOD(SingleComp)
   {
-    BitStreamComparator::BitStream a = { false, true, false, true };
-    BitStreamComparator::BitStream b = { false, true, false, true };
-    BitStreamComparator::BitStream c = { true, false, false, false };
+    BitStream a = { false, true, false, true };
+    BitStream b = { false, true, false, true };
+    BitStream c = { true, false, false, false };
 
     Assert::AreEqual((size_t)0, BitStreamComparator::Compare(a, b));
     Assert::AreEqual((size_t)0, BitStreamComparator::Compare(b, a));
@@ -27,9 +28,9 @@ public:
 
   TEST_METHOD(MultiComp)
   {
-    BitStreamComparator::BitStream a = { false, true, false, true };
-    BitStreamComparator::BitStream b = { false, true, false, true };
-    BitStreamComparator::BitStream c = { true, false, false, false };
+    BitStream a = { false, true, false, true };
+    BitStream b = { false, true, false, true };
+    BitStream c = { true, false, false, false };
 
     Assert::IsTrue(BitStreamComparator::CompareMultiple({ a, b }));
     Assert::IsFalse(BitStreamComparator::CompareMultiple({ a, b, c }));
@@ -37,11 +38,11 @@ public:
 
   TEST_METHOD(FindSimilar)
   {
-    BitStreamComparator::BitStream a = { false, true, false, true };
-    BitStreamComparator::BitStream b = { false, true, false, true };
-    BitStreamComparator::BitStream c = { true, false, false, false };
-    BitStreamComparator::BitStream d = { false, false, false, false };
-    BitStreamComparator::BitStream e = { true, false, false, false };
+    BitStream a = { false, true, false, true };
+    BitStream b = { false, true, false, true };
+    BitStream c = { true, false, false, false };
+    BitStream d = { false, false, false, false };
+    BitStream e = { true, false, false, false };
 
     BitStreamComparator::IndexListList results;
     BitStreamComparator::FindSimilar(results, { a, b, c, d, e });
