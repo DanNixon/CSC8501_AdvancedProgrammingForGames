@@ -22,11 +22,13 @@
     <ClCompile Include="BitStreamComparator.cpp" />
     <ClCompile Include="CW1CommandLine.cpp" />
     <ClCompile Include="Permutation.cpp" />
+    <ClCompile Include="PermutationGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BitStreamComparator.h" />
     <ClInclude Include="CW1CommandLine.h" />
     <ClInclude Include="Permutation.h" />
+    <ClInclude Include="PermutationGenerator.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8CDF6858-E094-438D-B3AB-809FBBDEE93C}</ProjectGuid>

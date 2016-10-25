@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "Coursework1Lib/Permutation.h"
+#include "Coursework1Lib/PermutationGenerator.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace CircuitSimulator;
@@ -11,10 +12,10 @@ namespace Coursework1
 {
 namespace Test
 {
-TEST_CLASS(PermutationTest)
+TEST_CLASS(PermutationGeneratorTest)
 {
 public:
-  TEST_METHOD(Permutations_Connectivity1)
+  TEST_METHOD(Permutations)
   {
     WireDef w1("a1", "b1");
     WireDef w2("a1", "b2");
@@ -27,11 +28,7 @@ public:
 
     WireDefList wires = { w1, w2, w3, w4, w5, w6, w7, w8 };
 
-    std::vector<Permutation> results;
-    Assert::AreEqual((size_t)10, Permutation::GenerateAllStrict(results, wires, 1));
-    Assert::AreEqual((size_t)10, results.size());
-
-    // TODO: test results
+    // TODO
   }
 };
 }

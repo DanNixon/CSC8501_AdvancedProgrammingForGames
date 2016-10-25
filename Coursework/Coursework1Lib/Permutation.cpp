@@ -8,15 +8,8 @@ using namespace CircuitSimulator;
 
 namespace Coursework1
 {
-size_t Permutation::GenerateAllStrict(std::vector<Permutation> &results, const WireDefList &wires,
-                                      size_t connectivity)
-{
-  size_t numPermutations = 0;
-  // TOOD
-  return numPermutations;
-}
-
-Permutation::Permutation()
+Permutation::Permutation(const CircuitSimulator::WireDefList &wires)
+    : m_wires(wires)
 {
 }
 
@@ -39,7 +32,7 @@ std::ostream &operator<<(std::ostream &stream, const Permutation &o)
 {
   stream << "Permutation[\n";
 
-  for (auto it = o.m_wiring.begin(); it != o.m_wiring.end(); ++it)
+  for (auto it = o.m_wires.begin(); it != o.m_wires.end(); ++it)
     stream << it->first << " - " << it->second << '\n';
 
   stream << ']';

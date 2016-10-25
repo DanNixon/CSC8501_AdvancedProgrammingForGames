@@ -4,10 +4,12 @@
     <ClCompile Include="CW1CommandLine.cpp" />
     <ClCompile Include="Permutation.cpp" />
     <ClCompile Include="BitStreamComparator.cpp" />
+    <ClCompile Include="PermutationGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CW1CommandLine.h" />
     <ClInclude Include="Permutation.h" />
     <ClInclude Include="BitStreamComparator.h" />
+    <ClInclude Include="PermutationGenerator.h" />
   </ItemGroup>
 </Project>

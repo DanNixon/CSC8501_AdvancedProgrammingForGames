@@ -12,19 +12,19 @@ namespace Coursework1
 class Permutation
 {
 public:
-  static size_t GenerateAllStrict(std::vector<Permutation> &results,
-                                  const CircuitSimulator::WireDefList &wires,
-                                  size_t connectivity = 1);
-
-public:
-  Permutation();
+  Permutation(const CircuitSimulator::WireDefList &wires);
   virtual ~Permutation();
+
+  inline size_t numWires() const
+  {
+    return m_wires.size();
+  }
 
   void apply(CircuitSimulator::Circuit_ptr c);
 
   friend std::ostream &operator<<(std::ostream &stream, const Permutation &o);
 
 private:
-  CircuitSimulator::WireDefList m_wiring;
+  const CircuitSimulator::WireDefList m_wires;
 };
 }
