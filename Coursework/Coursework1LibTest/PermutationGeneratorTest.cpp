@@ -24,7 +24,7 @@ public:
   TEST_METHOD(Permutations)
   {
     PermutationGenerator::WireEndpointList ep = {
-      {{"a1", "a2", "a3", "a4"}, {"b1", "b1", "b3", "b4"}},
+      {{"a1", "a2", "a3", "a4"}, {"b1", "b2", "b3", "b4"}},
       {{"c1", "c2"}, {"d1", "d2"}}
     };
 
@@ -32,7 +32,11 @@ public:
     g.generate();
     Assert::AreEqual((size_t)48, g.numPermutations());
 
-    // TODO
+    // TODO: test these results
+    g.permutation(0);
+    g.permutation(20);
+    g.permutation(40);
+    g.permutation(41);
   }
 };
 }

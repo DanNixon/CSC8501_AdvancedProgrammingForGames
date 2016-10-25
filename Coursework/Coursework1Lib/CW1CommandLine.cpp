@@ -287,9 +287,18 @@ SubCommand_ptr CW1CommandLine::generatePermutationCmd()
           delete this->m_permutationGenerator;
 
         // TODO
+        PermutationGenerator::WireEndpointList endpoints = {
+          { { "a1", "a2", "a3", "a4" },{ "b1", "b2", "b3", "b4" } },
+          { { "c1", "c2" },{ "d1", "d2" } }
+        };
+
+        this->m_permutationGenerator = new PermutationGenerator(endpoints);
+        this->m_permutationGenerator->generate();
+
+        out << "Generated " << this->m_permutationGenerator->numPermutations() << " permutations.\n";
         return COMMAND_EXIT_CLEAN;
       },
-      2, "Generates permutations."));
+      1, "Generates permutations."));
 
   cmd->registerCommand(std::make_shared<Command>(
       "list",
@@ -300,9 +309,8 @@ SubCommand_ptr CW1CommandLine::generatePermutationCmd()
           return 1;
         }
 
-        // TODO
-        // for (size_t i = 0; i < this->m_permutationGenerator->numPermutations(); i++)
-        // this->m_permutationGenerator->printPermutation(i, out);
+        for (size_t i = 0; i < this->m_permutationGenerator->numPermutations(); i++)
+          out << i  << ' ' << this->m_permutationGenerator->permutation(i) << '\n';
 
         return COMMAND_EXIT_CLEAN;
       },

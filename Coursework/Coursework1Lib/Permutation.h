@@ -13,6 +13,7 @@ class Permutation
 {
 public:
   Permutation(const CircuitSimulator::WireDefList &wires);
+  Permutation(const Permutation &other);
   virtual ~Permutation();
 
   inline size_t numWires() const

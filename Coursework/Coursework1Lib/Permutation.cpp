@@ -13,6 +13,11 @@ Permutation::Permutation(const CircuitSimulator::WireDefList &wires)
 {
 }
 
+Permutation::Permutation(const Permutation & other)
+  : m_wires(other.m_wires)
+{
+}
+
 Permutation::~Permutation()
 {
 }
@@ -34,7 +39,7 @@ std::ostream &operator<<(std::ostream &stream, const Permutation &o)
   stream << "Permutation[\n";
 
   for (auto it = o.m_wires.begin(); it != o.m_wires.end(); ++it)
-    stream << it->first << " - " << it->second << '\n';
+    stream << it->first << " -> " << it->second << '\n';
 
   stream << ']';
 
