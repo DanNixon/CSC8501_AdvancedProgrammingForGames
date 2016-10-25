@@ -19,6 +19,7 @@ TEST_CLASS(EncoderMetricsTest)
 public:
   TEST_METHOD(Encoder_Metrics)
   {
+    // Static seed for deterministic results
     std::srand(100);
 
     BitStream data;
@@ -41,8 +42,9 @@ public:
     e->attachWire("xor1.z", "output_bus.bit_1");
 
     EncoderMetrics metrics(e);
-
     metrics.measure(data);
+
+    // TOOD
   }
 };
 }

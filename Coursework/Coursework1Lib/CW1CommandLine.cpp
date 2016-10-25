@@ -13,6 +13,7 @@
 #include "UtilityLib/BinaryFileIO.h"
 
 #include "BitStreamComparator.h"
+#include "EncoderMetrics.h"
 
 using namespace CommandLineInterface;
 using namespace CircuitSimulator;
@@ -43,6 +44,19 @@ void CW1CommandLine::initCLI()
       "reset",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         this->m_activeEncoder = std::make_shared<Encoder>();
+        return COMMAND_EXIT_CLEAN;
+      },
+      1, "Resets the state of the encoder."));
+
+  encoderCmd->registerCommand(std::make_shared<Command>(
+      "metrics",
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        EncoderMetrics m(this->m_activeEncoder);
+        BitStream data;
+        data.reserve(100);
+        EncoderMetrics::GenerateRandomData(data, 100);
+        m.measure(data);
+        out << m;
         return COMMAND_EXIT_CLEAN;
       },
       1, "Resets the state of the encoder."));

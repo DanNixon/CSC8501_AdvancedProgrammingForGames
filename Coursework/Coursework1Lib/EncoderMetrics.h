@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <map>
+
 #include "CircuitSimulatorLib/BitStream.h"
 #include "CircuitSimulatorLib/Encoder.h"
 
@@ -17,8 +19,12 @@ public:
   virtual ~EncoderMetrics();
 
   void measure(const CircuitSimulator::BitStream &data);
+  void resetStats();
+
+  friend std::ostream &operator<<(std::ostream &stream, const EncoderMetrics &o);
 
 private:
   CircuitSimulator::Encoder_ptr m_encoder;
+  std::map<std::string, std::map<std::string, double>> m_stats;
 };
 }
