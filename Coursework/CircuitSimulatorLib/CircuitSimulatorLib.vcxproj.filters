@@ -13,6 +13,7 @@
     <ClInclude Include="Component_fwd.h" />
     <ClInclude Include="Pin_fwd.h" />
     <ClInclude Include="ComponentFactory.h" />
+    <ClInclude Include="Wire.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Circuit.cpp" />

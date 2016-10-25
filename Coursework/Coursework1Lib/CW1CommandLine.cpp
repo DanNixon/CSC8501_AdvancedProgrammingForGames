@@ -219,8 +219,9 @@ SubCommand_ptr CW1CommandLine::generatePermutationCmd()
       "generate",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         this->m_permutations.clear();
-        out << Permutation::GenerateAll(this->m_permutations, this->m_activeEncoder)
-            << " permutations generated from active encoder setup.\n";
+        // TOOD
+        // out << Permutation::GenerateAllStrict(this->m_permutations)
+        //     << " permutations generated from active encoder setup.\n";
         return COMMAND_EXIT_CLEAN;
       },
       1, "Generates permutations."));

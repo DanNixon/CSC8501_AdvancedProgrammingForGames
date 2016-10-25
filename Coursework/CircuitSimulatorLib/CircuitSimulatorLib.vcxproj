@@ -142,6 +142,7 @@
     <ClInclude Include="Pin.h" />
     <ClInclude Include="Pin_fwd.h" />
     <ClInclude Include="RegisterArray.h" />
+    <ClInclude Include="Wire.h" />
     <ClInclude Include="XORGate.h" />
   </ItemGroup>
   <ItemGroup>

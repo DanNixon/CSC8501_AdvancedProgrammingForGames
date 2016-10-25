@@ -5,18 +5,16 @@
 #include <vector>
 
 #include "CircuitSimulatorLib/Circuit_fwd.h"
+#include "CircuitSimulatorLib/Wire.h"
 
 namespace Coursework1
 {
 class Permutation
 {
 public:
-  static size_t GenerateAll(std::vector<Permutation>, CircuitSimulator::Circuit_const_ptr c);
-
-public:
-  typedef std::vector<std::pair<std::string, std::string>> WiringList;
-  typedef WiringList::iterator WiringList_iter;
-  typedef WiringList::const_iterator WiringList_const_iter;
+  static size_t GenerateAllStrict(std::vector<Permutation> &results,
+                                  const CircuitSimulator::WireDefList &wires,
+                                  size_t connectivity = 1);
 
 public:
   Permutation();
@@ -27,6 +25,6 @@ public:
   friend std::ostream &operator<<(std::ostream &stream, const Permutation &o);
 
 private:
-  WiringList m_wiring;
+  CircuitSimulator::WireDefList m_wiring;
 };
 }
