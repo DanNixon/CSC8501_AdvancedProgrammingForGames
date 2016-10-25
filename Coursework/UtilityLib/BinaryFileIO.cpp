@@ -5,6 +5,8 @@
 #include <fstream>
 #include <string>
 
+using namespace CircuitSimulator;
+
 namespace Utility
 {
 /**
@@ -13,7 +15,7 @@ namespace Utility
  * @param in Reference to stream to read from
  * @return Number of bits read
  */
-size_t BinaryFileIO::Read(std::vector<bool> &bits, std::istream &in)
+size_t BinaryFileIO::Read(BitStream &bits, std::istream &in)
 {
   size_t numBits = 0;
   char c;
@@ -42,7 +44,7 @@ size_t BinaryFileIO::Read(std::vector<bool> &bits, std::istream &in)
  * @param out Reference to stream to write to
  * @return Number of bits written
  */
-size_t BinaryFileIO::Write(const std::vector<bool> &bits, std::ostream &out)
+size_t BinaryFileIO::Write(const BitStream &bits, std::ostream &out)
 {
   size_t numBits = 0;
   for (auto it = bits.begin(); it != bits.end(); ++it)
@@ -59,7 +61,7 @@ size_t BinaryFileIO::Write(const std::vector<bool> &bits, std::ostream &out)
  * @param filename Name of file to read from
  * @return Number of bits read
  */
-size_t BinaryFileIO::ReadFile(std::vector<bool> &bits, const std::string &filename)
+size_t BinaryFileIO::ReadFile(BitStream &bits, const std::string &filename)
 {
   std::ifstream in;
   in.open(filename, std::fstream::in);
@@ -74,7 +76,7 @@ size_t BinaryFileIO::ReadFile(std::vector<bool> &bits, const std::string &filena
  * @param filename Name of file to write to
  * @return Number of bits written
  */
-size_t BinaryFileIO::WriteFile(const std::vector<bool> &bits, const std::string &filename)
+size_t BinaryFileIO::WriteFile(const BitStream &bits, const std::string &filename)
 {
   std::ofstream out;
   out.open(filename, std::fstream::out);

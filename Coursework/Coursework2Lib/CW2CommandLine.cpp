@@ -3,9 +3,11 @@
 #include "CW2CommandLine.h"
 
 #include "CommandLineInterfaceLib/SubCommand.h"
+#include "Coursework2Lib/ErrorInjector.h"
 #include "UtilityLib/BinaryFileIO.h"
 
 using namespace CommandLineInterface;
+using namespace CircuitSimulator;
 using namespace Utility;
 
 namespace Coursework2
@@ -24,8 +26,15 @@ void CW2CommandLine::initCLI()
   registerCommand(std::make_shared<Command>(
       "inject_error",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-        // TODO
-        out << "TODO\n";
+        BitStream inData;
+        BitStream outData;
+
+        BinaryFileIO::ReadFile(inData, argv[1]);
+        outData.reserve(inData.size());
+
+        ErrorInjector::InjectError(inData, outData);
+        BinaryFileIO::WriteFile(outData, argv[2]);
+
         return COMMAND_EXIT_CLEAN;
       },
       3, "Injects erronous data into a file."));

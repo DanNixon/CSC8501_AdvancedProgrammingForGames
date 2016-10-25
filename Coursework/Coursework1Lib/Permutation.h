@@ -20,6 +20,11 @@ public:
     return m_wires.size();
   }
 
+  inline CircuitSimulator::WireDef wire(size_t idx) const
+  {
+    return m_wires[idx];
+  }
+
   void apply(CircuitSimulator::Circuit_ptr c);
 
   friend std::ostream &operator<<(std::ostream &stream, const Permutation &o);

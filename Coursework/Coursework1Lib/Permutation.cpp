@@ -19,7 +19,8 @@ Permutation::~Permutation()
 
 void Permutation::apply(CircuitSimulator::Circuit_ptr c)
 {
-  // TODO
+  for (auto it = m_wires.cbegin(); it != m_wires.cend(); ++it)
+    c->attachWire(it->first, it->second);
 }
 
 /**
