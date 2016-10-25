@@ -24,5 +24,6 @@
     <ClCompile Include="XORGate.cpp" />
     <ClCompile Include="CircuitValidator.cpp" />
     <ClCompile Include="ComponentFactory.cpp" />
+    <ClCompile Include="Wire.cpp" />
   </ItemGroup>
 </Project>

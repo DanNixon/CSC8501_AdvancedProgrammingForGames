@@ -153,6 +153,7 @@
     <ClCompile Include="ComponentFactory.cpp" />
     <ClCompile Include="Encoder.cpp" />
     <ClCompile Include="Pin.cpp" />
+    <ClCompile Include="Wire.cpp" />
     <ClCompile Include="XORGate.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

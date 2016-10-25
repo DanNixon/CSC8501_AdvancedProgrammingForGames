@@ -8,16 +8,21 @@ using namespace CircuitSimulator;
 
 namespace Coursework1
 {
-PermutationGenerator::PermutationGenerator(const CircuitSimulator::WireDefList &wires,
-                                           const std::vector<std::string> &validationStrings)
+  void PermutationGenerator::GenerateWireList(const std::vector<std::string>& sourceList, const std::vector<std::string>& destList, WireDefList & output)
+  {
+    for (auto sIt = sourceList.cbegin(); sIt != sourceList.cend(); ++sIt)
+    {
+      for (auto dIt = destList.cbegin(); dIt != destList.cend(); ++dIt)
+      {
+        output.push_back(WireDef(*sIt, *dIt));
+      }
+    }
+  }
+
+  PermutationGenerator::PermutationGenerator(const CircuitSimulator::WireDefList &wires)
     : m_wires(wires)
     , m_numPermutations((size_t)(std::pow(2, wires.size() + 1) - 1))
 {
-  for (size_t i = 0; i < m_numPermutations; i++)
-  {
-    if (validationStrings.empty() || validatePermutation(i, validationStrings))
-      m_validPermutationMasks.push_back(i);
-  }
 }
 
 PermutationGenerator::~PermutationGenerator()
@@ -48,20 +53,5 @@ void PermutationGenerator::printPermutation(size_t mask, std::ostream &str)
   }
 
   str << "]\n";
-}
-
-bool PermutationGenerator::validatePermutation(size_t mask, std::vector<std::string> searchStrings)
-{
-  bool valid = true;
-
-  for (size_t i = 0; i < m_wires.size(); i++)
-  {
-    if (IS_ACTIVE_BIT)
-    {
-      // TODO
-    }
-  }
-
-  return valid;
 }
 }

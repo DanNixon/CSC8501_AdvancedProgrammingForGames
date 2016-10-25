@@ -39,6 +39,8 @@ public:
     return m_name;
   }
 
+  bool hasLogicalConnection(size_t maxInputs = 1) const;
+
   bool hasPin(const std::string &name, uint8_t flag) const;
 
   Pin_ptr pin(const std::string &name);

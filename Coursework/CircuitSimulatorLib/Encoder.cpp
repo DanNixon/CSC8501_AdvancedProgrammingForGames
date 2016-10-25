@@ -31,6 +31,23 @@ void Encoder::addComponent(Component_ptr component)
     m_registers.push_back(ra);
 }
 
+bool Encoder::validateComponentUse()
+{
+  for (auto it = m_components.cbegin(); it != m_components.cend(); ++it)
+  {
+    if (!(*it)->hasLogicalConnection())
+      return false;
+  }
+
+  return true;
+}
+
+bool Encoder::validateOutputSpace(size_t limit)
+{
+  // TODO
+  return true;
+}
+
 /**
  * @brief Shifts all registers in the encoder.
  * @param direction Direction to shift in (-1 for left, 1 for right)

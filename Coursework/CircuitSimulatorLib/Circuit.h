@@ -65,7 +65,7 @@ public:
 private:
   Pin_ptr findPatchEndpoint(const std::string &def);
 
-private:
+protected:
   ComponentList m_components; //!< List of components in circuit
 };
 }

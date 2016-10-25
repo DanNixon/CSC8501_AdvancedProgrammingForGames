@@ -37,6 +37,23 @@ Component::~Component()
 {
 }
 
+bool Component::hasLogicalConnection(size_t maxInputs) const
+{
+  bool connectedInput = false;
+  bool connectedOutput = false;
+
+  for (auto it = m_pins.cbegin(); it != m_pins.cend(); ++it)
+  {
+    if (!connectedInput && (*it)->isInput() && (*it)->numInboundConnections() > 0 && (*it)->numInboundConnections() <= maxInputs)
+      connectedInput = true;
+
+    if (!connectedOutput && (*it)->isOutput() && (*it)->numOutboundConnections() > 0)
+      connectedOutput = true;
+  }
+
+  return connectedInput && connectedOutput;
+}
+
 /**
  * @brief Checks if a Pin with a given name and IO flags exists on this
  *        component.

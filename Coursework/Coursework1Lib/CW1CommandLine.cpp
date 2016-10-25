@@ -10,6 +10,7 @@
 #include "CircuitSimulatorLib/XORGate.h"
 #include "CommandLineInterfaceLib/Command.h"
 #include "UtilityLib/BinaryFileIO.h"
+#include "CircuitSimulatorLib/Wire.h"
 
 #include "BitStreamComparator.h"
 
@@ -85,6 +86,60 @@ void CW1CommandLine::initCLI()
         return COMMAND_EXIT_CLEAN;
       },
       3, "Encodes data from a file."));
+
+  encodeCmd->registerCommand(std::make_shared<Command>(
+      "cw1workflow",
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        std::vector<bool> dataIn;
+        BinaryFileIO::ReadFile(dataIn, argv[1]);
+
+        if (this->m_permutationGenerator != nullptr)
+          delete this->m_permutationGenerator;
+
+        WireDefList permutationWires;
+        PermutationGenerator::GenerateWireList({"input_bus.bit_0", "r.bit_1", "r.bit_2", "r.bit_3"}, {"xor1.a", "xor1.b", "xor2.a", "xor2.b"}, permutationWires);
+        PermutationGenerator::GenerateWireList({"xor1.z", "xor2.z"}, {"output_bus.bit_0", "output_bus.bit_1"}, permutationWires);
+        this->m_permutationGenerator = new PermutationGenerator(permutationWires);
+
+        for (size_t i = 0; i < this->m_permutationGenerator->numPermutations(); i++)
+        {
+          this->loadPreset("cw_basic");
+
+          std::vector<bool> dataOut;
+          dataOut.reserve(dataIn.size() * 2);
+
+          Permutation p = this->m_permutationGenerator->permutation(i);
+          p.apply(this->m_activeEncoder);
+
+          if (!this->m_activeEncoder->validate())
+          {
+            out << "Permutation with mask " << i << " failed to generate valid wiring.\n";
+            continue;
+          }
+
+          if (!this->m_activeEncoder->validateComponentUse())
+          {
+            //out << "Permutation with mask " << i << " failed to use all components.\n";
+            continue;
+          }
+
+          if (!this->m_activeEncoder->validateOutputSpace())
+          {
+            out << "Permutation with mask " << i << " failed to generate valid output.\n";
+            continue;
+          }
+
+          this->m_activeEncoder->encode(dataIn, dataOut);
+
+          std::string outFilename = argv[2] + "enc_mask" + std::to_string(i) + ".txt";
+          BinaryFileIO::WriteFile(dataOut, outFilename);
+
+          out << "Permutation with mask " << i << " saved to: " << outFilename << '\n';
+        }
+
+        return COMMAND_EXIT_CLEAN;
+      },
+      3, "Performs permutation generation and encoding steps for coursework 1."));
 
   registerCommand(encoderCmd);
   registerCommand(encodeCmd);
@@ -220,9 +275,21 @@ SubCommand_ptr CW1CommandLine::generatePermutationCmd()
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         if (this->m_permutationGenerator != nullptr)
           delete this->m_permutationGenerator;
-        this->m_permutationGenerator = new PermutationGenerator({}, {}); // TODO
+
+        std::vector<std::string> wireDefs(argv.begin() + 1, argv.end());
+        WireDefList wires;
+        for (auto it = wireDefs.begin(); it != wireDefs.end(); ++it)
+        {
+          WireDef w;
+          std::stringstream wStr(*it);
+          wStr >> w;
+          wires.push_back(w);
+        }
+
+        this->m_permutationGenerator = new PermutationGenerator(wires);
         out << this->m_permutationGenerator->numPermutations()
             << " permutations generated from wire set.\n";
+
         return COMMAND_EXIT_CLEAN;
       },
       2, "Generates permutations."));
@@ -269,16 +336,7 @@ SubCommand_ptr CW1CommandLine::generatePresetCmd()
   cmd->registerCommand(std::make_shared<Command>(
       "cw_basic",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-        this->m_activeEncoder = std::make_shared<Encoder>();
-
-        this->m_activeEncoder->addComponent(std::make_shared<XORGate>("xor1"));
-        this->m_activeEncoder->addComponent(std::make_shared<XORGate>("xor2"));
-        this->m_activeEncoder->addComponent(std::make_shared<RegisterArray>("r", 4));
-
-        this->m_activeEncoder->attachWire("input_bus.bit_0", "r.bit_0");
-        this->m_activeEncoder->attachWire("xor2.z", "output_bus.bit_0");
-        this->m_activeEncoder->attachWire("xor1.z", "output_bus.bit_1");
-
+    this->loadPreset("cw_basic");
         return COMMAND_EXIT_CLEAN;
       },
       1, "Minimal wiring configuration form coursework spec."));
@@ -286,24 +344,43 @@ SubCommand_ptr CW1CommandLine::generatePresetCmd()
   cmd->registerCommand(std::make_shared<Command>(
       "cw_example",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-        this->m_activeEncoder = std::make_shared<Encoder>();
-
-        this->m_activeEncoder->addComponent(std::make_shared<XORGate>("xor1"));
-        this->m_activeEncoder->addComponent(std::make_shared<XORGate>("xor2"));
-        this->m_activeEncoder->addComponent(std::make_shared<RegisterArray>("r", 4));
-
-        this->m_activeEncoder->attachWire("input_bus.bit_0", "r.bit_0");
-        this->m_activeEncoder->attachWire("input_bus.bit_0", "xor2.a");
-        this->m_activeEncoder->attachWire("r.bit_1", "xor2.b");
-        this->m_activeEncoder->attachWire("xor2.z", "output_bus.bit_0");
-        this->m_activeEncoder->attachWire("r.bit_2", "xor1.a");
-        this->m_activeEncoder->attachWire("r.bit_3", "xor1.b");
-        this->m_activeEncoder->attachWire("xor1.z", "output_bus.bit_1");
-
+        this->loadPreset("cw_example");
         return COMMAND_EXIT_CLEAN;
       },
       1, "Minimal wiring configuration form coursework spec."));
 
   return cmd;
+}
+
+void Coursework1::CW1CommandLine::loadPreset(const std::string & preset)
+{
+  this->m_activeEncoder = std::make_shared<Encoder>();
+
+  if (preset == "cw_basic")
+  {
+    this->m_activeEncoder->addComponent(std::make_shared<XORGate>("xor1"));
+    this->m_activeEncoder->addComponent(std::make_shared<XORGate>("xor2"));
+    this->m_activeEncoder->addComponent(std::make_shared<RegisterArray>("r", 4));
+
+    this->m_activeEncoder->attachWire("input_bus.bit_0", "r.bit_0");
+    this->m_activeEncoder->attachWire("xor2.z", "output_bus.bit_0");
+    this->m_activeEncoder->attachWire("xor1.z", "output_bus.bit_1");
+  }
+  else if (preset == "cw_example")
+  {
+    this->m_activeEncoder->addComponent(std::make_shared<XORGate>("xor1"));
+    this->m_activeEncoder->addComponent(std::make_shared<XORGate>("xor2"));
+    this->m_activeEncoder->addComponent(std::make_shared<RegisterArray>("r", 4));
+
+    this->m_activeEncoder->attachWire("input_bus.bit_0", "r.bit_0");
+    this->m_activeEncoder->attachWire("input_bus.bit_0", "xor2.a");
+    this->m_activeEncoder->attachWire("r.bit_1", "xor2.b");
+    this->m_activeEncoder->attachWire("xor2.z", "output_bus.bit_0");
+    this->m_activeEncoder->attachWire("r.bit_2", "xor1.a");
+    this->m_activeEncoder->attachWire("r.bit_3", "xor1.b");
+    this->m_activeEncoder->attachWire("xor1.z", "output_bus.bit_1");
+  }
+  else
+    throw std::runtime_error("Preset \"" + preset + "\" not found.");
 }
 }

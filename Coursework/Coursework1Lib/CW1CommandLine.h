@@ -28,6 +28,7 @@ private:
   CommandLineInterface::SubCommand_ptr generateWireCmd();
   CommandLineInterface::SubCommand_ptr generatePermutationCmd();
   CommandLineInterface::SubCommand_ptr generatePresetCmd();
+  void loadPreset(const std::string &preset);
 
 private:
   CircuitSimulator::Encoder_ptr m_activeEncoder;

@@ -62,6 +62,16 @@ public:
   bool isInput() const;
   bool isOutput() const;
 
+  inline size_t numInboundConnections() const
+  {
+    return m_inboundConnections.size();
+  }
+
+  inline size_t numOutboundConnections() const
+  {
+    return m_outboundConnections.size();
+  }
+
   void setOnChange(std::function<void(void)> func);
 
   void setState(bool state);
