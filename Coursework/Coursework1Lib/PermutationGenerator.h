@@ -11,28 +11,26 @@ namespace Coursework1
 class PermutationGenerator
 {
 public:
-  static void GenerateWireList(const std::vector<std::string> &sourceList,
-                               const std::vector<std::string> &destList,
-                               CircuitSimulator::WireDefList &output);
+  typedef std::vector<std::pair<std::vector<std::string>, std::vector<std::string>>>
+      WireEndpointList;
 
 public:
-  typedef std::vector<size_t> IndexList;
-  typedef IndexList::const_iterator IndexList_const_iter;
-
-public:
-  PermutationGenerator(const CircuitSimulator::WireDefList &wires);
+  PermutationGenerator(const WireEndpointList &wireEndpoints);
   virtual ~PermutationGenerator();
 
-  inline size_t numPermutations() const
+  size_t numPermutations() const;
+
+  inline void reset()
   {
-    return m_numPermutations;
+    m_groupPermutations.clear();
   }
 
-  Permutation permutation(size_t mask);
-  void printPermutation(size_t mask, std::ostream &str);
+  void generate();
+
+  Permutation permutation(size_t idx);
 
 private:
-  const CircuitSimulator::WireDefList &m_wires;
-  const size_t m_numPermutations;
+  const WireEndpointList &m_endpointGroups;
+  std::vector<std::vector<std::vector<size_t>>> m_groupPermutations;
 };
 }

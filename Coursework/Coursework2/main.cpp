@@ -1,13 +1,13 @@
 /** @file */
 
-#include <iostream>
 #include <ctime>
+#include <iostream>
 
 #include "Coursework2Lib/CW2CommandLine.h"
 
 int main()
 {
-  std::srand(std::time(0));
+  std::srand((unsigned int)std::time(0));
   Coursework2::CW2CommandLine cli(std::cin, std::cout);
   cli.initCLI();
   return cli.run();

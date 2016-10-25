@@ -286,20 +286,7 @@ SubCommand_ptr CW1CommandLine::generatePermutationCmd()
         if (this->m_permutationGenerator != nullptr)
           delete this->m_permutationGenerator;
 
-        std::vector<std::string> wireDefs(argv.begin() + 1, argv.end());
-        WireDefList wires;
-        for (auto it = wireDefs.begin(); it != wireDefs.end(); ++it)
-        {
-          WireDef w;
-          std::stringstream wStr(*it);
-          wStr >> w;
-          wires.push_back(w);
-        }
-
-        this->m_permutationGenerator = new PermutationGenerator(wires);
-        out << this->m_permutationGenerator->numPermutations()
-            << " permutations generated from wire set.\n";
-
+        // TODO
         return COMMAND_EXIT_CLEAN;
       },
       2, "Generates permutations."));
@@ -313,8 +300,9 @@ SubCommand_ptr CW1CommandLine::generatePermutationCmd()
           return 1;
         }
 
-        for (size_t i = 0; i < this->m_permutationGenerator->numPermutations(); i++)
-          this->m_permutationGenerator->printPermutation(i, out);
+        // TODO
+        // for (size_t i = 0; i < this->m_permutationGenerator->numPermutations(); i++)
+        // this->m_permutationGenerator->printPermutation(i, out);
 
         return COMMAND_EXIT_CLEAN;
       },
