@@ -7,10 +7,10 @@
 
 #include "CircuitSimulatorLib/ComponentFactory.h"
 #include "CircuitSimulatorLib/RegisterArray.h"
+#include "CircuitSimulatorLib/Wire.h"
 #include "CircuitSimulatorLib/XORGate.h"
 #include "CommandLineInterfaceLib/Command.h"
 #include "UtilityLib/BinaryFileIO.h"
-#include "CircuitSimulatorLib/Wire.h"
 
 #include "BitStreamComparator.h"
 
@@ -87,7 +87,7 @@ void CW1CommandLine::initCLI()
       },
       3, "Encodes data from a file."));
 
-  // TODO
+// TODO
 #if 0
   encodeCmd->registerCommand(std::make_shared<Command>(
       "cw1workflow",
@@ -333,7 +333,7 @@ SubCommand_ptr CW1CommandLine::generatePresetCmd()
   cmd->registerCommand(std::make_shared<Command>(
       "cw_basic",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-    this->loadPreset("cw_basic");
+        this->loadPreset("cw_basic");
         return COMMAND_EXIT_CLEAN;
       },
       1, "Minimal wiring configuration form coursework spec."));
@@ -349,7 +349,7 @@ SubCommand_ptr CW1CommandLine::generatePresetCmd()
   return cmd;
 }
 
-void Coursework1::CW1CommandLine::loadPreset(const std::string & preset)
+void Coursework1::CW1CommandLine::loadPreset(const std::string &preset)
 {
   this->m_activeEncoder = std::make_shared<Encoder>();
 

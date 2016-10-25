@@ -8,18 +8,20 @@ using namespace CircuitSimulator;
 
 namespace Coursework1
 {
-  void PermutationGenerator::GenerateWireList(const std::vector<std::string>& sourceList, const std::vector<std::string>& destList, WireDefList & output)
+void PermutationGenerator::GenerateWireList(const std::vector<std::string> &sourceList,
+                                            const std::vector<std::string> &destList,
+                                            WireDefList &output)
+{
+  for (auto sIt = sourceList.cbegin(); sIt != sourceList.cend(); ++sIt)
   {
-    for (auto sIt = sourceList.cbegin(); sIt != sourceList.cend(); ++sIt)
+    for (auto dIt = destList.cbegin(); dIt != destList.cend(); ++dIt)
     {
-      for (auto dIt = destList.cbegin(); dIt != destList.cend(); ++dIt)
-      {
-        output.push_back(WireDef(*sIt, *dIt));
-      }
+      output.push_back(WireDef(*sIt, *dIt));
     }
   }
+}
 
-  PermutationGenerator::PermutationGenerator(const CircuitSimulator::WireDefList &wires)
+PermutationGenerator::PermutationGenerator(const CircuitSimulator::WireDefList &wires)
     : m_wires(wires)
     , m_numPermutations((size_t)(std::pow(2, wires.size() + 1) - 1))
 {

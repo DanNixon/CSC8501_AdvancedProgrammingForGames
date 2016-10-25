@@ -44,7 +44,8 @@ bool Component::hasLogicalConnection(size_t maxInputs) const
 
   for (auto it = m_pins.cbegin(); it != m_pins.cend(); ++it)
   {
-    if (!connectedInput && (*it)->isInput() && (*it)->numInboundConnections() > 0 && (*it)->numInboundConnections() <= maxInputs)
+    if (!connectedInput && (*it)->isInput() && (*it)->numInboundConnections() > 0 &&
+        (*it)->numInboundConnections() <= maxInputs)
       connectedInput = true;
 
     if (!connectedOutput && (*it)->isOutput() && (*it)->numOutboundConnections() > 0)

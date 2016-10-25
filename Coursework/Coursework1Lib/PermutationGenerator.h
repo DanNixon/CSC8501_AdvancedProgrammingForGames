@@ -11,7 +11,9 @@ namespace Coursework1
 class PermutationGenerator
 {
 public:
-  static void GenerateWireList(const std::vector<std::string> & sourceList, const std::vector<std::string> &destList, CircuitSimulator::WireDefList &output);
+  static void GenerateWireList(const std::vector<std::string> &sourceList,
+                               const std::vector<std::string> &destList,
+                               CircuitSimulator::WireDefList &output);
 
 public:
   typedef std::vector<size_t> IndexList;
