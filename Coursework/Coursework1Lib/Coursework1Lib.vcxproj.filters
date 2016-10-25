@@ -5,11 +5,13 @@
     <ClCompile Include="Permutation.cpp" />
     <ClCompile Include="BitStreamComparator.cpp" />
     <ClCompile Include="PermutationGenerator.cpp" />
+    <ClCompile Include="EncoderMetrics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CW1CommandLine.h" />
     <ClInclude Include="Permutation.h" />
     <ClInclude Include="BitStreamComparator.h" />
     <ClInclude Include="PermutationGenerator.h" />
+    <ClInclude Include="EncoderMetrics.h" />
   </ItemGroup>
 </Project>

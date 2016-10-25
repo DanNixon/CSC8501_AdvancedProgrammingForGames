@@ -2,6 +2,8 @@
 
 #include "Encoder.h"
 
+#include <map>
+
 namespace CircuitSimulator
 {
 /**
@@ -42,12 +44,6 @@ bool Encoder::validateComponentUse()
   return true;
 }
 
-bool Encoder::validateOutputSpace(size_t limit)
-{
-  // TODO
-  return true;
-}
-
 /**
  * @brief Shifts all registers in the encoder.
  * @param direction Direction to shift in (-1 for left, 1 for right)
@@ -68,6 +64,12 @@ void Encoder::advanceRegisters(int8_t direction)
       throw std::runtime_error("Invalid shift direction");
     }
   }
+}
+
+void Encoder::resetRegisters()
+{
+  for (auto it = m_registers.begin(); it != m_registers.end(); ++it)
+    (*it)->reset();
 }
 
 void Encoder::encode(const std::vector<bool> &in, std::vector<bool> &out)

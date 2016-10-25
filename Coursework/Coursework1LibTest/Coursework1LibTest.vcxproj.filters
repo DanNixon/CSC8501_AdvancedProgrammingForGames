@@ -3,5 +3,6 @@
   <ItemGroup>
     <ClCompile Include="BitStreamComparatorTest.cpp" />
     <ClCompile Include="PermutationGeneratorTest.cpp" />
+    <ClCompile Include="EncoderMetricsTest.cpp" />
   </ItemGroup>
 </Project>

@@ -68,6 +68,12 @@ public:
 
     m_pins.back()->setState(false);
   }
+
+  void reset()
+  {
+    for (auto it = m_pins.begin(); it != m_pins.end(); ++it)
+      (*it)->setState(false);
+  }
 };
 
 typedef std::shared_ptr<RegisterArray> RegisterArray_ptr;

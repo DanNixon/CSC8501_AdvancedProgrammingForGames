@@ -87,6 +87,8 @@ void CW1CommandLine::initCLI()
       },
       3, "Encodes data from a file."));
 
+  // TODO
+#if 0
   encodeCmd->registerCommand(std::make_shared<Command>(
       "cw1workflow",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
@@ -119,13 +121,7 @@ void CW1CommandLine::initCLI()
 
           if (!this->m_activeEncoder->validateComponentUse())
           {
-            //out << "Permutation with mask " << i << " failed to use all components.\n";
-            continue;
-          }
-
-          if (!this->m_activeEncoder->validateOutputSpace())
-          {
-            out << "Permutation with mask " << i << " failed to generate valid output.\n";
+            out << "Permutation with mask " << i << " failed to use all components.\n";
             continue;
           }
 
@@ -140,6 +136,7 @@ void CW1CommandLine::initCLI()
         return COMMAND_EXIT_CLEAN;
       },
       3, "Performs permutation generation and encoding steps for coursework 1."));
+#endif
 
   registerCommand(encoderCmd);
   registerCommand(encodeCmd);

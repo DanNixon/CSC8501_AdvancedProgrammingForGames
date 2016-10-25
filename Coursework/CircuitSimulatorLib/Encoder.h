@@ -24,9 +24,9 @@ public:
   virtual void addComponent(Component_ptr component);
 
   bool validateComponentUse();
-  bool validateOutputSpace(size_t limit = 100);
 
   void advanceRegisters(int8_t direction);
+  void resetRegisters();
   void encode(const std::vector<bool> &in, std::vector<bool> &out);
 
 private:
