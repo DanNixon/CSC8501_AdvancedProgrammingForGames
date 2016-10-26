@@ -294,7 +294,7 @@ SubCommand_ptr CW1CommandLine::generatePermutationCmd()
         PermutationGenerator::WireEndpointList endpoints = {
             {{"input_bus.bit_0", "r.bit_1", "r.bit_2", "r.bit_3"},
              {"xor1.a", "xor1.b", "xor2.a", "xor2.b"}},
-            {{"xor1.z", "xor2.z"}, {"output_bus.bit_0", "output_bus.bit_1"}}};
+            {{"xor2.z", "xor1.z"}, {"output_bus.bit_0", "output_bus.bit_1"}}};
 
         this->m_permutationGenerator = new PermutationGenerator(endpoints);
         this->m_permutationGenerator->generate();

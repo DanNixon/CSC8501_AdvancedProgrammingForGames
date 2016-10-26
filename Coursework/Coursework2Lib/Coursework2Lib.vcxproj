@@ -134,11 +134,13 @@
     <ClCompile Include="CW2CommandLine.cpp" />
     <ClCompile Include="Decoder.cpp" />
     <ClCompile Include="ErrorInjector.cpp" />
+    <ClCompile Include="Viterbi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CW2CommandLine.h" />
     <ClInclude Include="Decoder.h" />
     <ClInclude Include="ErrorInjector.h" />
+    <ClInclude Include="Viterbi.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
