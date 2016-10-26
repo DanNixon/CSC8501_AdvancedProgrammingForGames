@@ -53,7 +53,7 @@ void CW2CommandLine::initCLI()
       "decode",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         // TODO
-        return COMMAND_EXIT_CLEAN;
+        return 40;
       },
       3, "Decodes encoded data."));
 

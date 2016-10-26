@@ -60,7 +60,19 @@ int CLI::run()
     std::vector<std::string> tokens;
     StringUtils::Split(tokens, command, ' ');
 
-    handle(m_in, m_out, tokens);
+    int retVal = handle(m_in, m_out, tokens);
+
+    switch (retVal)
+    {
+    case COMMAND_EXIT_CLEAN:
+      /* Do nothing here. */
+      break;
+    case COMMAND_EXIT_TOO_FEW_ARGUMENTS:
+      /* Do nothing here. Handled in Command::handleCmdFunc() */
+      break;
+    default:
+      m_out << "Command exited with code " << retVal << ".\n";
+    }
   }
 
   return (int)m_exitCode;
