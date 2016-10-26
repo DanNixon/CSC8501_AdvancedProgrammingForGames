@@ -57,7 +57,6 @@ int main(void)
   }
 
   // Place ships
-  // TODO: make this random
   for (size_t i = 0; i < ships[0].numSquares; i++)
     grid[4][i + 2].ship = &ships[0];
   for (size_t i = 0; i < ships[1].numSquares; i++)

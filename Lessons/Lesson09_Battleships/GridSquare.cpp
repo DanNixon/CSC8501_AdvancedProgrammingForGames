@@ -13,5 +13,4 @@ GridSquare::~GridSquare()
 
 void GridSquare::hit()
 {
-  // TODO
 }
