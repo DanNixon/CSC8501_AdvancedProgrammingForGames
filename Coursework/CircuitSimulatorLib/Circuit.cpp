@@ -204,7 +204,14 @@ std::ostream &operator<<(std::ostream &stream, const Circuit &o)
   stream << "Circuit[\n";
 
   for (auto it = o.m_components.begin(); it != o.m_components.end(); ++it)
-    stream << " - " << *(*it) << '\n';
+    stream << " c: " << *(*it) << '\n';
+
+  for (auto cIt = o.m_components.begin(); cIt != o.m_components.end(); ++cIt)
+    for (auto pIt = (*cIt)->pinsBegin(); pIt != (*cIt)->pinsEnd(); ++pIt)
+      for (auto wIt = (*pIt)->outboundConnectionsBegin(); wIt != (*pIt)->outboundConnectionsEnd();
+           ++wIt)
+        stream << " w: " << (*cIt)->id() << '.' << (*pIt)->id() << " -> "
+               << (*wIt)->parentComponent()->id() << '.' << (*wIt)->id() << '\n';
 
   stream << ']';
 

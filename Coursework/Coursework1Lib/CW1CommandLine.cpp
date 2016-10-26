@@ -50,6 +50,14 @@ void CW1CommandLine::initCLI()
       1, "Resets the state of the encoder."));
 
   encoderCmd->registerCommand(std::make_shared<Command>(
+      "show",
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        out << *(this->m_activeEncoder) << '\n';
+        return COMMAND_EXIT_CLEAN;
+      },
+      1, "Outputs the encoder configuration."));
+
+  encoderCmd->registerCommand(std::make_shared<Command>(
       "metrics",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         EncoderMetrics m(this->m_activeEncoder);
@@ -141,6 +149,13 @@ void CW1CommandLine::initCLI()
           // Perform encoding
           this->m_activeEncoder->encode(dataIn, dataOut);
 
+          // Output wiring info
+          std::string wiringFilename = argv[2] + "enc_" + std::to_string(i) + "_wiring.txt";
+          std::ofstream wiringOut;
+          wiringOut.open(wiringFilename, std::fstream::out);
+          wiringOut << *(this->m_activeEncoder) << '\n';
+          wiringOut.close();
+
           // Calculate and output metrics
           EncoderMetrics metrics(this->m_activeEncoder);
           metrics.measure(dataIn);
@@ -206,27 +221,18 @@ SubCommand_ptr CW1CommandLine::generateComponentCmd()
   cmd->registerCommand(std::make_shared<Command>(
       "list",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) -> int {
-        if (argv.size() > 1)
-        {
-          auto cIt = std::find_if(this->m_activeEncoder->componentsBegin(),
-                                  this->m_activeEncoder->componentsEnd(),
-                                  [&argv](Component_ptr c) { return c->id() == argv[1]; });
-          if (cIt == this->m_activeEncoder->componentsEnd())
-            return 1;
+        auto cIt = std::find_if(this->m_activeEncoder->componentsBegin(),
+                                this->m_activeEncoder->componentsEnd(),
+                                [&argv](Component_ptr c) { return c->id() == argv[1]; });
+        if (cIt == this->m_activeEncoder->componentsEnd())
+          return 1;
 
-          for (auto pIt = (*cIt)->pinsBegin(); pIt != (*cIt)->pinsEnd(); ++pIt)
-            out << ((*pIt)->isInput() ? 'I' : ' ') << ((*pIt)->isOutput() ? 'O' : ' ') << ": "
-                << (*pIt)->id() << '\n';
-        }
-        else
-        {
-          for (auto it = this->m_activeEncoder->componentsBegin();
-               it != this->m_activeEncoder->componentsEnd(); ++it)
-            out << (*it)->name() << " : " << (*it)->id() << '\n';
-        }
+        for (auto pIt = (*cIt)->pinsBegin(); pIt != (*cIt)->pinsEnd(); ++pIt)
+          out << ((*pIt)->isInput() ? 'I' : ' ') << ((*pIt)->isOutput() ? 'O' : ' ') << ": "
+              << (*pIt)->id() << '\n';
         return COMMAND_EXIT_CLEAN;
       },
-      1, "Lists encoder components and component pins."));
+      2, "Lists component pins."));
 
   cmd->registerCommand(std::make_shared<Command>(
       "add",
@@ -251,20 +257,6 @@ SubCommand_ptr CW1CommandLine::generateComponentCmd()
 SubCommand_ptr CW1CommandLine::generateWireCmd()
 {
   SubCommand_ptr cmd = std::make_shared<SubCommand>("wires", "Manage encoder wiring.");
-
-  cmd->registerCommand(std::make_shared<Command>(
-      "list",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-        for (auto cIt = this->m_activeEncoder->componentsBegin();
-             cIt != this->m_activeEncoder->componentsEnd(); ++cIt)
-          for (auto pIt = (*cIt)->pinsBegin(); pIt != (*cIt)->pinsEnd(); ++pIt)
-            for (auto wIt = (*pIt)->outboundConnectionsBegin();
-                 wIt != (*pIt)->outboundConnectionsEnd(); ++wIt)
-              out << (*cIt)->id() << '.' << (*pIt)->id() << " -> " << (*wIt)->id() << '.'
-                  << (*wIt)->parentComponent()->id() << '\n';
-        return COMMAND_EXIT_CLEAN;
-      },
-      1, "Lists encoder wiring."));
 
   cmd->registerCommand(std::make_shared<Command>(
       "add",
