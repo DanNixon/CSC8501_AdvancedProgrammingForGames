@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DecoderTest.cpp" />
-    <ClCompile Include="ViterbiTest.cpp" />
+    <ClCompile Include="TrellisTest.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D7D0E775-12C6-46AB-8BB8-FA2299724604}</ProjectGuid>
