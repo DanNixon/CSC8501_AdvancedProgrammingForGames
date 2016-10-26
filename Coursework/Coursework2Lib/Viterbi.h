@@ -39,9 +39,9 @@ public:
   /**
    * @brief Container of emission matrix.
    *
-   * Map of observation and state to the probability of that state given that observation.
+   * Map of state and observation to the probability of that state given that observation.
    */
-  typedef std::map<std::pair<O, S>, double> EmissionMatrix;
+  typedef std::map<std::pair<S, O>, double> EmissionMatrix;
 
   /**
    * @brief Container of initial probabilities.
@@ -59,7 +59,6 @@ public:
   /**
    * @brief Finds the most likely path using the Viterbi algorithm.
    * @param x Output path
-   * @param o Observation space
    * @param s State space
    * @param y Observations
    * @param a Transition matrix
@@ -68,9 +67,8 @@ public:
    *
    * Derived from https://en.wikipedia.org/wiki/Viterbi_algorithm#Pseudocode
    */
-  static void FindPath(States &x, const Observations &o, const States &s, const Observations &y,
-                       const TransitionMatrix &a, const EmissionMatrix &b,
-                       const InitialProbability &pi)
+  static void FindPath(States &x, const States &s, const Observations &y, const TransitionMatrix &a,
+                       const EmissionMatrix &b, const InitialProbability &pi)
   {
     std::vector<Record> t;
 
@@ -79,14 +77,14 @@ public:
     for (S st : s)
     {
       // Product of initial and emission probabilities
-      t[0][st].first = pi.at(st) * b.at({st, o[0]});
+      t[0][st].first = pi.at(st) * b.at({st, y[0]});
 
       // No pervious state
       t[0][st].second = S();
     }
 
     // Run Viterbi over observations
-    for (size_t i = 1; i < o.size(); i++)
+    for (size_t i = 1; i < y.size(); i++)
     {
       t.push_back(Record());
 
@@ -107,7 +105,7 @@ public:
         {
           if (AreClose(t[i - 1][pst].first * a.at({pst, st}), maxTrProb))
           {
-            t[i][st].first = maxTrProb * b.at({st, o[i]});
+            t[i][st].first = maxTrProb * b.at({st, y[i]});
             t[i][st].second = pst;
             break;
           }

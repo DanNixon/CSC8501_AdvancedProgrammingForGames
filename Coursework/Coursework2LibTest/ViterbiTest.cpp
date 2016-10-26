@@ -38,13 +38,13 @@ public:
       { { "Healthy", "normal" }, 0.5 },
       { { "Healthy", "cold" }, 0.4 },
       { { "Healthy", "dizzy" }, 0.1 },
-      { { "Feaver", "normal" }, 0.0 },
+      { { "Feaver", "normal" }, 0.1 },
       { { "Feaver", "cold" }, 0.3 },
       { { "Feaver", "dizzy" }, 0.6 },
     };
     
     StringViterbi::States result;
-    StringViterbi::FindPath(result, observations, stateSpace, observations, transMatrix, emmMatrix, startProbability);
+    StringViterbi::FindPath(result, stateSpace, observations, transMatrix, emmMatrix, startProbability);
 
     Assert::AreEqual((size_t)3, result.size());
     Assert::AreEqual(std::string("Healthy"), result[0]);

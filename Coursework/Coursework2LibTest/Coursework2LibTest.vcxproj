@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DecoderTest.cpp" />
     <ClCompile Include="ViterbiTest.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
