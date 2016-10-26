@@ -18,51 +18,80 @@ public:
   typedef std::map<std::pair<O, S>, double> EmissionMatrix;
   typedef std::map<S, double> InitialProbability;
 
+  typedef std::map<S, std::pair<double, S>> Record;
+
 public:
   static void FindPath(States &x, const Observations &o, const States &s, const Observations &y,
                        const TransitionMatrix &a, const EmissionMatrix &b,
                        const InitialProbability &pi)
   {
-    size_t tLen = s.size();
+    std::vector<Record> t;
 
-    double ** t1 = new double*[tlen];
-    double ** t2 = new double*[tlen];
-
-    for (size_t i = 0; i < tlen; i++)
+    // Initial state
+    t.push_back(Record());
+    for (S st : s)
     {
-      t1[i] = new double[tlen];
-      t2[i] = new double[tlen];
+      // Product of initial and emission probabilities
+      t[0][st].first = pi.at(st) * b.at({st, o[0]});
+
+      // No pervious state
+      t[0][st].second = S();
     }
 
-    // For each state s_i
-    for (size_t i = 0; i < s.size(); i++)
+    // Run Viterbi over observations
+    for (size_t i = 1; i < o.size(); i++)
     {
-      t1[i][0] = pi.at(s.at(i)) * b.at({s.at(i), o.at(0)});
-      t2[i][0] = 0.0;
-    }
+      t.push_back(Record());
 
-    // For elements of T
-    for (size_t i = 1; i < tLen; i++)
-    {
-      // For each state s_j
-      for (size_t j = 0; j < s.size(); j++)
+      for (S st : s)
       {
-        // TODO
-        t1[j][i] = 0.0;
-        t2[j][i] = 0.0;
+        // Find maximum transition probability
+        double maxTrProb = 0.0;
+        for (S pst : s)
+        {
+          double trProb = t[i - 1][pst].first * a.at({pst, st});
+
+          if (trProb > maxTrProb)
+            maxTrProb = trProb;
+        }
+
+        // Find most likely state
+        for (S pst : s)
+        {
+          if (AreClose(t[i - 1][pst].first * a.at({pst, st}), maxTrProb))
+          {
+            t[i][st].first = maxTrProb * b.at({st, o[i]});
+            t[i][st].second = pst;
+            break;
+          }
+        }
       }
     }
 
-    // TODO: z_{T}\gets \arg \max _{k}{(T_{1}[k,T])}
+    // Find most likely end state
+    double maxProb = 0.0;
+    S maxProbState;
 
-    // TODO: xT <- szT
-
-    for (size_t i = tLen; i > 0; i--)
+    for (auto it = t.back().begin(); it != t.back().end(); ++it)
     {
-      // TODO
+      if (it->second.first > maxProb)
+      {
+        maxProb = it->second.first;
+        maxProbState = it->first;
+      }
     }
 
-    // TODO: Delete t1 and t2
+    x.push_back(maxProbState);
+
+    // Backtrack to obtain path
+    for (size_t i = t.size() - 2; i > 0; i--)
+      x.push_back(t[i + 1][x.back()].second);
+  }
+
+private:
+  static bool AreClose(double a, double b)
+  {
+    return std::abs(a - b) < 1e-6;
   }
 };
 }
