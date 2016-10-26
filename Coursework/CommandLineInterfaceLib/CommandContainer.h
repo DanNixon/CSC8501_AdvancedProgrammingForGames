@@ -17,6 +17,9 @@ namespace CommandLineInterface
 class CommandContainer
 {
 public:
+  static const size_t HELP_CMD_WIDTH;
+
+public:
   CommandContainer();
   virtual ~CommandContainer();
 

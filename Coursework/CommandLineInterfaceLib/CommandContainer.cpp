@@ -3,9 +3,12 @@
 #include "CommandContainer.h"
 
 #include <algorithm>
+#include <iomanip>
 
 namespace CommandLineInterface
 {
+const size_t CommandContainer::HELP_CMD_WIDTH = 25;
+
 /**
  * @brief Create a new container.
  *
@@ -77,6 +80,7 @@ void CommandContainer::help(std::ostream &out)
   out << "Command usage:\n";
 
   for (auto it = m_commands.begin(); it != m_commands.end(); ++it)
-    out << ' ' << (*it)->commandName() << "\t\t: " << (*it)->description() << '\n';
+    out << ' ' << std::left << std::setw(HELP_CMD_WIDTH) << (*it)->commandName() << ": "
+        << (*it)->description() << '\n';
 }
 }
