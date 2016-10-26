@@ -84,8 +84,11 @@ public:
     x.push_back(maxProbState);
 
     // Backtrack to obtain path
-    for (size_t i = t.size() - 2; i > 0; i--)
-      x.push_back(t[i + 1][x.back()].second);
+    for (size_t i = t.size() - 1; i > 0; i--)
+      x.push_back(t[i][x.back()].second);
+
+    // Reverse list to get path in correct order
+    std::reverse(x.begin(), x.end());
   }
 
 private:
