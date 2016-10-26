@@ -3,9 +3,11 @@
   <ItemGroup>
     <ClCompile Include="StringUtils.cpp" />
     <ClCompile Include="BinaryFileIO.cpp" />
+    <ClCompile Include="FileUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StringUtils.h" />
     <ClInclude Include="BinaryFileIO.h" />
+    <ClInclude Include="FileUtils.h" />
   </ItemGroup>
 </Project>

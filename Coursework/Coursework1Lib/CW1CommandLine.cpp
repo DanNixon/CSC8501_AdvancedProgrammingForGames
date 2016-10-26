@@ -12,6 +12,7 @@
 #include "CircuitSimulatorLib/XORGate.h"
 #include "CommandLineInterfaceLib/Command.h"
 #include "UtilityLib/BinaryFileIO.h"
+#include "UtilityLib/FileUtils.h"
 
 #include "BitStreamComparator.h"
 #include "EncoderMetrics.h"
@@ -166,7 +167,7 @@ void CW1CommandLine::initCLI()
           metricsOut.close();
 
           // Save encoded string
-          std::string outFilename = argv[2] + "enc_" + std::to_string(i) + ".txt";
+          std::string outFilename = argv[2] + "enc_" + std::to_string(i) + "_out.txt";
           BinaryFileIO::WriteFile(dataOut, outFilename);
 
           out << "Permutation " << i << " saved to: " << outFilename << '\n';
@@ -194,7 +195,9 @@ void CW1CommandLine::initCLI()
   registerCommand(std::make_shared<Command>(
       "find_matching",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-        std::vector<std::string> filenames(argv.begin() + 1, argv.end());
+        std::vector<std::string> filenames;
+        FileUtils::FindFiles(filenames, argv[1]);
+
         BitStreamComparator::IndexListList results;
         BitStreamComparator::FindSimilar(results, filenames);
         if (!results.empty())
@@ -211,7 +214,7 @@ void CW1CommandLine::initCLI()
         }
         return COMMAND_EXIT_CLEAN;
       },
-      3, "Finds matching datasets given a list of filenames."));
+      2, "Finds matching datasets from files in a directory."));
 }
 
 SubCommand_ptr CW1CommandLine::generateComponentCmd()
