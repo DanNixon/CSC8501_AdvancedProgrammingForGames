@@ -67,7 +67,9 @@ size_t BinaryFileIO::ReadFile(BitStream &bits, const std::string &filename)
   in.open(filename, std::fstream::in);
   if (!in.good())
     throw std::runtime_error("Failed to open file for reading: " + filename);
-  return Read(bits, in);
+  size_t res = Read(bits, in);
+  in.close();
+  return res;
 }
 
 /**
@@ -80,6 +82,8 @@ size_t BinaryFileIO::WriteFile(const BitStream &bits, const std::string &filenam
 {
   std::ofstream out;
   out.open(filename, std::fstream::out);
-  return Write(bits, out);
+  size_t res = Write(bits, out);
+  out.close();
+  return res;
 }
 }

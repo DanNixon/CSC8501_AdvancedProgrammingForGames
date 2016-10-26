@@ -3,6 +3,7 @@
 #include "CW1CommandLine.h"
 
 #include <algorithm>
+#include <fstream>
 #include <sstream>
 
 #include "CircuitSimulatorLib/ComponentFactory.h"
@@ -114,14 +115,17 @@ void CW1CommandLine::initCLI()
 
         for (size_t i = 0; i < this->m_permutationGenerator->numPermutations(); i++)
         {
+          // Reset encoder
           this->loadPreset("cw_basic");
 
           std::vector<bool> dataOut;
           dataOut.reserve(dataIn.size() * 2);
 
+          // Get and apply permutation to encoder
           Permutation p = this->m_permutationGenerator->permutation(i);
           p.apply(this->m_activeEncoder);
 
+          // Perform validation
           if (!this->m_activeEncoder->validate())
           {
             out << "Permutation " << i << " failed to generate valid wiring.\n";
@@ -134,12 +138,19 @@ void CW1CommandLine::initCLI()
             continue;
           }
 
+          // Perform encoding
           this->m_activeEncoder->encode(dataIn, dataOut);
 
+          // Calculate and output metrics
           EncoderMetrics metrics(this->m_activeEncoder);
           metrics.measure(dataIn);
-          // TODO
+          std::string metricsFilename = argv[2] + "enc_" + std::to_string(i) + "_metrics.txt";
+          std::ofstream metricsOut;
+          metricsOut.open(metricsFilename, std::fstream::out);
+          metricsOut << metrics << '\n';
+          metricsOut.close();
 
+          // Save encoded string
           std::string outFilename = argv[2] + "enc_" + std::to_string(i) + ".txt";
           BinaryFileIO::WriteFile(dataOut, outFilename);
 
