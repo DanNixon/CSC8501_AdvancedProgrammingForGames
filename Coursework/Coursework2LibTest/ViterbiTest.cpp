@@ -31,7 +31,7 @@ public:
       { { "Healthy", "Healthy" }, 0.7 },
       { { "Healthy", "Feaver" }, 0.3 },
       { { "Feaver", "Healthy" }, 0.4 },
-      { { "Feaver", "Healthy" }, 0.6 }
+      { { "Feaver", "Feaver" }, 0.6 }
     };
 
     StringViterbi::EmissionMatrix emmMatrix = {
