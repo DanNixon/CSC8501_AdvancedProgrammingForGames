@@ -9,6 +9,7 @@ namespace Utility
 class FileUtils
 {
 public:
-  static void FindFiles(std::vector<std::string> &filenames, const std::string &searchPath);
+  static void FindFiles(std::vector<std::string> &filenames, const std::string &directory,
+                        const std::string &glob);
 };
 }

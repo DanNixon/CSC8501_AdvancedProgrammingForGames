@@ -196,7 +196,7 @@ void CW1CommandLine::initCLI()
       "find_matching",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         std::vector<std::string> filenames;
-        FileUtils::FindFiles(filenames, argv[1]);
+        FileUtils::FindFiles(filenames, argv[1], argv[2]);
 
         BitStreamComparator::IndexListList results;
         BitStreamComparator::FindSimilar(results, filenames);
@@ -214,7 +214,7 @@ void CW1CommandLine::initCLI()
         }
         return COMMAND_EXIT_CLEAN;
       },
-      2, "Finds matching datasets from files in a directory."));
+      3, "Finds matching datasets from files in a directory."));
 }
 
 SubCommand_ptr CW1CommandLine::generateComponentCmd()
