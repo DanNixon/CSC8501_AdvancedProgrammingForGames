@@ -4,10 +4,16 @@
 
 #include <windows.h>
 
-// Based on: http://stackoverflow.com/a/20847429
-
 namespace Utility
 {
+/**
+ * @brief Finds files in a given directory that match a given glob.
+ * @param filenames Reference to vector to store output in
+ * @param directory Directory to search in (must have training slash)
+ * @param glob Glob to find files by (use * to find all files)
+ *
+ * Based on: http://stackoverflow.com/a/20847429
+ */
 void FileUtils::FindFiles(std::vector<std::string> &filenames, const std::string &directory,
                           const std::string &glob)
 {

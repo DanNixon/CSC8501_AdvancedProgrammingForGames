@@ -44,13 +44,21 @@ public:
   bool hasPin(const std::string &name, uint8_t flag) const;
 
   Pin_ptr pin(const std::string &name);
-  Pin_const_ptr Component::pin(const std::string &name) const;
+  Pin_const_ptr pin(const std::string &name) const;
 
+  /**
+   * @brief Gets an iterator to the start of the Pins vector.
+   * @return Const Pins iterator
+   */
   inline PinList_const_iter pinsBegin() const
   {
     return m_pins.cbegin();
   }
 
+  /**
+   * @brief Gets an iterator to the end of the Pins vector.
+   * @return Const Pins iterator
+   */
   inline PinList_const_iter pinsEnd() const
   {
     return m_pins.cend();

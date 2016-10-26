@@ -33,6 +33,11 @@ void Encoder::addComponent(Component_ptr component)
     m_registers.push_back(ra);
 }
 
+/**
+ * @brief Checks to ensure that all components in this Circuit are used.
+ * @return True if all components are used
+ * @see Component::hasLogicalConnection()
+ */
 bool Encoder::validateComponentUse()
 {
   for (auto it = m_components.cbegin(); it != m_components.cend(); ++it)
@@ -66,13 +71,21 @@ void Encoder::advanceRegisters(int8_t direction)
   }
 }
 
+/**
+ * @brief Resets all registers to all zeros.
+ */
 void Encoder::resetRegisters()
 {
   for (auto it = m_registers.begin(); it != m_registers.end(); ++it)
     (*it)->reset();
 }
 
-void Encoder::encode(const std::vector<bool> &in, std::vector<bool> &out)
+/**
+ * @brief Encodes a string of bits.
+ * @param in Input data
+ * @param out Output data
+ */
+void Encoder::encode(const BitStream &in, BitStream &out)
 {
   for (auto it = in.cbegin(); it != in.cend(); ++it)
   {

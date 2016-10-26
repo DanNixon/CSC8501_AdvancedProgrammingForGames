@@ -14,7 +14,14 @@ using namespace Utility;
 
 namespace CircuitSimulator
 {
+/**
+ * @brief Name of the input bus.
+ */
 const std::string Circuit::INPUT_BUS_NAME = "input_bus";
+
+/**
+ * @brief Name of the output bus.
+ */
 const std::string Circuit::OUTPUT_BUS_NAME = "output_bus";
 
 /**
@@ -48,8 +55,10 @@ void Circuit::addComponent(Component_ptr component)
 */
 bool Circuit::removeComponent(const std::string &id)
 {
-  auto it = std::find_if(m_components.begin(), m_components.end(),
-                         [&id](Component_ptr c) { return c->id() == id; });
+  auto it = std::find_if(m_components.begin(), m_components.end(), [&id](Component_ptr c)
+                         {
+                           return c->id() == id;
+                         });
 
   if (it != m_components.end())
   {
@@ -67,8 +76,10 @@ bool Circuit::removeComponent(const std::string &id)
  */
 bool Circuit::hasComponent(const std::string &name) const
 {
-  auto it = std::find_if(m_components.cbegin(), m_components.cend(),
-                         [name](Component_const_ptr c) { return c->id() == name; });
+  auto it = std::find_if(m_components.cbegin(), m_components.cend(), [name](Component_const_ptr c)
+                         {
+                           return c->id() == name;
+                         });
 
   return it != m_components.cend();
 }
@@ -80,8 +91,10 @@ bool Circuit::hasComponent(const std::string &name) const
  */
 Component_ptr Circuit::component(const std::string &name)
 {
-  auto it = std::find_if(m_components.begin(), m_components.end(),
-                         [name](Component_ptr c) { return c->id() == name; });
+  auto it = std::find_if(m_components.begin(), m_components.end(), [name](Component_ptr c)
+                         {
+                           return c->id() == name;
+                         });
 
   if (it == m_components.end())
     throw std::runtime_error("Could not find component \"" + name + "\"");
@@ -96,8 +109,10 @@ Component_ptr Circuit::component(const std::string &name)
  */
 Component_const_ptr Circuit::component(const std::string &name) const
 {
-  auto it = std::find_if(m_components.cbegin(), m_components.cend(),
-                         [name](Component_const_ptr c) { return c->id() == name; });
+  auto it = std::find_if(m_components.cbegin(), m_components.cend(), [name](Component_const_ptr c)
+                         {
+                           return c->id() == name;
+                         });
 
   if (it == m_components.cend())
     throw std::runtime_error("Could not find component \"" + name + "\"");

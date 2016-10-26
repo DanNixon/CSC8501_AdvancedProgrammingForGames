@@ -42,6 +42,13 @@ public:
   }
 };
 
+/**
+ * @brief Shared pointer to a Bus.
+ */
 typedef std::shared_ptr<Bus> Bus_ptr;
+
+/**
+ * @brief Shared pointer to a const Bus.
+ */
 typedef std::shared_ptr<const Bus> Bus_const_ptr;
 }

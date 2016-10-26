@@ -6,6 +6,10 @@
 
 namespace CircuitSimulator
 {
+/**
+ * @brief Creates an XORGate
+ * @param id Unique string ID
+ */
 XORGate::XORGate(const std::string &id)
     : Component(id, "XOR Gate", {"a", "b"}, {"z"})
 {

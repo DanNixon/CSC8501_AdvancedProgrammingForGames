@@ -6,6 +6,11 @@
 
 namespace Coursework2
 {
+/**
+ * @class ErrorInjector
+ * @author Dan Nixon
+ * @brief Contains functions to inject burst random error into encoded data.
+ */
 class ErrorInjector
 {
 public:

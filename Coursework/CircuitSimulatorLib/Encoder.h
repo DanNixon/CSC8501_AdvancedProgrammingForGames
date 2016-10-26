@@ -6,6 +6,7 @@
 
 #include <vector>
 
+#include "BitStream.h"
 #include "RegisterArray.h"
 
 namespace CircuitSimulator
@@ -27,12 +28,19 @@ public:
 
   void advanceRegisters(int8_t direction);
   void resetRegisters();
-  void encode(const std::vector<bool> &in, std::vector<bool> &out);
+  void encode(const BitStream &in, BitStream &out);
 
 private:
   std::vector<RegisterArray_ptr> m_registers; //!< Components that are registers
 };
 
+/**
+ * @brief Shared pointer to an Encoder.
+ */
 typedef std::shared_ptr<Encoder> Encoder_ptr;
+
+/**
+ * @brief Shared pointer to a const Encoder.
+ */
 typedef std::shared_ptr<const Encoder> Encoder_const_ptr;
 }

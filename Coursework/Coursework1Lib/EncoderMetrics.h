@@ -9,6 +9,11 @@
 
 namespace Coursework1
 {
+/**
+ * @class EncoderMetrics
+ * @author Dan Nixon
+ * @brief Utility class to measure probabilities from encoded data.
+ */
 class EncoderMetrics
 {
 public:
@@ -24,7 +29,7 @@ public:
   friend std::ostream &operator<<(std::ostream &stream, const EncoderMetrics &o);
 
 private:
-  CircuitSimulator::Encoder_ptr m_encoder;
-  std::map<std::string, std::map<std::string, double>> m_stats;
+  CircuitSimulator::Encoder_ptr m_encoder;                      //!< Encoder being measured
+  std::map<std::string, std::map<std::string, double>> m_stats; //!< Measured statistics
 };
 }

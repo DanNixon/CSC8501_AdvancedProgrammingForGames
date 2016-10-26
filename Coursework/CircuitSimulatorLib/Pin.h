@@ -62,11 +62,19 @@ public:
   bool isInput() const;
   bool isOutput() const;
 
+  /**
+   * @brief Gets the number of inbound connections to this Pin.
+   * @return Number of inbound connections
+   */
   inline size_t numInboundConnections() const
   {
     return m_inboundConnections.size();
   }
 
+  /**
+   * @brief Gets the number of outbound connections to this Pin.
+   * @return Number of outbound connections
+   */
   inline size_t numOutboundConnections() const
   {
     return m_outboundConnections.size();

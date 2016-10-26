@@ -14,6 +14,11 @@ using namespace Coursework1;
 
 namespace Coursework2
 {
+/**
+ * @brief Create a new command line on given streams.
+ * @param in Input stream
+ * @param out Output stream
+ */
 CW2CommandLine::CW2CommandLine(std::istream &in, std::ostream &out)
     : CLI(in, out)
 {
@@ -23,11 +28,15 @@ CW2CommandLine::~CW2CommandLine()
 {
 }
 
+/**
+ * @brief Add commands to the CLI.
+ */
 void CW2CommandLine::initCLI()
 {
   registerCommand(std::make_shared<Command>(
       "inject_error",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
+      {
         BitStream inData;
         BitStream outData;
 
@@ -43,7 +52,8 @@ void CW2CommandLine::initCLI()
 
   registerCommand(std::make_shared<Command>(
       "decode",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
+      {
         // TODO
         out << "TODO\n";
         return COMMAND_EXIT_CLEAN;
@@ -52,7 +62,8 @@ void CW2CommandLine::initCLI()
 
   registerCommand(std::make_shared<Command>(
       "compare",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
+      {
         BitStream original;
         BitStream cleanDecode;
         BitStream noisyDecode;

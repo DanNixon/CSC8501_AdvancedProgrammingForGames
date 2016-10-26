@@ -8,9 +8,17 @@
 
 namespace Coursework1
 {
+/**
+ * @class BitStreamComparator
+ * @author Dan Nixon
+ * @brief Used to make comparisons between streams of binary data.
+ */
 class BitStreamComparator
 {
 public:
+  /**
+   * @brief A list of list of indices.
+   */
   typedef std::vector<std::vector<size_t>> IndexListList;
 
 public:

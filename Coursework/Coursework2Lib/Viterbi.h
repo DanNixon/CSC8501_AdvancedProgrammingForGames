@@ -5,22 +5,69 @@
 #include <map>
 #include <vector>
 
-// Derived from https://en.wikipedia.org/wiki/Viterbi_algorithm#Pseudocode
-
 namespace Coursework2
 {
+/**
+ * @class Viterbi
+ * @author Dan Nixon
+ * @brief Templated class for performing the Viterbi algorithm.
+ */
 template <typename S, typename O> class Viterbi
 {
 public:
+  /**
+   * @brief Container of states.
+   *
+   * Flat vector of states.
+   */
   typedef std::vector<S> States;
+
+  /**
+   * @brief Container of observations.
+   *
+   * Flat vector of observations.
+   */
   typedef std::vector<O> Observations;
+
+  /**
+   * @brief Container of transition matrix.
+   *
+   * Map of two states to the probability of transition from the first state to the second.
+   */
   typedef std::map<std::pair<S, S>, double> TransitionMatrix;
+
+  /**
+   * @brief Container of emission matrix.
+   *
+   * Map of observation and state to the probability of that state given that observation.
+   */
   typedef std::map<std::pair<O, S>, double> EmissionMatrix;
+
+  /**
+   * @brief Container of initial probabilities.
+   *
+   * Map of state to initial probability of that state.
+   */
   typedef std::map<S, double> InitialProbability;
 
+  /**
+   * @brief Used to record an iteration of the Viterbi algorithm.
+   */
   typedef std::map<S, std::pair<double, S>> Record;
 
 public:
+  /**
+   * @brief Finds the most likely path using the Viterbi algorithm.
+   * @param x Output path
+   * @param o Observation space
+   * @param s State space
+   * @param y Observations
+   * @param a Transition matrix
+   * @param b Emission matrix
+   * @param pi Initial state probabilities
+   *
+   * Derived from https://en.wikipedia.org/wiki/Viterbi_algorithm#Pseudocode
+   */
   static void FindPath(States &x, const Observations &o, const States &s, const Observations &y,
                        const TransitionMatrix &a, const EmissionMatrix &b,
                        const InitialProbability &pi)
@@ -92,6 +139,12 @@ public:
   }
 
 private:
+  /**
+   * @brief Helper function to test if two doubles are close.
+   * @param a First value
+   * @param b Second value
+   * @return True of values differ by less than 1e-6.
+   */
   static bool AreClose(double a, double b)
   {
     return std::abs(a - b) < 1e-6;

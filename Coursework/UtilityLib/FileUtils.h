@@ -6,6 +6,11 @@
 
 namespace Utility
 {
+/**
+ * @class FileUtils
+ * @author Dan Nixon
+ * @brief Provides functions for working with files on disk.
+ */
 class FileUtils
 {
 public:

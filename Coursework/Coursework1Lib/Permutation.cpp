@@ -8,11 +8,19 @@ using namespace CircuitSimulator;
 
 namespace Coursework1
 {
+/**
+ * @brief Creates a new Permutation.
+ * @param wires List of wires
+ */
 Permutation::Permutation(const WireDefList &wires)
     : m_wires(wires)
 {
 }
 
+/**
+ * @brief Copies a permutation.
+ * @param other Permutation to copy.
+ */
 Permutation::Permutation(const Permutation &other)
     : m_wires(other.m_wires)
 {
@@ -22,6 +30,10 @@ Permutation::~Permutation()
 {
 }
 
+/**
+ * @brief Applies the wiring of this permutation to a circuit.
+ * @param c Circuit to apply wiring to
+ */
 void Permutation::apply(CircuitSimulator::Circuit_ptr c)
 {
   for (auto it = m_wires.cbegin(); it != m_wires.cend(); ++it)

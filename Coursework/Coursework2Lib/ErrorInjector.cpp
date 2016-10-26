@@ -6,10 +6,26 @@ using namespace CircuitSimulator;
 
 namespace Coursework2
 {
+/**
+ * @brief Maximum value of random number generator.
+ */
 const size_t ErrorInjector::BURST_RAND_MAX = 20;
+
+/**
+ * @brief Value random number generator must reach or exceed to enter burst mode.
+ */
 const size_t ErrorInjector::BURST_RAND_THRESHOLD = 18;
+
+/**
+ * @brief Length of a single packet of burst mode randomness.
+ */
 const size_t ErrorInjector::BURST_LENGTH = 4;
 
+/**
+ * @brief Injects error into data using the algorithm from the coursework 2 specification.
+ * @param in Input data
+ * @param out Output data
+ */
 void ErrorInjector::InjectError(const BitStream &in, BitStream &out)
 {
   bool burstMode = false;

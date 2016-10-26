@@ -12,6 +12,12 @@ using namespace CircuitSimulator;
 
 namespace Coursework1
 {
+/**
+ * @brief Check for similarity between two datasets.
+ * @param a First dataset
+ * @param b Second dataset
+ * @return Number of bits that differ between both datasets
+ */
 size_t BitStreamComparator::Compare(const BitStream &a, const BitStream &b)
 {
   size_t mismatches = 0;
@@ -31,6 +37,12 @@ size_t BitStreamComparator::Compare(const BitStream &a, const BitStream &b)
   return mismatches;
 }
 
+/**
+ * @brief Check for similarity between two datasets.
+ * @param aFilename Filename to load first dataset from
+ * @param bFilename Filename to load second dataset from
+ * @return Number of bits that differ between both datasets
+ */
 size_t BitStreamComparator::Compare(const std::string &aFilename, const std::string &bFilename)
 {
   BitStream a;
@@ -42,6 +54,11 @@ size_t BitStreamComparator::Compare(const std::string &aFilename, const std::str
   return Compare(a, b);
 }
 
+/**
+ * @brief Compares multiple datasets and checks for identity.
+ * @param data Vector of datasets
+ * @return True if all datasets are identical
+ */
 bool BitStreamComparator::CompareMultiple(const std::vector<BitStream> &data)
 {
   for (auto it = data.cbegin() + 1; it != data.cend(); ++it)
@@ -53,6 +70,11 @@ bool BitStreamComparator::CompareMultiple(const std::vector<BitStream> &data)
   return true;
 }
 
+/**
+ * @brief Compares multiple datasets and checks for identity.
+ * @param filenames Vector of filenames to load datasets from
+ * @return True if all datasets are identical
+ */
 bool BitStreamComparator::CompareMultiple(const std::vector<std::string> &filenames)
 {
   std::vector<BitStream> data;
@@ -60,6 +82,11 @@ bool BitStreamComparator::CompareMultiple(const std::vector<std::string> &filena
   return CompareMultiple(data);
 }
 
+/**
+ * @brief Searches for groups of identical datasets.
+ * @param results Reference to list of results
+ * @param data Vector of datasets
+ */
 void BitStreamComparator::FindSimilar(IndexListList &results, const std::vector<BitStream> &data)
 {
   // For each input data set
@@ -84,6 +111,11 @@ void BitStreamComparator::FindSimilar(IndexListList &results, const std::vector<
   }
 }
 
+/**
+ * @brief Searches for groups of identical datasets.
+ * @param results Reference to list of results
+ * @param filenames Vector of filenames to load datasets from
+ */
 void BitStreamComparator::FindSimilar(IndexListList &results,
                                       const std::vector<std::string> &filenames)
 {
@@ -92,6 +124,11 @@ void BitStreamComparator::FindSimilar(IndexListList &results,
   FindSimilar(results, data);
 }
 
+/**
+ * @brief Loads multiple datasets from several files.
+ * @param data Reference to vector to store datasets in
+ * @param filenames Vector of filenames to load datasets from
+ */
 void BitStreamComparator::LoadData(std::vector<BitStream> &data,
                                    const std::vector<std::string> &filenames)
 {

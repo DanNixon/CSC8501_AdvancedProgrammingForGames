@@ -15,6 +15,11 @@
 
 namespace Coursework1
 {
+/**
+ * @class CW1CommandLine
+ * @author Dan Nixon
+ * @brief CLI that contains functionality for coursework 1.
+ */
 class CW1CommandLine : public CommandLineInterface::CLI
 {
 public:
@@ -31,7 +36,7 @@ private:
   void loadPreset(const std::string &preset);
 
 private:
-  CircuitSimulator::Encoder_ptr m_activeEncoder;
-  PermutationGenerator *m_permutationGenerator;
+  CircuitSimulator::Encoder_ptr m_activeEncoder; //!< Current encoder
+  PermutationGenerator *m_permutationGenerator;  //!< Current permutation generator
 };
 }

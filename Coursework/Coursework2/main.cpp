@@ -5,6 +5,10 @@
 
 #include "Coursework2Lib/CW2CommandLine.h"
 
+/**
+ * @brief Entry point.
+ * @return Exit code
+ */
 int main()
 {
   std::srand((unsigned int)std::time(0));

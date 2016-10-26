@@ -69,6 +69,9 @@ public:
     m_pins.back()->setState(false);
   }
 
+  /**
+   * @brief Resets all bits to zero.
+   */
   void reset()
   {
     for (auto it = m_pins.begin(); it != m_pins.end(); ++it)
@@ -76,6 +79,13 @@ public:
   }
 };
 
+/**
+ * @brief Shared pointer to a RegisterArray.
+ */
 typedef std::shared_ptr<RegisterArray> RegisterArray_ptr;
+
+/**
+ * @brief Shared pointer to a const RegisterArray.
+ */
 typedef std::shared_ptr<const RegisterArray> RegisterArray_const_ptr;
 }
