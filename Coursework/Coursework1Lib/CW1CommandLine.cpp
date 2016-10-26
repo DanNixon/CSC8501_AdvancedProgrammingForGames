@@ -100,21 +100,17 @@ void CW1CommandLine::initCLI()
       },
       3, "Encodes data from a file."));
 
-// TODO
-#if 0
   encodeCmd->registerCommand(std::make_shared<Command>(
       "cw1workflow",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) -> int {
+        if (this->m_permutationGenerator == nullptr)
+        {
+          out << "No permutations (try running generate first).\n";
+          return 1;
+        }
+
         std::vector<bool> dataIn;
         BinaryFileIO::ReadFile(dataIn, argv[1]);
-
-        if (this->m_permutationGenerator != nullptr)
-          delete this->m_permutationGenerator;
-
-        WireDefList permutationWires;
-        PermutationGenerator::GenerateWireList({"input_bus.bit_0", "r.bit_1", "r.bit_2", "r.bit_3"}, {"xor1.a", "xor1.b", "xor2.a", "xor2.b"}, permutationWires);
-        PermutationGenerator::GenerateWireList({"xor1.z", "xor2.z"}, {"output_bus.bit_0", "output_bus.bit_1"}, permutationWires);
-        this->m_permutationGenerator = new PermutationGenerator(permutationWires);
 
         for (size_t i = 0; i < this->m_permutationGenerator->numPermutations(); i++)
         {
@@ -128,28 +124,31 @@ void CW1CommandLine::initCLI()
 
           if (!this->m_activeEncoder->validate())
           {
-            out << "Permutation with mask " << i << " failed to generate valid wiring.\n";
+            out << "Permutation " << i << " failed to generate valid wiring.\n";
             continue;
           }
 
           if (!this->m_activeEncoder->validateComponentUse())
           {
-            out << "Permutation with mask " << i << " failed to use all components.\n";
+            out << "Permutation " << i << " failed to use all components.\n";
             continue;
           }
 
           this->m_activeEncoder->encode(dataIn, dataOut);
 
-          std::string outFilename = argv[2] + "enc_mask" + std::to_string(i) + ".txt";
+          EncoderMetrics metrics(this->m_activeEncoder);
+          metrics.measure(dataIn);
+          // TODO
+
+          std::string outFilename = argv[2] + "enc_" + std::to_string(i) + ".txt";
           BinaryFileIO::WriteFile(dataOut, outFilename);
 
-          out << "Permutation with mask " << i << " saved to: " << outFilename << '\n';
+          out << "Permutation " << i << " saved to: " << outFilename << '\n';
         }
 
         return COMMAND_EXIT_CLEAN;
       },
       3, "Performs permutation generation and encoding steps for coursework 1."));
-#endif
 
   registerCommand(encoderCmd);
   registerCommand(encodeCmd);
@@ -240,7 +239,7 @@ SubCommand_ptr CW1CommandLine::generateComponentCmd()
 
 SubCommand_ptr CW1CommandLine::generateWireCmd()
 {
-  SubCommand_ptr cmd = std::make_shared<SubCommand>("wire", "Manage encoder wiring.");
+  SubCommand_ptr cmd = std::make_shared<SubCommand>("wires", "Manage encoder wiring.");
 
   cmd->registerCommand(std::make_shared<Command>(
       "list",
@@ -278,7 +277,7 @@ SubCommand_ptr CW1CommandLine::generateWireCmd()
 SubCommand_ptr CW1CommandLine::generatePermutationCmd()
 {
   SubCommand_ptr cmd =
-      std::make_shared<SubCommand>("permutation", "Work with encoder permutations.");
+      std::make_shared<SubCommand>("permutations", "Work with encoder permutations.");
 
   cmd->registerCommand(std::make_shared<Command>(
       "generate",
@@ -286,16 +285,16 @@ SubCommand_ptr CW1CommandLine::generatePermutationCmd()
         if (this->m_permutationGenerator != nullptr)
           delete this->m_permutationGenerator;
 
-        // TODO
         PermutationGenerator::WireEndpointList endpoints = {
-          { { "a1", "a2", "a3", "a4" },{ "b1", "b2", "b3", "b4" } },
-          { { "c1", "c2" },{ "d1", "d2" } }
-        };
+            {{"input_bus.bit_0", "r.bit_1", "r.bit_2", "r.bit_3"},
+             {"xor1.a", "xor1.b", "xor2.a", "xor2.b"}},
+            {{"xor1.z", "xor2.z"}, {"output_bus.bit_0", "output_bus.bit_1"}}};
 
         this->m_permutationGenerator = new PermutationGenerator(endpoints);
         this->m_permutationGenerator->generate();
 
-        out << "Generated " << this->m_permutationGenerator->numPermutations() << " permutations.\n";
+        out << "Generated " << this->m_permutationGenerator->numPermutations()
+            << " permutations.\n";
         return COMMAND_EXIT_CLEAN;
       },
       1, "Generates permutations."));
@@ -305,12 +304,12 @@ SubCommand_ptr CW1CommandLine::generatePermutationCmd()
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) -> int {
         if (this->m_permutationGenerator == nullptr)
         {
-          out << "No permutations (try running generate first).";
+          out << "No permutations (try running generate first).\n";
           return 1;
         }
 
         for (size_t i = 0; i < this->m_permutationGenerator->numPermutations(); i++)
-          out << i  << ' ' << this->m_permutationGenerator->permutation(i) << '\n';
+          out << i << ' ' << this->m_permutationGenerator->permutation(i) << '\n';
 
         return COMMAND_EXIT_CLEAN;
       },
@@ -337,7 +336,7 @@ SubCommand_ptr CW1CommandLine::generatePermutationCmd()
 
 SubCommand_ptr CW1CommandLine::generatePresetCmd()
 {
-  SubCommand_ptr cmd = std::make_shared<SubCommand>("presets", "Load encoder presets.");
+  SubCommand_ptr cmd = std::make_shared<SubCommand>("preset", "Load encoder presets.");
 
   cmd->registerCommand(std::make_shared<Command>(
       "cw_basic",
@@ -369,8 +368,6 @@ void Coursework1::CW1CommandLine::loadPreset(const std::string &preset)
     this->m_activeEncoder->addComponent(std::make_shared<RegisterArray>("r", 4));
 
     this->m_activeEncoder->attachWire("input_bus.bit_0", "r.bit_0");
-    this->m_activeEncoder->attachWire("xor2.z", "output_bus.bit_0");
-    this->m_activeEncoder->attachWire("xor1.z", "output_bus.bit_1");
   }
   else if (preset == "cw_example")
   {

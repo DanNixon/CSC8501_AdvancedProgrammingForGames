@@ -8,13 +8,13 @@ using namespace CircuitSimulator;
 
 namespace Coursework1
 {
-Permutation::Permutation(const CircuitSimulator::WireDefList &wires)
+Permutation::Permutation(const WireDefList &wires)
     : m_wires(wires)
 {
 }
 
-Permutation::Permutation(const Permutation & other)
-  : m_wires(other.m_wires)
+Permutation::Permutation(const Permutation &other)
+    : m_wires(other.m_wires)
 {
 }
 

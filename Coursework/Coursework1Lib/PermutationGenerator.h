@@ -31,7 +31,7 @@ public:
 
 private:
   // List of pairs of pins to map and pins to map them to (must be equal length)
-  const WireEndpointList &m_endpointGroups;
+  const WireEndpointList m_endpointGroups;
 
   // List of permutation indices for each endpoint group
   std::vector<std::vector<std::vector<size_t>>> m_groupPermutations;

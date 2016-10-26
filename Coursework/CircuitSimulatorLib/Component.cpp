@@ -46,10 +46,22 @@ bool Component::hasLogicalConnection(size_t maxInputs) const
   {
     if (!connectedInput && (*it)->isInput() && (*it)->numInboundConnections() > 0 &&
         (*it)->numInboundConnections() <= maxInputs)
+    {
       connectedInput = true;
 
+      // Special case for bi-directional pins
+      if ((*it)->isOutput())
+        connectedOutput = true;
+    }
+
     if (!connectedOutput && (*it)->isOutput() && (*it)->numOutboundConnections() > 0)
+    {
       connectedOutput = true;
+
+      // Special case for bi-directional pins
+      if ((*it)->isInput())
+        connectedInput = true;
+    }
   }
 
   return connectedInput && connectedOutput;

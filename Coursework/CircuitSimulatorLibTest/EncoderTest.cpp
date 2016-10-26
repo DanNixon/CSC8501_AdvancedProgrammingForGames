@@ -31,6 +31,7 @@ public:
     e.attachWire("xor1.z", "output_bus.bit_1");
 
     Assert::IsTrue(e.validate());
+    Assert::IsTrue(e.validateComponentUse());
 
     Assert::AreEqual(false, e.getOutput("bit_0"));
     Assert::AreEqual(false, e.getOutput("bit_1"));

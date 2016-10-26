@@ -68,10 +68,10 @@ Permutation PermutationGenerator::permutation(size_t idx)
   // http://codinghighway.com/2014/02/22/c-multi-dimensional-arrays-part-2-flattened-to-unflattened-index
   std::vector<size_t> permutationIndices(sizes.size());
   permutationIndices.back() = 1;
-  for (int i = sizes.size() - 2; i >= 0; i--)
+  for (int i = (int)sizes.size() - 2; i >= 0; i--)
     permutationIndices[i] = permutationIndices[i + 1] * sizes[i + 1];
 
-  for (int i = 0; i < permutationIndices.size(); i++)
+  for (size_t i = 0; i < permutationIndices.size(); i++)
     permutationIndices[i] = (idx / permutationIndices[i]) % sizes[i];
 
   // Generate the wire list
@@ -83,7 +83,7 @@ Permutation PermutationGenerator::permutation(size_t idx)
       wires.push_back(
           {group.first[j], group.second[m_groupPermutations[i][permutationIndices[i]][j]]});
   }
-  
+
   return Permutation(wires);
 }
 }

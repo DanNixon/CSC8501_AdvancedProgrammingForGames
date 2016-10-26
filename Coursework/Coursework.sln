@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Coursework1", "Coursework1\Coursework1.vcxproj", "{48600FAC-8930-437C-8DCC-EA360CCA533F}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -43,6 +43,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CommandLineInterfaceLibTest
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Coursework1Lib", "Coursework1Lib\Coursework1Lib.vcxproj", "{8CDF6858-E094-438D-B3AB-809FBBDEE93C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6E201AB4-B579-4871-BD6F-6D501F5D15EE} = {6E201AB4-B579-4871-BD6F-6D501F5D15EE}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Coursework2Lib", "Coursework2Lib\Coursework2Lib.vcxproj", "{990C8209-DCB4-4849-A610-4D9EBE07C64A}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -56,6 +59,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Coursework1LibTest", "Coursework1LibTest\Coursework1LibTest.vcxproj", "{8BB0C1C2-343F-4670-9972-00D257211671}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8CDF6858-E094-438D-B3AB-809FBBDEE93C} = {8CDF6858-E094-438D-B3AB-809FBBDEE93C}
+		{6E201AB4-B579-4871-BD6F-6D501F5D15EE} = {6E201AB4-B579-4871-BD6F-6D501F5D15EE}
+		{D116EDDF-8C15-4354-962B-0DA55E06A0AA} = {D116EDDF-8C15-4354-962B-0DA55E06A0AA}
 	EndProjectSection
 EndProject
 Global
