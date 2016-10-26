@@ -8,12 +8,6 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace CircuitSimulator;
 
-#define WIRES_EQUAL(e, v)                                                                          \
-  {                                                                                                \
-    Assert::AreEqual(e.first, v.first);                                                            \
-    Assert::AreEqual(e.second, v.second);                                                          \
-  }
-
 namespace Coursework1
 {
 namespace Test
@@ -32,11 +26,97 @@ public:
     g.generate();
     Assert::AreEqual((size_t)48, g.numPermutations());
 
-    // TODO: test these results
-    g.permutation(0);
-    g.permutation(20);
-    g.permutation(40);
-    g.permutation(41);
+    {
+      Permutation p = g.permutation(0);
+      Assert::AreEqual((size_t)6, p.numWires());
+
+      Assert::AreEqual(std::string("a1"), p.wire(0).first);
+      Assert::AreEqual(std::string("b1"), p.wire(0).second);
+
+      Assert::AreEqual(std::string("a2"), p.wire(1).first);
+      Assert::AreEqual(std::string("b2"), p.wire(1).second);
+
+      Assert::AreEqual(std::string("a3"), p.wire(2).first);
+      Assert::AreEqual(std::string("b3"), p.wire(2).second);
+
+      Assert::AreEqual(std::string("a4"), p.wire(3).first);
+      Assert::AreEqual(std::string("b4"), p.wire(3).second);
+
+      Assert::AreEqual(std::string("c1"), p.wire(4).first);
+      Assert::AreEqual(std::string("d1"), p.wire(4).second);
+
+      Assert::AreEqual(std::string("c2"), p.wire(5).first);
+      Assert::AreEqual(std::string("d2"), p.wire(5).second);
+    }
+
+    {
+      Permutation p = g.permutation(1);
+      Assert::AreEqual((size_t)6, p.numWires());
+
+      Assert::AreEqual(std::string("a1"), p.wire(0).first);
+      Assert::AreEqual(std::string("b1"), p.wire(0).second);
+
+      Assert::AreEqual(std::string("a2"), p.wire(1).first);
+      Assert::AreEqual(std::string("b2"), p.wire(1).second);
+
+      Assert::AreEqual(std::string("a3"), p.wire(2).first);
+      Assert::AreEqual(std::string("b3"), p.wire(2).second);
+
+      Assert::AreEqual(std::string("a4"), p.wire(3).first);
+      Assert::AreEqual(std::string("b4"), p.wire(3).second);
+
+      Assert::AreEqual(std::string("c1"), p.wire(4).first);
+      Assert::AreEqual(std::string("d2"), p.wire(4).second);
+
+      Assert::AreEqual(std::string("c2"), p.wire(5).first);
+      Assert::AreEqual(std::string("d1"), p.wire(5).second);
+    }
+
+    {
+      Permutation p = g.permutation(40);
+      Assert::AreEqual((size_t)6, p.numWires());
+
+      Assert::AreEqual(std::string("a1"), p.wire(0).first);
+      Assert::AreEqual(std::string("b4"), p.wire(0).second);
+
+      Assert::AreEqual(std::string("a2"), p.wire(1).first);
+      Assert::AreEqual(std::string("b2"), p.wire(1).second);
+
+      Assert::AreEqual(std::string("a3"), p.wire(2).first);
+      Assert::AreEqual(std::string("b1"), p.wire(2).second);
+
+      Assert::AreEqual(std::string("a4"), p.wire(3).first);
+      Assert::AreEqual(std::string("b3"), p.wire(3).second);
+
+      Assert::AreEqual(std::string("c1"), p.wire(4).first);
+      Assert::AreEqual(std::string("d1"), p.wire(4).second);
+
+      Assert::AreEqual(std::string("c2"), p.wire(5).first);
+      Assert::AreEqual(std::string("d2"), p.wire(5).second);
+    }
+
+    {
+      Permutation p = g.permutation(41);
+      Assert::AreEqual((size_t)6, p.numWires());
+
+      Assert::AreEqual(std::string("a1"), p.wire(0).first);
+      Assert::AreEqual(std::string("b4"), p.wire(0).second);
+
+      Assert::AreEqual(std::string("a2"), p.wire(1).first);
+      Assert::AreEqual(std::string("b2"), p.wire(1).second);
+
+      Assert::AreEqual(std::string("a3"), p.wire(2).first);
+      Assert::AreEqual(std::string("b1"), p.wire(2).second);
+
+      Assert::AreEqual(std::string("a4"), p.wire(3).first);
+      Assert::AreEqual(std::string("b3"), p.wire(3).second);
+
+      Assert::AreEqual(std::string("c1"), p.wire(4).first);
+      Assert::AreEqual(std::string("d2"), p.wire(4).second);
+
+      Assert::AreEqual(std::string("c2"), p.wire(5).first);
+      Assert::AreEqual(std::string("d1"), p.wire(5).second);
+    }
   }
 };
 }

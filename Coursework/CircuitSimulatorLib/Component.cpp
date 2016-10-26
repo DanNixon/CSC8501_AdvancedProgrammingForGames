@@ -25,10 +25,7 @@ Component::Component(const std::string &id, const std::string &name,
   for (auto it = inputs.begin(); it != inputs.end(); ++it)
   {
     auto p = std::make_shared<Pin>(this, *it, PIN_FLAG_INPUT);
-    p->setOnChange([this]()
-                   {
-                     this->operate();
-                   });
+    p->setOnChange([this]() { this->operate(); });
     m_pins.push_back(p);
   }
 
@@ -87,10 +84,9 @@ bool Component::hasLogicalConnection(size_t maxInputs) const
  */
 bool Component::hasPin(const std::string &name, uint8_t flag) const
 {
-  return std::find_if(m_pins.begin(), m_pins.end(), [name, flag](Pin_ptr p)
-                      {
-                        return p->id() == name && p->flags() & flag;
-                      }) != m_pins.end();
+  return std::find_if(m_pins.begin(), m_pins.end(), [name, flag](Pin_ptr p) {
+           return p->id() == name && p->flags() & flag;
+         }) != m_pins.end();
 }
 
 /**
@@ -100,10 +96,8 @@ bool Component::hasPin(const std::string &name, uint8_t flag) const
  */
 Pin_ptr Component::pin(const std::string &name)
 {
-  auto it = std::find_if(m_pins.begin(), m_pins.end(), [name](Pin_ptr p)
-                         {
-                           return p->id() == name;
-                         });
+  auto it =
+      std::find_if(m_pins.begin(), m_pins.end(), [name](Pin_ptr p) { return p->id() == name; });
 
   if (it == m_pins.end())
     throw std::runtime_error("Cannot find pin \"" + name + "\"");
@@ -118,10 +112,8 @@ Pin_ptr Component::pin(const std::string &name)
  */
 Pin_const_ptr Component::pin(const std::string &name) const
 {
-  auto it = std::find_if(m_pins.cbegin(), m_pins.cend(), [name](Pin_const_ptr p)
-                         {
-                           return p->id() == name;
-                         });
+  auto it = std::find_if(m_pins.cbegin(), m_pins.cend(),
+                         [name](Pin_const_ptr p) { return p->id() == name; });
 
   if (it == m_pins.cend())
     throw std::runtime_error("Cannot find pin \"" + name + "\"");

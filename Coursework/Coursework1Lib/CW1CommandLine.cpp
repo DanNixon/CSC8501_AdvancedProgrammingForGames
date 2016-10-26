@@ -52,8 +52,7 @@ void CW1CommandLine::initCLI()
 
   encoderCmd->registerCommand(std::make_shared<Command>(
       "reset",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
-      {
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         this->m_activeEncoder = std::make_shared<Encoder>();
         return COMMAND_EXIT_CLEAN;
       },
@@ -61,8 +60,7 @@ void CW1CommandLine::initCLI()
 
   encoderCmd->registerCommand(std::make_shared<Command>(
       "show",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
-      {
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         out << *(this->m_activeEncoder) << '\n';
         return COMMAND_EXIT_CLEAN;
       },
@@ -70,8 +68,7 @@ void CW1CommandLine::initCLI()
 
   encoderCmd->registerCommand(std::make_shared<Command>(
       "metrics",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
-      {
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         EncoderMetrics m(this->m_activeEncoder);
         BitStream data;
         EncoderMetrics::GenerateRandomData(data, 500);
@@ -85,8 +82,7 @@ void CW1CommandLine::initCLI()
 
   encodeCmd->registerCommand(std::make_shared<Command>(
       "string",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
-      {
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         std::stringstream inStr(argv[1]);
 
         std::vector<bool> dataIn;
@@ -107,8 +103,7 @@ void CW1CommandLine::initCLI()
 
   encodeCmd->registerCommand(std::make_shared<Command>(
       "file",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
-      {
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         std::vector<bool> dataIn;
         std::vector<bool> dataOut;
 
@@ -125,8 +120,7 @@ void CW1CommandLine::initCLI()
 
   encodeCmd->registerCommand(std::make_shared<Command>(
       "cw1workflow",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) -> int
-      {
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) -> int {
         if (this->m_permutationGenerator == nullptr)
         {
           out << "No permutations (try running generate first).\n";
@@ -196,8 +190,7 @@ void CW1CommandLine::initCLI()
 
   registerCommand(std::make_shared<Command>(
       "compare",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
-      {
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         std::vector<std::string> filenames(argv.begin() + 1, argv.end());
         if (BitStreamComparator::CompareMultiple(filenames))
           out << "All files match.\n";
@@ -209,8 +202,7 @@ void CW1CommandLine::initCLI()
 
   registerCommand(std::make_shared<Command>(
       "find_matching",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
-      {
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         std::vector<std::string> filenames;
         FileUtils::FindFiles(filenames, argv[1], argv[2]);
 
@@ -243,13 +235,10 @@ SubCommand_ptr CW1CommandLine::generateComponentCmd()
 
   cmd->registerCommand(std::make_shared<Command>(
       "list",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) -> int
-      {
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) -> int {
         auto cIt = std::find_if(this->m_activeEncoder->componentsBegin(),
-                                this->m_activeEncoder->componentsEnd(), [&argv](Component_ptr c)
-                                {
-                                  return c->id() == argv[1];
-                                });
+                                this->m_activeEncoder->componentsEnd(),
+                                [&argv](Component_ptr c) { return c->id() == argv[1]; });
         if (cIt == this->m_activeEncoder->componentsEnd())
           return 1;
 
@@ -262,8 +251,7 @@ SubCommand_ptr CW1CommandLine::generateComponentCmd()
 
   cmd->registerCommand(std::make_shared<Command>(
       "add",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
-      {
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         std::vector<std::string> args(argv.begin() + 3, argv.end());
         Component_ptr c = ComponentFactory::Create(argv[1], argv[2], args);
         this->m_activeEncoder->addComponent(c);
@@ -273,8 +261,7 @@ SubCommand_ptr CW1CommandLine::generateComponentCmd()
 
   cmd->registerCommand(std::make_shared<Command>(
       "remove",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) -> int
-      {
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) -> int {
         return this->m_activeEncoder->removeComponent(argv[1]) ? COMMAND_EXIT_CLEAN : 1;
       },
       2, "Removes a component from the encoder."));
@@ -292,8 +279,7 @@ SubCommand_ptr CW1CommandLine::generateWireCmd()
 
   cmd->registerCommand(std::make_shared<Command>(
       "add",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
-      {
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         this->m_activeEncoder->attachWire(argv[1], argv[2]);
         return COMMAND_EXIT_CLEAN;
       },
@@ -301,8 +287,7 @@ SubCommand_ptr CW1CommandLine::generateWireCmd()
 
   cmd->registerCommand(std::make_shared<Command>(
       "remove",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
-      {
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         this->m_activeEncoder->removeWire(argv[1], argv[2]);
         return COMMAND_EXIT_CLEAN;
       },
@@ -320,33 +305,29 @@ SubCommand_ptr CW1CommandLine::generatePermutationCmd()
   SubCommand_ptr cmd =
       std::make_shared<SubCommand>("permutations", "Work with encoder permutations.");
 
-  cmd
-      ->registerCommand(
-          std::make_shared<Command>(
-              "generate",
-              [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
-              {
-                if (this->m_permutationGenerator != nullptr)
-                  delete this->m_permutationGenerator;
+  cmd->registerCommand(std::make_shared<Command>(
+      "generate",
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        if (this->m_permutationGenerator != nullptr)
+          delete this->m_permutationGenerator;
 
-                PermutationGenerator::WireEndpointList endpoints = {
-                    {{"input_bus.bit_0", "r.bit_1", "r.bit_2", "r.bit_3"},
-                     {"xor1.a", "xor1.b", "xor2.a", "xor2.b"}},
-                    {{"xor2.z", "xor1.z"}, {"output_bus.bit_0", "output_bus.bit_1"}}};
+        PermutationGenerator::WireEndpointList endpoints = {
+            {{"input_bus.bit_0", "r.bit_1", "r.bit_2", "r.bit_3"},
+             {"xor1.a", "xor1.b", "xor2.a", "xor2.b"}},
+            {{"xor2.z", "xor1.z"}, {"output_bus.bit_0", "output_bus.bit_1"}}};
 
-                this->m_permutationGenerator = new PermutationGenerator(endpoints);
-                this->m_permutationGenerator->generate();
+        this->m_permutationGenerator = new PermutationGenerator(endpoints);
+        this->m_permutationGenerator->generate();
 
-                out << "Generated " << this->m_permutationGenerator->numPermutations()
-                    << " permutations.\n";
-                return COMMAND_EXIT_CLEAN;
-              },
-              1, "Generates permutations."));
+        out << "Generated " << this->m_permutationGenerator->numPermutations()
+            << " permutations.\n";
+        return COMMAND_EXIT_CLEAN;
+      },
+      1, "Generates permutations."));
 
   cmd->registerCommand(std::make_shared<Command>(
       "list",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) -> int
-      {
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) -> int {
         if (this->m_permutationGenerator == nullptr)
         {
           out << "No permutations (try running generate first).\n";
@@ -362,8 +343,7 @@ SubCommand_ptr CW1CommandLine::generatePermutationCmd()
 
   cmd->registerCommand(std::make_shared<Command>(
       "load",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) -> int
-      {
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) -> int {
         if (this->m_permutationGenerator == nullptr)
         {
           out << "No permutations (try running generate first).";
@@ -390,8 +370,7 @@ SubCommand_ptr CW1CommandLine::generatePresetCmd()
 
   cmd->registerCommand(std::make_shared<Command>(
       "cw_basic",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
-      {
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         this->loadPreset("cw_basic");
         return COMMAND_EXIT_CLEAN;
       },
@@ -399,8 +378,7 @@ SubCommand_ptr CW1CommandLine::generatePresetCmd()
 
   cmd->registerCommand(std::make_shared<Command>(
       "cw_example",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv)
-      {
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
         this->loadPreset("cw_example");
         return COMMAND_EXIT_CLEAN;
       },

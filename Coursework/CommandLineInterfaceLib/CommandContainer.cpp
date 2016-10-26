@@ -22,8 +22,7 @@ CommandContainer::CommandContainer()
   /* Add help command */
   m_commands.push_back(std::make_shared<Command>(
       "help",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> argv)
-      {
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> argv) {
         this->help(out);
         return 0;
       },
@@ -62,10 +61,8 @@ int CommandContainer::handle(std::istream &in, std::ostream &out, std::vector<st
     return -1;
   }
 
-  auto it = std::find_if(m_commands.begin(), m_commands.end(), [tokens](Command_ptr c)
-                         {
-                           return c->commandName() == tokens[0];
-                         });
+  auto it = std::find_if(m_commands.begin(), m_commands.end(),
+                         [tokens](Command_ptr c) { return c->commandName() == tokens[0]; });
 
   if (it == m_commands.end())
   {

@@ -85,7 +85,8 @@ Permutation PermutationGenerator::permutation(size_t idx)
 
   /* Get indices of each permutation segment to use */
   /* This section was written with reference to: */
-  /* http://codinghighway.com/2014/02/22/c-multi-dimensional-arrays-part-2-flattened-to-unflattened-index */
+  /* http://codinghighway.com/2014/02/22/c-multi-dimensional-arrays-part-2-flattened-to-unflattened-index
+   */
   std::vector<size_t> permutationIndices(sizes.size());
   permutationIndices.back() = 1;
   for (int i = (int)sizes.size() - 2; i >= 0; i--)

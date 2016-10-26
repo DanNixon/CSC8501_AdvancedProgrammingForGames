@@ -23,7 +23,7 @@ public:
     std::srand(0);
 
     BitStream data;
-    EncoderMetrics::GenerateRandomData(data, 500);
+    EncoderMetrics::GenerateRandomData(data, 100);
 
     Encoder_ptr e = std::make_shared<Encoder>();
 
@@ -42,8 +42,6 @@ public:
 
     EncoderMetrics metrics(e);
     metrics.measure(data);
-
-    // TOOD
   }
 };
 }
