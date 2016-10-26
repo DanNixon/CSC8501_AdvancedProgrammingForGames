@@ -62,17 +62,8 @@ int CLI::run()
 
     int retVal = handle(m_in, m_out, tokens);
 
-    switch (retVal)
-    {
-    case COMMAND_EXIT_CLEAN:
-      /* Do nothing here. */
-      break;
-    case COMMAND_EXIT_TOO_FEW_ARGUMENTS:
-      /* Do nothing here. Handled in Command::handleCmdFunc() */
-      break;
-    default:
+    if (retVal > 0)
       m_out << "Command exited with code " << retVal << ".\n";
-    }
   }
 
   return (int)m_exitCode;

@@ -67,7 +67,7 @@ int CommandContainer::handle(std::istream &in, std::ostream &out, std::vector<st
   if (it == m_commands.end())
   {
     out << "Command \"" << tokens[0] << "\" not found.\n";
-    return -1;
+    return COMMAND_EXIT_SUBCOMMANDNOTFOUND;
   }
 
   return (*it)->handleCmdFunc(in, out, tokens);
