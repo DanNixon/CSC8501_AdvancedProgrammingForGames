@@ -4,7 +4,6 @@
     <ClCompile Include="CW2CommandLine.cpp" />
     <ClCompile Include="ErrorInjector.cpp" />
     <ClCompile Include="Decoder.cpp" />
-    <ClCompile Include="Viterbi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CW2CommandLine.h" />

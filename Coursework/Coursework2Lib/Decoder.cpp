@@ -4,11 +4,11 @@
 
 #include <sstream>
 
+#include "Viterbi.h"
+
 namespace Coursework2
 {
-Decoder::Decoder(const TransitionMatrix &transition, const EmissionMatrix &emission)
-    : m_transition(transition)
-    , m_emission(emission)
+Decoder::Decoder()
 {
 }
 

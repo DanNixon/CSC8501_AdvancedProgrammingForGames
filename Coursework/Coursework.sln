@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Coursework1", "Coursework1\Coursework1.vcxproj", "{48600FAC-8930-437C-8DCC-EA360CCA533F}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -55,6 +55,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Coursework2Lib", "Coursewor
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Coursework2LibTest", "Coursework2LibTest\Coursework2LibTest.vcxproj", "{D7D0E775-12C6-46AB-8BB8-FA2299724604}"
+	ProjectSection(ProjectDependencies) = postProject
+		{990C8209-DCB4-4849-A610-4D9EBE07C64A} = {990C8209-DCB4-4849-A610-4D9EBE07C64A}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Coursework1LibTest", "Coursework1LibTest\Coursework1LibTest.vcxproj", "{8BB0C1C2-343F-4670-9972-00D257211671}"
 	ProjectSection(ProjectDependencies) = postProject
