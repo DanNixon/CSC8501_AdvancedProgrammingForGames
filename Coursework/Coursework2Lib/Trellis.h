@@ -7,37 +7,54 @@
 
 namespace Coursework2
 {
-  struct TrellisMapping
+/**
+ * @brief Stores one mapping within a Trellis.
+ */
+struct TrellisMapping
+{
+  size_t srcState;  //!< Source/current state index
+  bool bit;         //!< Corresponding data bit
+  std::string code; //!< Mapped code segment
+  size_t destState; //!< Destination/next state index
+};
+
+/**
+ * @class Trellis
+ * @author Dan Nixon
+ * @brief Stores a trellis mapping for decoding.
+ */
+class Trellis
+{
+public:
+  static Trellis LoadFromFile(const std::string &filename);
+
+public:
+  Trellis(const std::vector<TrellisMapping> &mapping = {});
+  virtual ~Trellis();
+
+  /**
+   * @brief Gets the number of mappings in this trellis.
+   * @return Mappings count
+   */
+  inline size_t numMappings() const
   {
-    size_t srcState;
-    bool bit;
-    std::string code;
-    size_t destState;
-  };
+    return m_mapping.size();
+  }
 
-  class Trellis
+  /**
+   * @brief Gets a mapping given its index.
+   * @param i Mapping index
+   * @return Maping
+   */
+  TrellisMapping mapping(size_t i) const
   {
-  public:
-    static const size_t NUM_STATES;
+    return m_mapping[i];
+  }
 
-  public:
-    Trellis(const std::vector<TrellisMapping> &mapping = {});
-    virtual ~Trellis();
+  friend std::ostream &operator<<(std::ostream &stream, const Trellis &o);
+  friend std::istream &operator>>(std::istream &stream, Trellis &o);
 
-    inline size_t numMappings() const
-    {
-      return m_mapping.size();
-    }
-
-    TrellisMapping mapping(size_t i) const
-    {
-      return m_mapping[i];
-    }
-
-    friend std::ostream &operator<<(std::ostream &stream, const Trellis &o);
-    friend std::istream &operator>>(std::istream &stream, Trellis &o);
-
-  private:
-    std::vector<TrellisMapping> m_mapping;
-  };
+private:
+  std::vector<TrellisMapping> m_mapping;
+};
 }

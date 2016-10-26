@@ -8,8 +8,12 @@ using namespace CircuitSimulator;
 
 namespace Coursework2
 {
+/**
+ * @brief Creates a new decoder with a given Trellis.
+ * @param trellis Trellis to use for decoding
+ */
 Decoder::Decoder(const Trellis &trellis)
-  : m_trellis(trellis)
+    : m_trellis(trellis)
 {
 }
 

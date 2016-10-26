@@ -4,6 +4,7 @@
 
 #include "CommandLineInterfaceLib/SubCommand.h"
 #include "Coursework1Lib/BitStreamComparator.h"
+#include "Coursework2Lib/Decoder.h"
 #include "Coursework2Lib/ErrorInjector.h"
 #include "UtilityLib/BinaryFileIO.h"
 
@@ -52,10 +53,24 @@ void CW2CommandLine::initCLI()
   registerCommand(std::make_shared<Command>(
       "decode",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-        // TODO
-        return 40;
+        // Load decoder
+        Trellis trellis = Trellis::LoadFromFile(argv[1]);
+        Decoder decoder(trellis);
+
+        // Read input data
+        BitStream inData;
+        BinaryFileIO::ReadFile(inData, argv[2]);
+
+        // Decode
+        BitStream outData;
+        decoder.decode(inData, outData);
+
+        // Save output
+        BinaryFileIO::WriteFile(outData, argv[3]);
+
+        return COMMAND_EXIT_CLEAN;
       },
-      3, "Decodes encoded data."));
+      4, "Decodes encoded data."));
 
   registerCommand(std::make_shared<Command>(
       "compare",

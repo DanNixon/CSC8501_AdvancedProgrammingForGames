@@ -22,10 +22,11 @@ public:
   Decoder(const Trellis &trellis);
   virtual ~Decoder();
 
-  void decode(const CircuitSimulator::BitStream &observations, CircuitSimulator::BitStream &results);
+  void decode(const CircuitSimulator::BitStream &observations,
+              CircuitSimulator::BitStream &results);
   void decode(const std::vector<std::string> &observations, CircuitSimulator::BitStream &results);
 
 private:
-  const Trellis m_trellis;
+  const Trellis m_trellis; //!< Trellis used for decoding
 };
 }
