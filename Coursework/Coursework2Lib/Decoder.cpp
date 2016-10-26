@@ -6,7 +6,14 @@
 
 namespace Coursework2
 {
+/**
+ * @brief All possible states.
+ */
 const Decoder::CDViterbi::States Decoder::STATE_SPACE = {true, false};
+
+/**
+ * @brief Initial uniform probabilities.
+ */
 const Decoder::CDViterbi::InitialProbability Decoder::INITIAL_PROBABILITY = {{true, 0.5},
                                                                              {false, 0.5}};
 

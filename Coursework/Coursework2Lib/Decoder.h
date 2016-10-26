@@ -12,13 +12,20 @@
 
 namespace Coursework2
 {
+/**
+ * @class Decoder
+ * @author Dan Nixon
+ * @brief Performs decoding of convolutional codes.
+ */
 class Decoder
 {
 public:
+  /**
+   * @brief Viterbi algorithm using correct types for decoder.
+   */
   typedef Viterbi<bool, std::string> CDViterbi;
 
   static const CDViterbi::States STATE_SPACE;
-  static const CDViterbi::Observations OBSERVATION_SPACE;
   static const CDViterbi::InitialProbability INITIAL_PROBABILITY;
 
 public:
