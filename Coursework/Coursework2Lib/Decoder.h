@@ -13,16 +13,18 @@ namespace Coursework2
 {
 struct ViterbiNode
 {
-  ViterbiNode()
+  ViterbiNode(size_t i)
       : pathMetric(0.0)
       , parent(nullptr)
       , bit(false)
+      , idx(i)
   {
   }
 
   double pathMetric;
   ViterbiNode *parent;
   bool bit;
+  size_t idx;
 };
 
 /**

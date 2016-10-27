@@ -56,8 +56,9 @@ void Decoder::decode(const CircuitSimulator::BitStream &observations, BitStream 
 
   for (auto it = observations.cbegin(); it != observations.cend();)
   {
+    bool bits[] = { *(it++), *(it++) };
     std::stringstream o;
-    o << *(it++) << *(it++);
+    o << bits[0] << bits[1];
     strObs.push_back(o.str());
   }
 
@@ -76,7 +77,7 @@ void Decoder::decode(const std::vector<std::string> &observations, BitStream &re
 
   // Initial states
   for (size_t i = 0; i < 4; i++)
-    statesNext[i] = new ViterbiNode();
+    statesNext[i] = new ViterbiNode(i);
 
   // Process trellis and build paths
   for (auto obsIt = observations.begin(); obsIt != observations.end(); ++obsIt)
@@ -85,7 +86,7 @@ void Decoder::decode(const std::vector<std::string> &observations, BitStream &re
     for (size_t i = 0; i < 4; i++)
     {
       states[i] = statesNext[i];
-      statesNext[i] = new ViterbiNode();
+      statesNext[i] = new ViterbiNode(i);
     }
 
     // Process states in current trellis frame
