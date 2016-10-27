@@ -29,6 +29,9 @@ public:
     std::stringstream str;
     str << t;
 
+    Assert::AreEqual((size_t)4, t.numStates());
+    Assert::AreEqual((size_t)8, t.numMappings());
+
     Assert::AreEqual(std::string("0 - 0/00 - 0\n0 - 1/11 - 2\n1 - 0/11 - 0\n1 - 1/00 - 2\n2 - 0/10 - 1\n2 - 1/01 - 3\n3 - 0/01 - 1\n3 - 1/10 - 3\n"), str.str());
   }
 
@@ -39,6 +42,7 @@ public:
     Trellis t;
     in >> t;
 
+    Assert::AreEqual((size_t)4, t.numStates());
     Assert::AreEqual((size_t)8, t.numMappings());
 
     Assert::AreEqual(false, t.mapping(0).bit);
@@ -74,6 +78,9 @@ public:
       { 3, false, "01", 1 },
       { 3, true, "10", 3 }
     });
+
+    Assert::AreEqual((size_t)4, t.numStates());
+    Assert::AreEqual((size_t)8, t.numMappings());
 
     {
       std::vector<TrellisMapping> res;

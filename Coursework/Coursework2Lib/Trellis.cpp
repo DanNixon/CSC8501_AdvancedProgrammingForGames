@@ -30,8 +30,9 @@ Trellis Trellis::LoadFromFile(const std::string &filename)
  * @param mapping Trellis mappings
  */
 Trellis::Trellis(const std::vector<TrellisMapping> &mapping)
-    : m_mapping(mapping)
+    : m_numStates(0), m_mapping(mapping)
 {
+  cacheStateCount();
 }
 
 Trellis::~Trellis()
@@ -51,6 +52,27 @@ void Trellis::getMappingsForDestinationState(std::vector<TrellisMapping> &mappin
     if (it->destState == destStateIdx)
       mappings.push_back(TrellisMapping(*it));
   }
+}
+
+/**
+ * @brief Updates the cached value for the number of states in the trellis.
+ *
+ * Assumes states are zero indexed.
+ */
+void Trellis::cacheStateCount()
+{
+  m_numStates = 0;
+
+  for (auto it = m_mapping.cbegin(); it != m_mapping.cend(); ++it)
+  {
+    if (it->srcState > m_numStates)
+      m_numStates = it->srcState;
+
+    if (it->destState > m_numStates)
+      m_numStates = it->destState;
+  }
+
+  m_numStates++;
 }
 
 /**
@@ -93,6 +115,8 @@ std::istream &operator>>(std::istream &stream, Trellis &o)
       o.m_mapping.push_back(m);
     }
   }
+
+  o.cacheStateCount();
 
   return stream;
 }

@@ -72,25 +72,25 @@ void Decoder::decode(const CircuitSimulator::BitStream &observations, BitStream 
  */
 void Decoder::decode(const std::vector<std::string> &observations, BitStream &results)
 {
-  ViterbiNode *states[4];
-  ViterbiNode *statesNext[4];
+  ViterbiNode **states = new ViterbiNode*[m_trellis.numStates()];
+  ViterbiNode **statesNext = new ViterbiNode*[m_trellis.numStates()];
 
   // Initial states
-  for (size_t i = 0; i < 4; i++)
+  for (size_t i = 0; i < m_trellis.numStates(); i++)
     statesNext[i] = new ViterbiNode(i);
 
   // Process trellis and build paths
   for (auto obsIt = observations.begin(); obsIt != observations.end(); ++obsIt)
   {
     // Move current trellis frame
-    for (size_t i = 0; i < 4; i++)
+    for (size_t i = 0; i < m_trellis.numStates(); i++)
     {
       states[i] = statesNext[i];
       statesNext[i] = new ViterbiNode(i);
     }
 
     // Process states in current trellis frame
-    for (size_t i = 0; i < 4; i++)
+    for (size_t i = 0; i < m_trellis.numStates(); i++)
     {
       // Get mappings
       std::vector<TrellisMapping> mappings;
@@ -133,5 +133,10 @@ void Decoder::decode(const std::vector<std::string> &observations, BitStream &re
 
   // Backtracking gives reverse path
   std::reverse(results.begin(), results.end());
+
+  // Free memory
+  delete[] states;
+  delete[] statesNext;
+  // TODO: nodes
 }
 }

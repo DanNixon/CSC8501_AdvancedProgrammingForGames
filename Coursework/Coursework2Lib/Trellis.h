@@ -35,6 +35,15 @@ public:
   virtual ~Trellis();
 
   /**
+   * @brief Returns the number of unique states in the trellis.
+   * @return State count
+   */
+  inline size_t numStates() const
+  {
+    return m_numStates;
+  }
+
+  /**
    * @brief Gets the number of mappings in this trellis.
    * @return Mappings count
    */
@@ -60,6 +69,10 @@ public:
   friend std::istream &operator>>(std::istream &stream, Trellis &o);
 
 private:
+  void cacheStateCount();
+
+private:
+  size_t m_numStates;
   std::vector<TrellisMapping> m_mapping;
 };
 }
