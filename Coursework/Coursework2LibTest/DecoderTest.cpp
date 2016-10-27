@@ -10,9 +10,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace CircuitSimulator;
 using namespace Utility;
 
-/*
- * Test data taken from this example: https://www.youtube.com/watch?v=iPh-HKZyWN4
- */
+/* Test data taken from this example: https://www.youtube.com/watch?v=iPh-HKZyWN4 */
 
 namespace Coursework2
 {
