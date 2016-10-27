@@ -16,6 +16,8 @@ struct TrellisMapping
   bool bit;         //!< Corresponding data bit
   std::string code; //!< Mapped code segment
   size_t destState; //!< Destination/next state index
+
+  double tempCost; //!< Holds a cost used in decoding algorithm
 };
 
 /**
@@ -51,7 +53,8 @@ public:
     return m_mapping[i];
   }
 
-  void getMappingsForDestinationState(std::vector<TrellisMapping> &mappings, size_t destStateIdx) const;
+  void getMappingsForDestinationState(std::vector<TrellisMapping> &mappings,
+                                      size_t destStateIdx) const;
 
   friend std::ostream &operator<<(std::ostream &stream, const Trellis &o);
   friend std::istream &operator>>(std::istream &stream, Trellis &o);

@@ -11,17 +11,19 @@
 
 namespace Coursework2
 {
-  struct ViterbiNode
+struct ViterbiNode
+{
+  ViterbiNode()
+      : pathMetric(0.0)
+      , parent(nullptr)
+      , bit(false)
   {
-    ViterbiNode()
-      : pathMetric(0.0), parent(nullptr), bit(false)
-    {
-    }
+  }
 
-    double pathMetric;
-    ViterbiNode * parent;
-    bool bit;
-  };
+  double pathMetric;
+  ViterbiNode *parent;
+  bool bit;
+};
 
 /**
  * @class Decoder

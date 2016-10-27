@@ -2,8 +2,8 @@
 
 #include "Decoder.h"
 
-#include <sstream>
 #include <algorithm>
+#include <sstream>
 
 using namespace CircuitSimulator;
 
@@ -15,7 +15,7 @@ namespace Coursework2
  * @param b Second string
  * @return Hamming distance
  */
-const size_t Decoder::HammingDist(const std::string & a, const std::string & b)
+const size_t Decoder::HammingDist(const std::string &a, const std::string &b)
 {
   size_t dist = 0;
 
@@ -44,6 +44,11 @@ Decoder::~Decoder()
 {
 }
 
+/**
+ * @brief Decodes a bit stream using the trellis.
+ * @param observations Bit stream received
+ * @param results Reference to storage for decoded result
+ */
 void Decoder::decode(const CircuitSimulator::BitStream &observations, BitStream &results)
 {
   std::vector<std::string> strObs;
@@ -59,17 +64,22 @@ void Decoder::decode(const CircuitSimulator::BitStream &observations, BitStream 
   decode(strObs, results);
 }
 
+/**
+ * @brief Decodes a sequence of bit pairs using the trellis.
+ * @param observations Bit pairs (as vector of string) received
+ * @param results Reference to storage for decoded result
+ */
 void Decoder::decode(const std::vector<std::string> &observations, BitStream &results)
 {
-  ViterbiNode * states[4];
-  ViterbiNode * statesNext[4];
+  ViterbiNode *states[4];
+  ViterbiNode *statesNext[4];
 
   // Initial states
   for (size_t i = 0; i < 4; i++)
     statesNext[i] = new ViterbiNode();
-  
+
   // Process trellis and build paths
-  for (auto it = observations.begin(); it != observations.end(); ++it)
+  for (auto obsIt = observations.begin(); obsIt != observations.end(); ++obsIt)
   {
     // Move current trellis frame
     for (size_t i = 0; i < 4; i++)
@@ -81,26 +91,43 @@ void Decoder::decode(const std::vector<std::string> &observations, BitStream &re
     // Process states in current trellis frame
     for (size_t i = 0; i < 4; i++)
     {
-      // Compute new path matrics
-      // TODO
+      // Get mappings
+      std::vector<TrellisMapping> mappings;
+      m_trellis.getMappingsForDestinationState(mappings, i);
 
-      // Select best path
-      // TODO
+      // Compute new path metrics and find best branch
+      TrellisMapping bestMapping;
+      bestMapping.tempCost = std::numeric_limits<double>::max();
+
+      for (size_t j = 0; j < mappings.size(); j++)
+      {
+        mappings[j].tempCost =
+            states[mappings[j].srcState]->pathMetric + HammingDist(mappings[j].code, *obsIt);
+
+        // Check if this is the new lowest cost
+        if (mappings[j].tempCost < bestMapping.tempCost)
+          bestMapping = mappings[j];
+      }
+
+      // Add best branch to tree
+      statesNext[i]->bit = bestMapping.bit;
+      statesNext[i]->pathMetric = bestMapping.tempCost;
+      statesNext[i]->parent = states[bestMapping.srcState];
     }
   }
 
   // Find best path (lowest path metric)
-  ViterbiNode *best = states[0];
+  ViterbiNode *best = statesNext[0];
   for (size_t i = 1; i < 4; i++)
-    if (states[i]->pathMetric < best->pathMetric)
-      best = states[i];
+    if (statesNext[i]->pathMetric < best->pathMetric)
+      best = statesNext[i];
 
   // Backtrack
-  while (best->parent != nullptr)
+  do
   {
     results.push_back(best->bit);
     best = best->parent;
-  }
+  } while (best->parent != nullptr);
 
   // Backtracking gives reverse path
   std::reverse(results.begin(), results.end());

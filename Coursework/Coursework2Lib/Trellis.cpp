@@ -43,7 +43,8 @@ Trellis::~Trellis()
  * @param mappings Reference to vector to store mappings in
  * @param destStateIdx Index of detination state to get mappings of
  */
-void Trellis::getMappingsForDestinationState(std::vector<TrellisMapping>& mappings, size_t destStateIdx) const
+void Trellis::getMappingsForDestinationState(std::vector<TrellisMapping> &mappings,
+                                             size_t destStateIdx) const
 {
   for (auto it = m_mapping.cbegin(); it != m_mapping.cend(); ++it)
   {
