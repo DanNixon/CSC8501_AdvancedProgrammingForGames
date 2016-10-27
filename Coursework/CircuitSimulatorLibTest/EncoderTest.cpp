@@ -120,8 +120,8 @@ public:
 
     Trellis t = e.generateTrellis();
 
-    Assert::AreEqual((size_t)0, t.numStates());
-    Assert::AreEqual((size_t)0, t.numMappings());
+    Assert::AreEqual((size_t)8, t.numStates());
+    Assert::AreEqual((size_t)16, t.numMappings());
 
     // TODO
   }

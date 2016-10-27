@@ -108,14 +108,18 @@ Trellis Encoder::generateTrellis()
     throw std::runtime_error("Incorrect number of registers (trellis generation needs exactly one "
                              "register in an encoder).");
 
-  // Generate states
-  size_t numElements = m_registers[0]->size();
-  size_t numStates = (size_t)std::pow(2, numElements) - 1;
+  size_t numElements = m_registers[0]->size() - 1;
+  size_t numStates = (size_t)std::pow(2, numElements);
+
+  // Generate all state permutations
   std::vector<BitStream> states;
   states.reserve(numStates);
   for (size_t i = 0; i < numStates; i++)
   {
-    // TODO
+    states.push_back(BitStream(numElements));
+
+    for (size_t j = 0; j < numElements; j++)
+      states[i][numElements - 1 - j] = (i & ((size_t)0x1 << j)) > 0;
   }
 
   // Test all input
@@ -123,11 +127,11 @@ Trellis Encoder::generateTrellis()
   for (size_t i = 0; i < numStates * 2; i++)
   {
     size_t srcIdx = i % numStates;
-    bool testBit = i % 2 == 0;
+    bool testBit = i / numStates == 0;
 
-    // Set register elements
+    // Set register elements (exclude first as it is a mirror of the input bit)
     for (size_t j = 0; j < numElements; j++)
-      setInput("bit_" + std::to_string(j), states[srcIdx][j]);
+      m_registers[0]->setInput("bit_" + std::to_string(j + 1), states[srcIdx][j]);
 
     // Run encoder step
     setInput("bit_0", testBit);
@@ -136,8 +140,15 @@ Trellis Encoder::generateTrellis()
     advanceRegisters(-1);
 
     // Get register state
-    size_t destIdx = 0;
-    // TOOD
+    BitStream outState;
+    for (size_t j = 0; j < numElements; j++)
+      outState.push_back(m_registers[0]->getOutput("bit_" + std::to_string(j + 1)));
+
+    // Find output state index
+    auto it = std::find(states.begin(), states.end(), outState);
+    if (it == states.end())
+      throw std::runtime_error("Could not find state.");
+    size_t destIdx = it - states.begin();
 
     mappings.push_back({srcIdx, testBit, resStr.str(), destIdx});
   }
