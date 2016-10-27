@@ -61,6 +61,52 @@ public:
     Assert::AreEqual((size_t)3, t.mapping(7).srcState);
     Assert::AreEqual((size_t)3, t.mapping(7).destState);
   }
+
+  TEST_METHOD(Trellis_GetMappingForDestState)
+  {
+    Trellis t({
+      { 0, false, "00", 0 },
+      { 0, true, "11", 2 },
+      { 1, false, "11", 0 },
+      { 1, true, "00", 2 },
+      { 2, false, "10", 1 },
+      { 2, true, "01", 3 },
+      { 3, false, "01", 1 },
+      { 3, true, "10", 3 }
+    });
+
+    {
+      std::vector<TrellisMapping> res;
+      t.getMappingsForDestinationState(res, 0);
+      Assert::AreEqual((size_t)2, res.size());
+
+      Assert::AreEqual(false, res[0].bit);
+      Assert::AreEqual(std::string("00"), res[0].code);
+      Assert::AreEqual((size_t)0, res[0].srcState);
+      Assert::AreEqual((size_t)0, res[0].destState);
+
+      Assert::AreEqual(false, res[1].bit);
+      Assert::AreEqual(std::string("11"), res[1].code);
+      Assert::AreEqual((size_t)1, res[1].srcState);
+      Assert::AreEqual((size_t)0, res[1].destState);
+    }
+
+    {
+      std::vector<TrellisMapping> res;
+      t.getMappingsForDestinationState(res, 2);
+      Assert::AreEqual((size_t)2, res.size());
+
+      Assert::AreEqual(true, res[0].bit);
+      Assert::AreEqual(std::string("11"), res[0].code);
+      Assert::AreEqual((size_t)0, res[0].srcState);
+      Assert::AreEqual((size_t)2, res[0].destState);
+
+      Assert::AreEqual(true, res[1].bit);
+      Assert::AreEqual(std::string("00"), res[1].code);
+      Assert::AreEqual((size_t)1, res[1].srcState);
+      Assert::AreEqual((size_t)2, res[1].destState);
+    }
+  }
 };
 }
 }

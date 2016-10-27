@@ -16,7 +16,7 @@ namespace Coursework1
  * @brief Check for similarity between two datasets.
  * @param a First dataset
  * @param b Second dataset
- * @return Number of bits that differ between both datasets
+ * @return Hamming distance
  */
 size_t BitStreamComparator::Compare(const BitStream &a, const BitStream &b)
 {
@@ -41,7 +41,7 @@ size_t BitStreamComparator::Compare(const BitStream &a, const BitStream &b)
  * @brief Check for similarity between two datasets.
  * @param aFilename Filename to load first dataset from
  * @param bFilename Filename to load second dataset from
- * @return Number of bits that differ between both datasets
+ * @return Hamming distance
  */
 size_t BitStreamComparator::Compare(const std::string &aFilename, const std::string &bFilename)
 {

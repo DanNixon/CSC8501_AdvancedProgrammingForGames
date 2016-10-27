@@ -51,6 +51,8 @@ public:
     return m_mapping[i];
   }
 
+  void getMappingsForDestinationState(std::vector<TrellisMapping> &mappings, size_t destStateIdx) const;
+
   friend std::ostream &operator<<(std::ostream &stream, const Trellis &o);
   friend std::istream &operator>>(std::istream &stream, Trellis &o);
 

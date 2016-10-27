@@ -11,6 +11,18 @@
 
 namespace Coursework2
 {
+  struct ViterbiNode
+  {
+    ViterbiNode()
+      : pathMetric(0.0), parent(nullptr), bit(false)
+    {
+    }
+
+    double pathMetric;
+    ViterbiNode * parent;
+    bool bit;
+  };
+
 /**
  * @class Decoder
  * @author Dan Nixon
@@ -18,6 +30,9 @@ namespace Coursework2
  */
 class Decoder
 {
+public:
+  static const size_t HammingDist(const std::string &a, const std::string &b);
+
 public:
   Decoder(const Trellis &trellis);
   virtual ~Decoder();

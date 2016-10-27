@@ -39,6 +39,20 @@ Trellis::~Trellis()
 }
 
 /**
+ * @brief Gets mappings that lead to a given state.
+ * @param mappings Reference to vector to store mappings in
+ * @param destStateIdx Index of detination state to get mappings of
+ */
+void Trellis::getMappingsForDestinationState(std::vector<TrellisMapping>& mappings, size_t destStateIdx) const
+{
+  for (auto it = m_mapping.cbegin(); it != m_mapping.cend(); ++it)
+  {
+    if (it->destState == destStateIdx)
+      mappings.push_back(TrellisMapping(*it));
+  }
+}
+
+/**
  * @brief Output a Trellis to a stream as a friendly formatted string.
  * @param stream Reference to output stream
  * @param o Trellis to output
