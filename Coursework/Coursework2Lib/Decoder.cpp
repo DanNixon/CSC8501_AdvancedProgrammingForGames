@@ -99,6 +99,7 @@ void Decoder::decode(const std::vector<std::string> &observations, BitStream &re
       TrellisMapping bestMapping;
       bestMapping.tempCost = std::numeric_limits<double>::max();
 
+      // For each mapping to this state in th trellis
       for (size_t j = 0; j < mappings.size(); j++)
       {
         mappings[j].tempCost =
