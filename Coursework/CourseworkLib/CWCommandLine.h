@@ -7,8 +7,8 @@
 #include <map>
 #include <string>
 
-#include "CommandLineInterfaceLib/SubCommand.h"
 #include "CircuitSimulatorLib/Encoder.h"
+#include "CommandLineInterfaceLib/SubCommand.h"
 
 #include "PermutationGenerator.h"
 
