@@ -6,7 +6,7 @@
 
 using namespace CircuitSimulator;
 
-namespace Coursework1
+namespace Coursework
 {
 /**
  * @brief Creates a new Permutation.

@@ -7,7 +7,7 @@
 #include "CircuitSimulatorLib/Circuit_fwd.h"
 #include "CircuitSimulatorLib/Wire.h"
 
-namespace Coursework1
+namespace Coursework
 {
 /**
  * @class Permutation

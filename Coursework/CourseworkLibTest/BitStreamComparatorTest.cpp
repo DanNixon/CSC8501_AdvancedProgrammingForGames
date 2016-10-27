@@ -2,12 +2,12 @@
 
 #include <vector>
 
-#include "Coursework1Lib/BitStreamComparator.h"
+#include "CourseworkLib/BitStreamComparator.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace CircuitSimulator;
 
-namespace Coursework1
+namespace Coursework
 {
 namespace Test
 {

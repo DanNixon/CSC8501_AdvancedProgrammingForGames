@@ -4,7 +4,7 @@
 
 using namespace CircuitSimulator;
 
-namespace Coursework2
+namespace Coursework
 {
 /**
  * @brief Maximum value of random number generator.

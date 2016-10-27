@@ -3,7 +3,7 @@
 #include <ctime>
 #include <iostream>
 
-#include "Coursework2Lib/CW2CommandLine.h"
+#include "CourseworkLib/CWCommandLine.h"
 
 /**
  * @brief Entry point.
@@ -11,8 +11,11 @@
  */
 int main()
 {
+  /* Seed random number generator. */
   std::srand((unsigned int)std::time(0));
-  Coursework2::CW2CommandLine cli(std::cin, std::cout);
+
+  /* Init and run CLI. */
+  Coursework::CWCommandLine cli(std::cin, std::cout);
   cli.initCLI();
   return cli.run();
 }

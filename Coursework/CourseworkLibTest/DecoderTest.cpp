@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "Coursework2Lib/Decoder.h"
+#include "CourseworkLib/Decoder.h"
 #include "CircuitSimulatorLib/BitStream.h"
 #include "UtilityLib/BinaryFileIO.h"
 
@@ -12,7 +12,7 @@ using namespace Utility;
 
 /* Test data taken from this example: https://www.youtube.com/watch?v=iPh-HKZyWN4 */
 
-namespace Coursework2
+namespace Coursework
 {
 namespace Test
 {

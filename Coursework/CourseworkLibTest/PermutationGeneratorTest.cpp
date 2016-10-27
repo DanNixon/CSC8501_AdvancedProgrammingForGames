@@ -2,13 +2,13 @@
 
 #include <vector>
 
-#include "Coursework1Lib/Permutation.h"
-#include "Coursework1Lib/PermutationGenerator.h"
+#include "CourseworkLib/Permutation.h"
+#include "CourseworkLib/PermutationGenerator.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace CircuitSimulator;
 
-namespace Coursework1
+namespace Coursework
 {
 namespace Test
 {

@@ -1,6 +1,6 @@
 /** @file */
 
-#include "CW1CommandLine.h"
+#include "CWCommandLine.h"
 
 #include <algorithm>
 #include <fstream>
@@ -11,6 +11,9 @@
 #include "CircuitSimulatorLib/Wire.h"
 #include "CircuitSimulatorLib/XORGate.h"
 #include "CommandLineInterfaceLib/Command.h"
+#include "CourseworkLib/BitStreamComparator.h"
+#include "CourseworkLib/Decoder.h"
+#include "CourseworkLib/ErrorInjector.h"
 #include "UtilityLib/BinaryFileIO.h"
 #include "UtilityLib/FileUtils.h"
 
@@ -20,28 +23,28 @@ using namespace CommandLineInterface;
 using namespace CircuitSimulator;
 using namespace Utility;
 
-namespace Coursework1
+namespace Coursework
 {
 /**
  * @brief Create a new command line on given streams.
  * @param in Input stream
  * @param out Output stream
  */
-CW1CommandLine::CW1CommandLine(std::istream &in, std::ostream &out)
+CWCommandLine::CWCommandLine(std::istream &in, std::ostream &out)
     : CLI(in, out)
     , m_activeEncoder(std::make_shared<Encoder>())
     , m_permutationGenerator(nullptr)
 {
 }
 
-CW1CommandLine::~CW1CommandLine()
+CWCommandLine::~CWCommandLine()
 {
 }
 
 /**
  * @brief Adds commands to the CLI.
  */
-void CW1CommandLine::initCLI()
+void CWCommandLine::initCLI()
 {
   SubCommand_ptr encoderCmd = std::make_shared<SubCommand>("encoder", "Configures encoder.");
   encoderCmd->registerCommand(generateComponentCmd());
@@ -216,13 +219,74 @@ void CW1CommandLine::initCLI()
         return COMMAND_EXIT_CLEAN;
       },
       3, "Finds matching datasets from files in a directory."));
+
+  registerCommand(std::make_shared<Command>(
+      "inject_error",
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        BitStream inData;
+        BitStream outData;
+
+        BinaryFileIO::ReadFile(inData, argv[1]);
+        outData.reserve(inData.size());
+
+        ErrorInjector::InjectError(inData, outData);
+        BinaryFileIO::WriteFile(outData, argv[2]);
+
+        return COMMAND_EXIT_CLEAN;
+      },
+      3, "Injects erronous data into a file."));
+
+  registerCommand(std::make_shared<Command>(
+      "decode",
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        // Load decoder
+        Trellis trellis = Trellis::LoadFromFile(argv[1]);
+        Decoder decoder(trellis);
+
+        // Read input data
+        BitStream inData;
+        BinaryFileIO::ReadFile(inData, argv[2]);
+
+        // Decode
+        BitStream outData;
+        double bestPathMetric = decoder.decode(inData, outData);
+        out << "Decoding complete. Best path has weight: " << bestPathMetric << '\n';
+
+        // Save output
+        BinaryFileIO::WriteFile(outData, argv[3]);
+
+        return COMMAND_EXIT_CLEAN;
+      },
+      4, "Decodes encoded data."));
+
+  registerCommand(std::make_shared<Command>(
+      "compare_decoded",
+      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
+        BitStream original;
+        BitStream cleanDecode;
+        BitStream noisyDecode;
+
+        BinaryFileIO::ReadFile(original, argv[1]);
+        BinaryFileIO::ReadFile(cleanDecode, argv[2]);
+        BinaryFileIO::ReadFile(noisyDecode, argv[3]);
+
+        out << "Clean decode "
+            << (BitStreamComparator::Compare(original, cleanDecode) ? "matches" : "differs")
+            << ".\n";
+        out << "Noisy decode "
+            << (BitStreamComparator::Compare(original, noisyDecode) ? "matches" : "differs")
+            << ".\n";
+
+        return COMMAND_EXIT_CLEAN;
+      },
+      4, "Comapres decoded datasets to original."));
 }
 
 /**
  * @brief Genertes commands for the components subcommend.
  * @return Subcommand
  */
-SubCommand_ptr CW1CommandLine::generateComponentCmd()
+SubCommand_ptr CWCommandLine::generateComponentCmd()
 {
   SubCommand_ptr cmd = std::make_shared<SubCommand>("components", "Manage encoder components.");
 
@@ -266,7 +330,7 @@ SubCommand_ptr CW1CommandLine::generateComponentCmd()
  * @brief Genertes commands for the wires subcommend.
  * @return Subcommand
  */
-SubCommand_ptr CW1CommandLine::generateWireCmd()
+SubCommand_ptr CWCommandLine::generateWireCmd()
 {
   SubCommand_ptr cmd = std::make_shared<SubCommand>("wires", "Manage encoder wiring.");
 
@@ -293,7 +357,7 @@ SubCommand_ptr CW1CommandLine::generateWireCmd()
  * @brief Genertes commands for the permutations subcommend.
  * @return Subcommand
  */
-SubCommand_ptr CW1CommandLine::generatePermutationCmd()
+SubCommand_ptr CWCommandLine::generatePermutationCmd()
 {
   SubCommand_ptr cmd =
       std::make_shared<SubCommand>("permutations", "Work with encoder permutations.");
@@ -357,7 +421,7 @@ SubCommand_ptr CW1CommandLine::generatePermutationCmd()
  * @brief Genertes commands for the presets subcommend.
  * @return Subcommand
  */
-SubCommand_ptr CW1CommandLine::generatePresetCmd()
+SubCommand_ptr CWCommandLine::generatePresetCmd()
 {
   SubCommand_ptr cmd = std::make_shared<SubCommand>("preset", "Load encoder presets.");
 
@@ -384,7 +448,7 @@ SubCommand_ptr CW1CommandLine::generatePresetCmd()
  * @brief Handles loading of a preset.
  * @param preset String ID of the preset
  */
-void Coursework1::CW1CommandLine::loadPreset(const std::string &preset)
+void CWCommandLine::loadPreset(const std::string &preset)
 {
   this->m_activeEncoder = std::make_shared<Encoder>();
 

@@ -10,7 +10,7 @@ namespace CommandLineInterface
 /**
  * @brief Indentation length of descriptions on "help" command.
  */
-const size_t CommandContainer::HELP_CMD_WIDTH = 25;
+const size_t CommandContainer::HELP_CMD_WIDTH = 20;
 
 /**
  * @brief Create a new container.

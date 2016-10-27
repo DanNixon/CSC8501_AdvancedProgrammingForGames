@@ -6,7 +6,7 @@
 
 #include "Permutation.h"
 
-namespace Coursework1
+namespace Coursework
 {
 /**
  * @class PermutationGenerator

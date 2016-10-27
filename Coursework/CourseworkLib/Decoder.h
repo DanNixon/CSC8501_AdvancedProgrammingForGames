@@ -8,7 +8,7 @@
 #include "CircuitSimulatorLib/BitStream.h"
 #include "CircuitSimulatorLib/Trellis.h"
 
-namespace Coursework2
+namespace Coursework
 {
 /**
  * @brief Contains information used for building path trees in viterbi decoding.

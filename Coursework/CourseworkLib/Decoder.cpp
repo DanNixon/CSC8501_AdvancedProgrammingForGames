@@ -7,7 +7,7 @@
 
 using namespace CircuitSimulator;
 
-namespace Coursework2
+namespace Coursework
 {
 /**
  * @brief Measures the hamming distance between two strings.

@@ -1,15 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="CW1CommandLine.cpp" />
-    <ClCompile Include="Permutation.cpp" />
     <ClCompile Include="BitStreamComparator.cpp" />
+    <ClCompile Include="CWCommandLine.cpp" />
+    <ClCompile Include="Decoder.cpp" />
+    <ClCompile Include="ErrorInjector.cpp" />
+    <ClCompile Include="Permutation.cpp" />
     <ClCompile Include="PermutationGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CW1CommandLine.h" />
-    <ClInclude Include="Permutation.h" />
     <ClInclude Include="BitStreamComparator.h" />
+    <ClInclude Include="CWCommandLine.h" />
+    <ClInclude Include="Decoder.h" />
+    <ClInclude Include="ErrorInjector.h" />
+    <ClInclude Include="Permutation.h" />
     <ClInclude Include="PermutationGenerator.h" />
   </ItemGroup>
 </Project>

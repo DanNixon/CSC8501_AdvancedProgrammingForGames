@@ -8,23 +8,22 @@
 #include <string>
 
 #include "CommandLineInterfaceLib/SubCommand.h"
-
 #include "CircuitSimulatorLib/Encoder.h"
 
 #include "PermutationGenerator.h"
 
-namespace Coursework1
+namespace Coursework
 {
 /**
- * @class CW1CommandLine
+ * @class CWCommandLine
  * @author Dan Nixon
- * @brief CLI that contains functionality for coursework 1.
+ * @brief CLI that provicdes an interface to courework functionality.
  */
-class CW1CommandLine : public CommandLineInterface::CLI
+class CWCommandLine : public CommandLineInterface::CLI
 {
 public:
-  CW1CommandLine(std::istream &in, std::ostream &out);
-  virtual ~CW1CommandLine();
+  CWCommandLine(std::istream &in, std::ostream &out);
+  virtual ~CWCommandLine();
 
   void initCLI();
 

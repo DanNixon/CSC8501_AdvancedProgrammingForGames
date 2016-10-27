@@ -6,7 +6,7 @@
 
 #include "CircuitSimulatorLib/BitStream.h"
 
-namespace Coursework1
+namespace Coursework
 {
 /**
  * @class BitStreamComparator

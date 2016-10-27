@@ -10,7 +10,7 @@
 using namespace Utility;
 using namespace CircuitSimulator;
 
-namespace Coursework1
+namespace Coursework
 {
 /**
  * @brief Check for similarity between two datasets.

@@ -4,7 +4,7 @@
 
 #include "CircuitSimulatorLib/BitStream.h"
 
-namespace Coursework2
+namespace Coursework
 {
 /**
  * @class ErrorInjector
