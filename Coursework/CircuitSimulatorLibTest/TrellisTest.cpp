@@ -2,11 +2,11 @@
 
 #include <string>
 
-#include "Coursework2Lib/Trellis.h"
+#include "CircuitSimulatorLib/Trellis.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace Coursework2
+namespace CircuitSimulator
 {
 namespace Test
 {

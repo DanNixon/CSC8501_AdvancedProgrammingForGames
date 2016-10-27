@@ -173,6 +173,7 @@
     <ClCompile Include="CircuitValidatorTest.cpp" />
     <ClCompile Include="EncoderTest.cpp" />
     <ClCompile Include="RegisterArrayTest.cpp" />
+    <ClCompile Include="TrellisTest.cpp" />
     <ClCompile Include="WireTest.cpp" />
     <ClCompile Include="XORGateTest.cpp" />
   </ItemGroup>

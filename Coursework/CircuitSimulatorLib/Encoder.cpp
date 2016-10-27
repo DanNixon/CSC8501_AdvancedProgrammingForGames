@@ -3,6 +3,7 @@
 #include "Encoder.h"
 
 #include <map>
+#include <sstream>
 
 namespace CircuitSimulator
 {
@@ -94,5 +95,53 @@ void Encoder::encode(const BitStream &in, BitStream &out)
     out.push_back(getOutput("bit_1"));
     advanceRegisters(-1);
   }
+}
+
+/**
+ * @brief Generates a Trellis for decoding output from this encoder.
+ * @return Trellis describing the state transitions of this encoder
+ */
+Trellis Encoder::generateTrellis()
+{
+  // Sanity check (logic only implemented for a single register)
+  if (m_registers.size() != 1)
+    throw std::runtime_error("Incorrect number of registers (trellis generation needs exactly one "
+                             "register in an encoder).");
+
+  // Generate states
+  size_t numElements = m_registers[0]->size();
+  size_t numStates = (size_t)std::pow(2, numElements) - 1;
+  std::vector<BitStream> states;
+  states.reserve(numStates);
+  for (size_t i = 0; i < numStates; i++)
+  {
+    // TODO
+  }
+
+  // Test all input
+  std::vector<TrellisMapping> mappings;
+  for (size_t i = 0; i < numStates * 2; i++)
+  {
+    size_t srcIdx = i % numStates;
+    bool testBit = i % 2 == 0;
+
+    // Set register elements
+    for (size_t j = 0; j < numElements; j++)
+      setInput("bit_" + std::to_string(j), states[srcIdx][j]);
+
+    // Run encoder step
+    setInput("bit_0", testBit);
+    std::stringstream resStr;
+    resStr << getOutput("bit_0") << getOutput("bit_1");
+    advanceRegisters(-1);
+
+    // Get register state
+    size_t destIdx = 0;
+    // TOOD
+
+    mappings.push_back({srcIdx, testBit, resStr.str(), destIdx});
+  }
+
+  return Trellis(mappings);
 }
 }

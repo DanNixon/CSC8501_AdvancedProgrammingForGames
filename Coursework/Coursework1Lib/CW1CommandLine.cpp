@@ -152,6 +152,13 @@ void CW1CommandLine::initCLI()
           wiringOut << *(this->m_activeEncoder) << '\n';
           wiringOut.close();
 
+          // Output trellis
+          std::string trellisFilename = argv[2] + "enc_" + std::to_string(i) + "_trellis.txt";
+          std::ofstream trellisOut;
+          trellisOut.open(trellisFilename, std::fstream::out);
+          trellisOut << this->m_activeEncoder->generateTrellis() << '\n';
+          trellisOut.close();
+
           // Save encoded string
           std::string outFilename = argv[2] + "enc_" + std::to_string(i) + "_out.txt";
           BinaryFileIO::WriteFile(dataOut, outFilename);

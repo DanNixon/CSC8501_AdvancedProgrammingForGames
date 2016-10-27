@@ -8,6 +8,7 @@
 
 #include "BitStream.h"
 #include "RegisterArray.h"
+#include "Trellis.h"
 
 namespace CircuitSimulator
 {
@@ -29,6 +30,8 @@ public:
   void advanceRegisters(int8_t direction);
   void resetRegisters();
   void encode(const BitStream &in, BitStream &out);
+
+  Trellis generateTrellis();
 
 private:
   std::vector<RegisterArray_ptr> m_registers; //!< Components that are registers

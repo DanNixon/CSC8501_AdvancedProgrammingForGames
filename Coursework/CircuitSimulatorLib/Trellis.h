@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-namespace Coursework2
+namespace CircuitSimulator
 {
 /**
  * @brief Stores one mapping within a Trellis.

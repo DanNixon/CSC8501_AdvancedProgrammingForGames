@@ -5,7 +5,7 @@
 #include <fstream>
 #include <regex>
 
-namespace Coursework2
+namespace CircuitSimulator
 {
 /**
  * @brief Loads a Trellis from a file.
@@ -30,7 +30,8 @@ Trellis Trellis::LoadFromFile(const std::string &filename)
  * @param mapping Trellis mappings
  */
 Trellis::Trellis(const std::vector<TrellisMapping> &mapping)
-    : m_numStates(0), m_mapping(mapping)
+    : m_numStates(0)
+    , m_mapping(mapping)
 {
   cacheStateCount();
 }

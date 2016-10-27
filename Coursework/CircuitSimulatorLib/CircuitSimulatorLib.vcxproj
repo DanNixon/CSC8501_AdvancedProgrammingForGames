@@ -143,6 +143,7 @@
     <ClInclude Include="Pin.h" />
     <ClInclude Include="Pin_fwd.h" />
     <ClInclude Include="RegisterArray.h" />
+    <ClInclude Include="Trellis.h" />
     <ClInclude Include="Wire.h" />
     <ClInclude Include="XORGate.h" />
   </ItemGroup>
@@ -153,6 +154,7 @@
     <ClCompile Include="ComponentFactory.cpp" />
     <ClCompile Include="Encoder.cpp" />
     <ClCompile Include="Pin.cpp" />
+    <ClCompile Include="Trellis.cpp" />
     <ClCompile Include="Wire.cpp" />
     <ClCompile Include="XORGate.cpp" />
   </ItemGroup>

@@ -15,6 +15,7 @@
     <ClInclude Include="ComponentFactory.h" />
     <ClInclude Include="Wire.h" />
     <ClInclude Include="BitStream.h" />
+    <ClInclude Include="Trellis.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Circuit.cpp" />
@@ -25,5 +26,6 @@
     <ClCompile Include="CircuitValidator.cpp" />
     <ClCompile Include="ComponentFactory.cpp" />
     <ClCompile Include="Wire.cpp" />
+    <ClCompile Include="Trellis.cpp" />
   </ItemGroup>
 </Project>

@@ -94,7 +94,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Coursework1Lib.lib;Coursework2Lib.lib;CommandLineInterfaceLib.lib;UtilityLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CircuitSimulatorLib.lib;Coursework1Lib.lib;Coursework2Lib.lib;CommandLineInterfaceLib.lib;UtilityLib.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -105,7 +105,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Coursework1Lib.lib;Coursework2Lib.lib;CommandLineInterfaceLib.lib;UtilityLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CircuitSimulatorLib.lib;Coursework1Lib.lib;Coursework2Lib.lib;CommandLineInterfaceLib.lib;UtilityLib.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -120,7 +120,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>Coursework2Lib.lib;CommandLineInterfaceLib.lib;UtilityLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CircuitSimulatorLib.lib;Coursework1Lib.lib;Coursework2Lib.lib;CommandLineInterfaceLib.lib;UtilityLib.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -135,7 +135,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>Coursework2Lib.lib;CommandLineInterfaceLib.lib;UtilityLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CircuitSimulatorLib.lib;Coursework1Lib.lib;Coursework2Lib.lib;CommandLineInterfaceLib.lib;UtilityLib.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

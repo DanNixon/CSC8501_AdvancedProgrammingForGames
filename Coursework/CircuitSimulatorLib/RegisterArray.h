@@ -42,6 +42,15 @@ public:
   }
 
   /**
+   * @brief Gets the number of elements in this register.
+   * @return Register element count
+   */
+  inline size_t size() const
+  {
+    return m_pins.size();
+  }
+
+  /**
    * @brief Performs a bit shift left.
    */
   void shiftLeft()

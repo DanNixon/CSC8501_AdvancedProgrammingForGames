@@ -8,5 +8,6 @@
     <ClCompile Include="EncoderTest.cpp" />
     <ClCompile Include="CircuitValidatorTest.cpp" />
     <ClCompile Include="WireTest.cpp" />
+    <ClCompile Include="TrellisTest.cpp" />
   </ItemGroup>
 </Project>

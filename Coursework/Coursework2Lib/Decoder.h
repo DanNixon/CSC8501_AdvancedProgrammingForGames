@@ -6,8 +6,7 @@
 #include <vector>
 
 #include "CircuitSimulatorLib/BitStream.h"
-
-#include "Trellis.h"
+#include "CircuitSimulatorLib/Trellis.h"
 
 namespace Coursework2
 {
@@ -23,9 +22,9 @@ struct ViterbiNode
   {
   }
 
-  double pathMetric; //!< Best path metric at this node
+  double pathMetric;   //!< Best path metric at this node
   ViterbiNode *parent; //!< Parent node that gives the best path matric
-  bool bit; //!< The bit decoded by following the path from the parent node
+  bool bit;            //!< The bit decoded by following the path from the parent node
 };
 
 /**
@@ -39,14 +38,14 @@ public:
   static const size_t HammingDist(const std::string &a, const std::string &b);
 
 public:
-  Decoder(const Trellis &trellis);
+  Decoder(const CircuitSimulator::Trellis &trellis);
   virtual ~Decoder();
 
   double decode(const CircuitSimulator::BitStream &observations,
-              CircuitSimulator::BitStream &results);
+                CircuitSimulator::BitStream &results);
   double decode(const std::vector<std::string> &observations, CircuitSimulator::BitStream &results);
 
 private:
-  const Trellis m_trellis; //!< Trellis used for decoding
+  const CircuitSimulator::Trellis m_trellis; //!< Trellis used for decoding
 };
 }
