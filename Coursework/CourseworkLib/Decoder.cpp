@@ -122,10 +122,10 @@ size_t Decoder::decode(const std::vector<std::string> &observations, BitStream &
 
   // Find best path (lowest path metric)
   ViterbiNode *best = statesNext[0];
-  size_t bestPathMetric = best->pathMetric;
   for (size_t i = 1; i < 4; i++)
     if (statesNext[i]->pathMetric < best->pathMetric)
       best = statesNext[i];
+  size_t bestPathMetric = best->pathMetric;
 
   // Backtrack
   do
