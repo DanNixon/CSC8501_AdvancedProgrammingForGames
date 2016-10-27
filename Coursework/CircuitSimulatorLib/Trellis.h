@@ -17,7 +17,7 @@ struct TrellisMapping
   std::string code; //!< Mapped code segment
   size_t destState; //!< Destination/next state index
 
-  double tempCost; //!< Holds a cost used in decoding algorithm
+  size_t tempCost; //!< Holds a cost used in decoding algorithm
 };
 
 /**

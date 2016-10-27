@@ -16,13 +16,13 @@ namespace Coursework
 struct ViterbiNode
 {
   ViterbiNode()
-      : pathMetric(0.0)
+      : pathMetric(0)
       , parent(nullptr)
       , bit(false)
   {
   }
 
-  double pathMetric;   //!< Best path metric at this node
+  size_t pathMetric;   //!< Best path metric at this node
   ViterbiNode *parent; //!< Parent node that gives the best path matric
   bool bit;            //!< The bit decoded by following the path from the parent node
 };
@@ -41,9 +41,9 @@ public:
   Decoder(const CircuitSimulator::Trellis &trellis);
   virtual ~Decoder();
 
-  double decode(const CircuitSimulator::BitStream &observations,
+  size_t decode(const CircuitSimulator::BitStream &observations,
                 CircuitSimulator::BitStream &results);
-  double decode(const std::vector<std::string> &observations, CircuitSimulator::BitStream &results);
+  size_t decode(const std::vector<std::string> &observations, CircuitSimulator::BitStream &results);
 
 private:
   const CircuitSimulator::Trellis m_trellis; //!< Trellis used for decoding

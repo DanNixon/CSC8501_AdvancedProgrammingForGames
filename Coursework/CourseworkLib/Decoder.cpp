@@ -50,7 +50,7 @@ Decoder::~Decoder()
  * @param results Reference to storage for decoded result
  * @return Best path metric
  */
-double Decoder::decode(const CircuitSimulator::BitStream &observations, BitStream &results)
+size_t Decoder::decode(const CircuitSimulator::BitStream &observations, BitStream &results)
 {
   std::vector<std::string> strObs;
   strObs.reserve(observations.size() / 2);
@@ -72,7 +72,7 @@ double Decoder::decode(const CircuitSimulator::BitStream &observations, BitStrea
  * @param results Reference to storage for decoded result
  * @return Best path metric
  */
-double Decoder::decode(const std::vector<std::string> &observations, BitStream &results)
+size_t Decoder::decode(const std::vector<std::string> &observations, BitStream &results)
 {
   ViterbiNode **states = new ViterbiNode *[m_trellis.numStates()];
   ViterbiNode **statesNext = new ViterbiNode *[m_trellis.numStates()];
@@ -100,7 +100,7 @@ double Decoder::decode(const std::vector<std::string> &observations, BitStream &
 
       // Compute new path metrics and find best branch
       TrellisMapping bestMapping;
-      bestMapping.tempCost = std::numeric_limits<double>::max();
+      bestMapping.tempCost = std::numeric_limits<size_t>::max();
 
       // For each mapping to this state in th trellis
       for (size_t j = 0; j < mappings.size(); j++)
@@ -122,7 +122,7 @@ double Decoder::decode(const std::vector<std::string> &observations, BitStream &
 
   // Find best path (lowest path metric)
   ViterbiNode *best = statesNext[0];
-  double bestPathMetric = best->pathMetric;
+  size_t bestPathMetric = best->pathMetric;
   for (size_t i = 1; i < 4; i++)
     if (statesNext[i]->pathMetric < best->pathMetric)
       best = statesNext[i];
@@ -140,7 +140,7 @@ double Decoder::decode(const std::vector<std::string> &observations, BitStream &
   // Free memory
   delete[] states;
   delete[] statesNext;
-  // TODO: nodes
+  // TODO: delete nodes
 
   return bestPathMetric;
 }

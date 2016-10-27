@@ -49,7 +49,7 @@ public:
     // Do decoding
     BitStream output;
     Decoder d(t);
-    Assert::AreEqual(0.0, d.decode(encodedInput, output));
+    Assert::AreEqual((size_t)0, d.decode(encodedInput, output));
 
     // Test size
     Assert::AreEqual(expectedOutput.size(), output.size());
@@ -83,7 +83,7 @@ public:
     // Do decoding
     BitStream output;
     Decoder d(t);
-    Assert::AreEqual(0.0, d.decode(encodedInput, output));
+    Assert::AreEqual((size_t)0, d.decode(encodedInput, output));
 
     // Test size
     Assert::AreEqual(expectedOutput.size(), output.size());
