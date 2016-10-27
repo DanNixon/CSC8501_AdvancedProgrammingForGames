@@ -28,8 +28,8 @@ public:
     const std::string expected =
       "> "
       "Command usage:\n"
-      " help                     : Shows command usage.\n"
-      " exit                     : Exit the application.\n"
+      " help                : Shows command usage.\n"
+      " exit                : Exit the application.\n"
       "> ";
 
     Assert::AreEqual(0, c.run());
@@ -117,8 +117,8 @@ public:
       "Test command.\n"
       "> "
       "Command usage:\n"
-      " help                     : Shows command usage.\n"
-      " list                     : Is a test 2.\n"
+      " help                : Shows command usage.\n"
+      " list                : Is a test 2.\n"
       "> "
       "Test command => list.\n"
       "> ";
