@@ -163,7 +163,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BitStreamComparatorTest.cpp" />
-    <ClCompile Include="EncoderMetricsTest.cpp" />
     <ClCompile Include="PermutationGeneratorTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

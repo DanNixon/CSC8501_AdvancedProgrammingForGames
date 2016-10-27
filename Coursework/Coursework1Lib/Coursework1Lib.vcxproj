@@ -21,14 +21,12 @@
   <ItemGroup>
     <ClCompile Include="BitStreamComparator.cpp" />
     <ClCompile Include="CW1CommandLine.cpp" />
-    <ClCompile Include="EncoderMetrics.cpp" />
     <ClCompile Include="Permutation.cpp" />
     <ClCompile Include="PermutationGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BitStreamComparator.h" />
     <ClInclude Include="CW1CommandLine.h" />
-    <ClInclude Include="EncoderMetrics.h" />
     <ClInclude Include="Permutation.h" />
     <ClInclude Include="PermutationGenerator.h" />
   </ItemGroup>

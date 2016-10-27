@@ -15,7 +15,6 @@
 #include "UtilityLib/FileUtils.h"
 
 #include "BitStreamComparator.h"
-#include "EncoderMetrics.h"
 
 using namespace CommandLineInterface;
 using namespace CircuitSimulator;
@@ -65,18 +64,6 @@ void CW1CommandLine::initCLI()
         return COMMAND_EXIT_CLEAN;
       },
       1, "Outputs the encoder configuration."));
-
-  encoderCmd->registerCommand(std::make_shared<Command>(
-      "metrics",
-      [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) {
-        EncoderMetrics m(this->m_activeEncoder);
-        BitStream data;
-        EncoderMetrics::GenerateRandomData(data, 500);
-        m.measure(data);
-        out << m;
-        return COMMAND_EXIT_CLEAN;
-      },
-      1, "Shows metrics of state changes with random input data."));
 
   SubCommand_ptr encodeCmd = std::make_shared<SubCommand>("encode", "Performs encoding.");
 
@@ -164,15 +151,6 @@ void CW1CommandLine::initCLI()
           wiringOut.open(wiringFilename, std::fstream::out);
           wiringOut << *(this->m_activeEncoder) << '\n';
           wiringOut.close();
-
-          // Calculate and output metrics
-          EncoderMetrics metrics(this->m_activeEncoder);
-          metrics.measure(dataIn);
-          std::string metricsFilename = argv[2] + "enc_" + std::to_string(i) + "_metrics.txt";
-          std::ofstream metricsOut;
-          metricsOut.open(metricsFilename, std::fstream::out);
-          metricsOut << metrics << '\n';
-          metricsOut.close();
 
           // Save encoded string
           std::string outFilename = argv[2] + "enc_" + std::to_string(i) + "_out.txt";
