@@ -38,7 +38,7 @@ const std::string DemonstrationWorkflow::NOISY_DECODED_FILE_PATTERN = "_decoded_
  * - clean decode
  * - error injection
  * - noisy decode
- * - clean & noisy decode compariosn to input data
+ * - clean & noisy decode comparison to input data
  */
 void DemonstrationWorkflow::RunWorkflow(Permutation p, BitStream inputData,
                                         std::string filenameBase, std::ostream &out,

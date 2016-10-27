@@ -195,7 +195,7 @@ void CWCommandLine::initCLI()
       4, "Comapres decoded datasets to original."));
 
   registerCommand(std::make_shared<Command>(
-      "thebigworkflow",
+      "workflow",
       [this](std::istream &in, std::ostream &out, std::vector<std::string> &argv) -> int {
         // Ensure permutations have been generated
         if (this->m_permutationGenerator == nullptr)
