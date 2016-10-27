@@ -1,13 +1,7 @@
 Command Line Interface Reference
 ================================
 
-Coursework 1
-------------
-
 TODO
-
-Coursework 2
-------------
 
 `inject_error [input filename] [output_filename]`
 
@@ -18,7 +12,7 @@ the coursework 2 specification.
 
 Decodes an encoded bit stream using a trellis.
 
-`compare [original_filename] [clean_filename] [noisy_filename]`
+`compare_decoded [original_filename] [clean_filename] [noisy_filename]`
 
 Utility to compare two decoded bit streams with the original before encoded,
 used to test decoding in absence and presence of noise.
