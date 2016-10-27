@@ -74,12 +74,18 @@ size_t Decoder::decode(const CircuitSimulator::BitStream &observations, BitStrea
  */
 size_t Decoder::decode(const std::vector<std::string> &observations, BitStream &results)
 {
+  // Keep track of all nodes for deletion later (this is lazy)
+  std::vector<ViterbiNode *> garbage;
+
   ViterbiNode **states = new ViterbiNode *[m_trellis.numStates()];
   ViterbiNode **statesNext = new ViterbiNode *[m_trellis.numStates()];
 
   // Initial states
   for (size_t i = 0; i < m_trellis.numStates(); i++)
+  {
     statesNext[i] = new ViterbiNode();
+    garbage.push_back(statesNext[i]);
+  }
 
   // Process trellis and build paths
   for (auto obsIt = observations.begin(); obsIt != observations.end(); ++obsIt)
@@ -89,6 +95,7 @@ size_t Decoder::decode(const std::vector<std::string> &observations, BitStream &
     {
       states[i] = statesNext[i];
       statesNext[i] = new ViterbiNode();
+      garbage.push_back(statesNext[i]);
     }
 
     // Process states in current trellis frame
@@ -140,7 +147,8 @@ size_t Decoder::decode(const std::vector<std::string> &observations, BitStream &
   // Free memory
   delete[] states;
   delete[] statesNext;
-  // TODO: delete nodes
+  for (auto it = garbage.begin(); it != garbage.end(); ++it)
+    delete *it;
 
   return bestPathMetric;
 }
