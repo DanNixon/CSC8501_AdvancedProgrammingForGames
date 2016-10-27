@@ -21,14 +21,6 @@ namespace Coursework
 class CWCommandLine : public CommandLineInterface::CLI
 {
 public:
-  static const std::string CLEAN_ENCODED_FILE_PATTERN;
-  static const std::string NOISY_ENCODED_FILE_PATTERN;
-  static const std::string WIRING_FILE_PATTERN;
-  static const std::string TRELLIS_FILE_PATTERN;
-  static const std::string CLEAN_DECODED_FILE_PATTERN;
-  static const std::string NOISY_DECODED_FILE_PATTERN;
-
-public:
   CWCommandLine(std::istream &in, std::ostream &out);
   virtual ~CWCommandLine();
 

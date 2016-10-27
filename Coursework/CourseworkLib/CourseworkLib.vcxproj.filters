@@ -7,6 +7,7 @@
     <ClCompile Include="ErrorInjector.cpp" />
     <ClCompile Include="Permutation.cpp" />
     <ClCompile Include="PermutationGenerator.cpp" />
+    <ClCompile Include="DemonstrationWorkflow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BitStreamComparator.h" />
@@ -15,5 +16,6 @@
     <ClInclude Include="ErrorInjector.h" />
     <ClInclude Include="Permutation.h" />
     <ClInclude Include="PermutationGenerator.h" />
+    <ClInclude Include="DemonstrationWorkflow.h" />
   </ItemGroup>
 </Project>

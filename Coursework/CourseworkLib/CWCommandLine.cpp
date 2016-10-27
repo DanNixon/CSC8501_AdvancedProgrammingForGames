@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <fstream>
 #include <sstream>
+#include <thread>
 
 #include "CircuitSimulatorLib/ComponentFactory.h"
 #include "CircuitSimulatorLib/RegisterArray.h"
@@ -18,6 +19,7 @@
 #include "UtilityLib/FileUtils.h"
 
 #include "BitStreamComparator.h"
+#include "DemonstrationWorkflow.h"
 
 using namespace CommandLineInterface;
 using namespace CircuitSimulator;
@@ -25,13 +27,6 @@ using namespace Utility;
 
 namespace Coursework
 {
-const std::string CWCommandLine::CLEAN_ENCODED_FILE_PATTERN = "_encoded.txt";
-const std::string CWCommandLine::NOISY_ENCODED_FILE_PATTERN = "_encoded_noisy.txt";
-const std::string CWCommandLine::WIRING_FILE_PATTERN = "_wiring.txt";
-const std::string CWCommandLine::TRELLIS_FILE_PATTERN = "_trellis.txt";
-const std::string CWCommandLine::CLEAN_DECODED_FILE_PATTERN = "_decoded.txt";
-const std::string CWCommandLine::NOISY_DECODED_FILE_PATTERN = "_decoded_noisy.txt";
-
 /**
  * @brief Create a new command line on given streams.
  * @param in Input stream
@@ -210,90 +205,15 @@ void CWCommandLine::initCLI()
         }
 
         // Input data
-        const std::string workingDirectory(argv[2]);
         std::vector<bool> inputData;
         BinaryFileIO::ReadFile(inputData, argv[1]);
 
+        // Run workflow for each permutation
+        DemonstrationWorkflow batchWorkflow(out, inputData);
         for (size_t i = 0; i < this->m_permutationGenerator->numPermutations(); i++)
-        {
-          out << "=== Permutation " << i << '\n';
-
-          // Reset encoder
-          this->loadPreset("cw_basic");
-
-          // Get and apply permutation to encoder
-          Permutation p = this->m_permutationGenerator->permutation(i);
-          p.apply(this->m_activeEncoder);
-
-          // Perform validation
-          if (!this->m_activeEncoder->validate())
-          {
-            out << "Permutation " << i << " failed to generate valid wiring.\n";
-            continue;
-          }
-
-          if (!this->m_activeEncoder->validateComponentUse())
-          {
-            out << "Permutation " << i << " failed to use all components.\n";
-            continue;
-          }
-
-          // Encode
-          std::vector<bool> cleanEncodedData;
-          cleanEncodedData.reserve(inputData.size() * 2);
-          this->m_activeEncoder->encode(inputData, cleanEncodedData);
-          BinaryFileIO::WriteFile(cleanEncodedData, workingDirectory + std::to_string(i) +
-                                                        CLEAN_ENCODED_FILE_PATTERN);
-
-          // Output wiring info
-          std::ofstream wiringOut;
-          wiringOut.open(workingDirectory + std::to_string(i) + WIRING_FILE_PATTERN,
-                         std::fstream::out);
-          wiringOut << *(this->m_activeEncoder) << '\n';
-          wiringOut.close();
-
-          // Generate trellis
-          Trellis trellis = this->m_activeEncoder->generateTrellis();
-          std::ofstream trellisOut;
-          trellisOut.open(workingDirectory + std::to_string(i) + TRELLIS_FILE_PATTERN,
-                          std::fstream::out);
-          trellisOut << trellis << '\n';
-          trellisOut.close();
-
-          Decoder decoder(trellis);
-
-          // Decode
-          std::vector<bool> cleanDecodedData;
-          cleanDecodedData.reserve(inputData.size());
-          size_t cleanDecoderHammingDist = decoder.decode(cleanEncodedData, cleanDecodedData);
-          BinaryFileIO::WriteFile(cleanDecodedData, workingDirectory + std::to_string(i) +
-                                                        CLEAN_DECODED_FILE_PATTERN);
-
-          // Inject error
-          std::vector<bool> noisyEncodedData;
-          noisyEncodedData.reserve(cleanEncodedData.size());
-          ErrorInjector::InjectError(cleanEncodedData, noisyEncodedData);
-          BinaryFileIO::WriteFile(noisyEncodedData, workingDirectory + std::to_string(i) +
-                                                        NOISY_ENCODED_FILE_PATTERN);
-
-          // Decode with error
-          std::vector<bool> noisyDecodedData;
-          noisyDecodedData.reserve(inputData.size());
-          size_t noisyDecoderHammingDist = decoder.decode(noisyEncodedData, noisyDecodedData);
-          BinaryFileIO::WriteFile(noisyDecodedData, workingDirectory + std::to_string(i) +
-                                                        NOISY_DECODED_FILE_PATTERN);
-
-          // Compare
-          size_t cleanDecodedDataHammingDist =
-              BitStreamComparator::Compare(inputData, cleanDecodedData);
-          size_t noisyDecodedDataHammingDist =
-              BitStreamComparator::Compare(inputData, noisyDecodedData);
-
-          out << "Clean decode hamming distance = " << cleanDecodedDataHammingDist << " ("
-              << cleanDecoderHammingDist << ")\n"
-              << "Noisy decode hamming distance = " << noisyDecodedDataHammingDist << " ("
-              << noisyDecoderHammingDist << ")\n";
-        }
+          batchWorkflow.addJob(this->m_permutationGenerator->permutation(i),
+                               argv[2] + "\\" + std::to_string(i));
+        batchWorkflow.join();
 
         return COMMAND_EXIT_CLEAN;
       },

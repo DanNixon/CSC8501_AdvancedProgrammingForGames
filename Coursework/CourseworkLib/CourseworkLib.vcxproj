@@ -22,6 +22,7 @@
     <ClCompile Include="BitStreamComparator.cpp" />
     <ClCompile Include="CWCommandLine.cpp" />
     <ClCompile Include="Decoder.cpp" />
+    <ClCompile Include="DemonstrationWorkflow.cpp" />
     <ClCompile Include="ErrorInjector.cpp" />
     <ClCompile Include="Permutation.cpp" />
     <ClCompile Include="PermutationGenerator.cpp" />
@@ -30,6 +31,7 @@
     <ClInclude Include="BitStreamComparator.h" />
     <ClInclude Include="CWCommandLine.h" />
     <ClInclude Include="Decoder.h" />
+    <ClInclude Include="DemonstrationWorkflow.h" />
     <ClInclude Include="ErrorInjector.h" />
     <ClInclude Include="Permutation.h" />
     <ClInclude Include="PermutationGenerator.h" />
