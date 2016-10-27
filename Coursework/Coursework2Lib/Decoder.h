@@ -11,20 +11,21 @@
 
 namespace Coursework2
 {
+/**
+ * @brief Contains information used for building path trees in viterbi decoding.
+ */
 struct ViterbiNode
 {
-  ViterbiNode(size_t i)
+  ViterbiNode()
       : pathMetric(0.0)
       , parent(nullptr)
       , bit(false)
-      , idx(i)
   {
   }
 
-  double pathMetric;
-  ViterbiNode *parent;
-  bool bit;
-  size_t idx;
+  double pathMetric; //!< Best path metric at this node
+  ViterbiNode *parent; //!< Parent node that gives the best path matric
+  bool bit; //!< The bit decoded by following the path from the parent node
 };
 
 /**
@@ -41,9 +42,9 @@ public:
   Decoder(const Trellis &trellis);
   virtual ~Decoder();
 
-  void decode(const CircuitSimulator::BitStream &observations,
+  double decode(const CircuitSimulator::BitStream &observations,
               CircuitSimulator::BitStream &results);
-  void decode(const std::vector<std::string> &observations, CircuitSimulator::BitStream &results);
+  double decode(const std::vector<std::string> &observations, CircuitSimulator::BitStream &results);
 
 private:
   const Trellis m_trellis; //!< Trellis used for decoding

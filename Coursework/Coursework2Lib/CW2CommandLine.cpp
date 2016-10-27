@@ -63,7 +63,8 @@ void CW2CommandLine::initCLI()
 
         // Decode
         BitStream outData;
-        decoder.decode(inData, outData);
+        double bestPathMetric = decoder.decode(inData, outData);
+        out << "Decoding complete. Best path has weight: " << bestPathMetric << '\n';
 
         // Save output
         BinaryFileIO::WriteFile(outData, argv[3]);

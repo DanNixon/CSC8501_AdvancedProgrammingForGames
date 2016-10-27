@@ -48,8 +48,9 @@ Decoder::~Decoder()
  * @brief Decodes a bit stream using the trellis.
  * @param observations Bit stream received
  * @param results Reference to storage for decoded result
+ * @return Best path metric
  */
-void Decoder::decode(const CircuitSimulator::BitStream &observations, BitStream &results)
+double Decoder::decode(const CircuitSimulator::BitStream &observations, BitStream &results)
 {
   std::vector<std::string> strObs;
   strObs.reserve(observations.size() / 2);
@@ -62,22 +63,23 @@ void Decoder::decode(const CircuitSimulator::BitStream &observations, BitStream 
     strObs.push_back(o.str());
   }
 
-  decode(strObs, results);
+  return decode(strObs, results);
 }
 
 /**
  * @brief Decodes a sequence of bit pairs using the trellis.
  * @param observations Bit pairs (as vector of string) received
  * @param results Reference to storage for decoded result
+ * @return Best path metric
  */
-void Decoder::decode(const std::vector<std::string> &observations, BitStream &results)
+double Decoder::decode(const std::vector<std::string> &observations, BitStream &results)
 {
   ViterbiNode **states = new ViterbiNode*[m_trellis.numStates()];
   ViterbiNode **statesNext = new ViterbiNode*[m_trellis.numStates()];
 
   // Initial states
   for (size_t i = 0; i < m_trellis.numStates(); i++)
-    statesNext[i] = new ViterbiNode(i);
+    statesNext[i] = new ViterbiNode();
 
   // Process trellis and build paths
   for (auto obsIt = observations.begin(); obsIt != observations.end(); ++obsIt)
@@ -86,7 +88,7 @@ void Decoder::decode(const std::vector<std::string> &observations, BitStream &re
     for (size_t i = 0; i < m_trellis.numStates(); i++)
     {
       states[i] = statesNext[i];
-      statesNext[i] = new ViterbiNode(i);
+      statesNext[i] = new ViterbiNode();
     }
 
     // Process states in current trellis frame
@@ -120,6 +122,7 @@ void Decoder::decode(const std::vector<std::string> &observations, BitStream &re
 
   // Find best path (lowest path metric)
   ViterbiNode *best = statesNext[0];
+  double bestPathMetric = best->pathMetric;
   for (size_t i = 1; i < 4; i++)
     if (statesNext[i]->pathMetric < best->pathMetric)
       best = statesNext[i];
@@ -138,5 +141,7 @@ void Decoder::decode(const std::vector<std::string> &observations, BitStream &re
   delete[] states;
   delete[] statesNext;
   // TODO: nodes
+
+  return bestPathMetric;
 }
 }
